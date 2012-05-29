@@ -1,0 +1,44 @@
+\name{assert_all_are_imaginary}
+\alias{assert_all_are_imaginary}
+\alias{assert_all_are_real}
+\alias{assert_any_are_imaginary}
+\alias{assert_any_are_real}
+\alias{is_imaginary}
+\alias{is_real}
+\title{Is the input real/imaginary?}
+\usage{
+  assert_all_are_imaginary(x)
+
+  assert_any_are_imaginary(x)
+
+  assert_all_are_real(x)
+
+  assert_any_are_real(x)
+
+  is_imaginary(x)
+
+  is_real(x)
+}
+\arguments{
+  \item{x}{Input to check.}
+}
+\value{
+  \code{TRUE} if the input has imaginary component equal to
+  zero. The \code{assert_*} functions return nothing but
+  throw an error if the corresponding \code{is_*} function
+  returns \code{FALSE}.
+}
+\description{
+  Checks to see if the input is real or imaginary.
+}
+\examples{
+assert_all_are_real(1:10)
+assert_all_are_real(1:10 + 0i)
+assert_any_are_real(c(1i, 0))
+assert_all_are_imaginary(1:10 * 1i)
+assert_any_are_imaginary(c(1i, 0))
+}
+\seealso{
+  \code{\link[base]{complex}}
+}
+
