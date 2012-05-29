@@ -1,0 +1,47 @@
+\name{assert_is_a_bool}
+\alias{assert_is_a_bool}
+\alias{assert_is_logical}
+\alias{is_a_bool}
+\alias{is_logical}
+\title{Is the input logical?}
+\usage{
+  assert_is_a_bool(x)
+
+  assert_is_logical(x)
+
+  is_a_bool(x, .xname = get_name_in_parent(x))
+
+  is_logical(x, .xname = get_name_in_parent(x))
+}
+\arguments{
+  \item{x}{Input to check.}
+
+  \item{.xname}{Not intended to be used directly.}
+}
+\value{
+  \code{is_logical} wraps \code{is.logical}, providing more
+  information on failure. \code{is_a_bool} returns
+  \code{TRUE} if the input is logical and scalar.  The
+  \code{assert_*} functions return nothing but throw an
+  error if the corresponding \code{is_*} function returns
+  \code{FALSE}.
+}
+\description{
+  Checks to see if the input is logical.
+}
+\examples{
+assert_is_logical(runif(10) > 0.5)
+assert_is_a_bool(TRUE)
+assert_is_a_bool(NA)
+\dontrun{
+#These examples should fail:
+assert_is_logical(1)
+assert_is_a_bool(c(TRUE, FALSE))
+assert_is_a_bool(logical())
+}
+}
+\seealso{
+  \code{\link[base]{is.logical}} and
+  \code{\link{is_scalar}}.
+}
+

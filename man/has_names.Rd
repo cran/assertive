@@ -1,0 +1,59 @@
+\name{assert_has_colnames}
+\alias{assert_has_colnames}
+\alias{assert_has_dimnames}
+\alias{assert_has_names}
+\alias{assert_has_rownames}
+\alias{has_colnames}
+\alias{has_dimnames}
+\alias{has_names}
+\alias{has_rownames}
+\title{Does the input have names?}
+\usage{
+  assert_has_colnames(x)
+
+  assert_has_dimnames(x)
+
+  assert_has_names(x)
+
+  assert_has_rownames(x)
+
+  has_colnames(x)
+
+  has_dimnames(x)
+
+  has_names(x)
+
+  has_rownames(x)
+}
+\arguments{
+  \item{x}{Input to check.}
+}
+\value{
+  \code{has_names} returns \code{TRUE} if \code{names} is
+  non-null. \code{has_rownames}, \code{has_colnames} and
+  \code{has_dimnames} work in a similar fashion, checking
+  the corresponding attributes. \code{assert_has_names}
+  returns nothing but throws an error if \code{has_names}
+  is not \code{TRUE}.
+}
+\description{
+  Checks to see if the input has (row/column/dimension)
+  names.
+}
+\note{
+  Empty names (i.e., \code{""}) are not allowed in R, and
+  are not checked here.
+}
+\examples{
+assert_has_names(c(a = 1, 2))
+dfr <- data.frame(x = 1:5)
+assert_has_rownames(dfr)
+assert_has_colnames(dfr)
+assert_has_dimnames(dfr)
+}
+\seealso{
+  \code{\link[base]{names}}, \code{\link[base]{rownames}},
+  \code{\link[base]{colnames}},
+  \code{\link[base]{dimnames}}.
+}
+

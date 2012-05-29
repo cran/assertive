@@ -1,0 +1,22 @@
+\name{strip_attributes}
+\alias{strip_attributes}
+\title{Strip all attributes from a variable.}
+\usage{
+  strip_attributes(x)
+}
+\arguments{
+  \item{x}{Input to strip.}
+}
+\value{
+  \code{x}, without attributes.
+}
+\description{
+  Strips all the attributes from a variable.
+}
+\examples{
+x <- structure(c(foo = 1, bar = 2), some_attr = 3)
+x2 <- strip_attributes(x)
+assert_is_false(has_names(x2), TRUE)
+assert_is_null(attr(x2, "some_attr"))
+}
+

@@ -1,0 +1,27 @@
+\name{has_any_attributes}
+\alias{has_any_attributes}
+\title{Does the input have any attributes?}
+\usage{
+  has_any_attributes(x, .xname = get_name_in_parent(x))
+}
+\arguments{
+  \item{x}{Input to check.}
+
+  \item{.xname}{Not intended to be used directly.}
+}
+\value{
+  \code{has_terms} returns \code{TRUE} if
+  \code{attributes(x)} has length zero.
+  \code{assert_has_terms} returns nothing but throws an
+  error if \code{has_terms} is not \code{TRUE}.
+}
+\description{
+  Checks to see if the input has any attributes.
+}
+\examples{
+assert_has_terms(lm(uptake ~ conc, CO2))
+}
+\seealso{
+  \code{\link[stats]{terms.default}}.
+}
+

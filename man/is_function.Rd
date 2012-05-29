@@ -1,0 +1,46 @@
+\name{assert_is_function}
+\alias{assert_is_function}
+\alias{assert_is_primitive}
+\alias{assert_is_stepfun}
+\alias{is_function}
+\alias{is_primitive}
+\alias{is_stepfun}
+\title{Is the input a function?}
+\usage{
+  assert_is_function(x)
+
+  assert_is_primitive(x)
+
+  assert_is_stepfun(x)
+
+  is_function(x, .xname = get_name_in_parent(x))
+
+  is_primitive(x, .xname = get_name_in_parent(x))
+
+  is_stepfun(x, .xname = get_name_in_parent(x))
+}
+\arguments{
+  \item{x}{Input to check.}
+
+  \item{.xname}{Not intended to be used directly.}
+}
+\value{
+  \code{is_function}, \code{is_primitive} and
+  \code{is_stepfun} wrap \code{is.function},
+  \code{is.primitive} and \code{is.stepfun} repsectively,
+  providing more information on failure.  The
+  \code{assert_*} functions return nothing but throw an
+  error if the corresponding \code{is_*} function returns
+  \code{FALSE}.
+}
+\description{
+  Checks to see if the input is a function.
+}
+\examples{
+assert_is_function(sqrt)
+assert_is_function(function(){})
+}
+\seealso{
+  \code{\link[base]{is.function}}.
+}
+
