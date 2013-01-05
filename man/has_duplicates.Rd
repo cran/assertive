@@ -9,9 +9,9 @@
 
   assert_has_no_duplicates(x)
 
-  has_no_duplicates(x)
-
   has_duplicates(x)
+
+  has_no_duplicates(x)
 }
 \arguments{
   \item{x}{Input to check.}

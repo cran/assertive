@@ -1,0 +1,26 @@
+\name{is_valid_r_code}
+\alias{is_valid_r_code}
+\title{Is the input valid R code?}
+\usage{
+  is_valid_r_code(x, .xname = get_name_in_parent(x))
+}
+\arguments{
+  \item{x}{Input to check.}
+
+  \item{.xname}{Not intended to be used directly.}
+}
+\value{
+  \code{TRUE} if the input string is valid R code.
+}
+\description{
+  Check to see if the input is a valid (parseable) R code.
+}
+\examples{
+is_valid_r_code("x <- 1 + sqrt(pi)")
+is_valid_r_code("x <- ")
+is_valid_r_code("<- 1 + sqrt(pi)")
+}
+\seealso{
+  \code{\link[base]{parse}}
+}
+

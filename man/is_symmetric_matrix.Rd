@@ -30,6 +30,7 @@
 m <- diag(3); m[3, 1] <- 1e-100
 assert_is_symmetric_matrix(m)
 \dontrun{
+#These examples should fail.
 assert_is_symmetric_matrix(m, tol = 0)
 }
 }

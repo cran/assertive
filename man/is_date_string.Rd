@@ -1,0 +1,37 @@
+\name{assert_all_are_date_strings}
+\alias{assert_all_are_date_strings}
+\alias{assert_any_are_date_strings}
+\alias{is_date_string}
+\title{Does the character vector contain dates?}
+\usage{
+  assert_all_are_date_strings(x, format = "\%F \%T")
+
+  assert_any_are_date_strings(x, format = "\%F \%T")
+
+  is_date_string(x, format = "\%F \%T",
+    .xname = get_name_in_parent(x))
+}
+\arguments{
+  \item{x}{Input to check.}
+
+  \item{format}{Expected format of the dates.  See
+  \code{\link[base]{strptime}}.}
+
+  \item{.xname}{Not intended to be called directly.}
+}
+\value{
+  A logical vector that is \code{TRUE} when the input
+  contains valid dates or times.
+}
+\description{
+  Checks that the input contains dates or times.
+}
+\examples{
+assert_all_are_date_strings("01Aug1979", format = "\%d\%b\%Y") #My DOB!
+}
+\seealso{
+  \code{\link[base]{strptime}} for specifying formats, and
+  the \code{lubridate} package for automatic guessing of
+  date formats (and other date manipulation functions).
+}
+

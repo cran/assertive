@@ -22,7 +22,7 @@
 \examples{
 assert_is_list(list(1,2,3))
 \dontrun{
-#These tests should fail:
+#These examples should fail.
 assert_is_list(1:10)
 }
 }

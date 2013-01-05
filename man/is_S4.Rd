@@ -24,6 +24,7 @@
 \examples{
 assert_is_S4(getClass("MethodDefinition"))
 \dontrun{
+#These examples should fail.
 assert_is_S4(1:10)
 }
 }

@@ -35,7 +35,7 @@ assert_is_a_number(pi)
 assert_is_a_number(1L)
 assert_is_a_number(NA_real_)
 \dontrun{
-#These examples should fail:
+#These examples should fail.
 assert_is_numeric(c(TRUE, FALSE))
 assert_is_a_number(1:10)
 assert_is_a_number(numeric())

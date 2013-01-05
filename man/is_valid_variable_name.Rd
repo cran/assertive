@@ -34,7 +34,7 @@
 \examples{
 assert_all_are_valid_variable_names(c("x", "y_y0.y", ".", "...", "..1"))
 \dontrun{
-#These examples should fail:
+#These examples should fail.
 assert_all_are_valid_variable_names(c("...", "..1"), allow_reserved = FALSE)
 assert_all_are_valid_variable_names(c("x", "x"), allow_duplicates = FALSE)
 }

@@ -1,0 +1,56 @@
+\name{assert_all_are_us_telephone_numbers}
+\alias{assert_all_are_us_telephone_numbers}
+\alias{assert_any_are_us_telephone_numbers}
+\alias{is_us_telephone_number}
+\title{Is the string a valid US telephone number?}
+\usage{
+  assert_all_are_us_telephone_numbers(x)
+
+  assert_any_are_us_telephone_numbers(x)
+
+  is_us_telephone_number(x)
+}
+\arguments{
+  \item{x}{Input to check.}
+}
+\value{
+  \code{is_us_telephone_number} returns \code{TRUE} if the
+  input string contains a valid US telephone number. The
+  {assert_*} functions return nothing but throw an error
+  when the \code{is_*} function returns \code{FALSE}.
+}
+\description{
+  Checks that the input contains US/Canadian (NANPA)
+  telephone numbers.
+}
+\note{
+  A valid US phone number consists of an optional country
+  code (either +1, 001 or just 1), followed by a 3 digit
+  NPA area code, where the first digit is between 2 and 9,
+  and the second and third digits don't match.  Next is a 3
+  digit exchange (NXX) code, where the first digit is
+  between 2 and 9 and the second and third digits aren't
+  11.  Finally there is a four digit subscriber number
+  (with no restrictions).  7 digit numbers (without the NPA
+  code) are not supported here. Canada, parts of the
+  Caribbean, and some Atlantic and Pacific islands also use
+  the same numbering system.
+}
+\examples{
+phone_numbers <- c(
+  "12345678901",   #country code as 1
+  "+12345678901",  #country code as +1
+  "0012345678901", #country code as 001
+  "2345678901",    #no country code
+  "10345678901",   #NPA can't begin 0
+  "11345678901",   #...or 1
+  "12335678901",   #2nd, 3rd digits of NPA can't match
+  "12340678901",   #NXX can't begin 0
+  "12341678901",   #...or 1
+  "12345118901",   #2nd, 3rd digits of NXX can't be 11
+  "1234567",       #NPA must be included
+  "12345678"      #ditto
+)
+is_us_telephone_number(phone_numbers)
+}
+

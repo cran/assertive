@@ -1,13 +1,13 @@
-\name{assert_all_numbers_whole_numbers}
-\alias{assert_all_numbers_whole_numbers}
-\alias{assert_any_numbers_whole_numbers}
+\name{assert_all_numbers_are_whole_numbers}
+\alias{assert_all_numbers_are_whole_numbers}
+\alias{assert_any_numbers_are_whole_numbers}
 \alias{is_whole_number}
 \title{Is the input a whole number?}
 \usage{
-  assert_all_numbers_whole_numbers(x,
+  assert_all_numbers_are_whole_numbers(x,
     tol = .Machine$double.eps)
 
-  assert_any_numbers_whole_numbers(x,
+  assert_any_numbers_are_whole_numbers(x,
     tol = .Machine$double.eps)
 
   is_whole_number(x, tol = 100 * .Machine$double.eps)

@@ -35,7 +35,7 @@ assert_is_a_complex(1i)
 assert_is_a_complex(1 + 0i)
 assert_is_a_complex(NA_complex_)
 \dontrun{
-#These examples should fail:
+#These examples should fail.
 assert_is_complex(1:10)
 assert_is_a_complex(c(1i, 2i))
 assert_is_a_complex(complex())

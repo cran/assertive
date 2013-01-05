@@ -1,3 +1,18 @@
+#' Is the path a directory?
+#' Checks to see if the input path is a directory.
+#' 
+#' @param x File paths.
+#' @return \code{is_dir} returns \code{TRUE} if and only if the input 
+#' path is a directory that exists, as determined by \code{file.info}.
+#' @examples
+#' assert_all_are_dirs(R.home())
+#' @export
+is_dir <- function(x)
+{  
+  x <- coerce_to(x, "character")
+  call_and_name(function(x) is_true(file.info(x)[["isdir"]]), x)
+}
+
 #' Does the file exist?
 #'
 #' Checks to see if the input files exist.
@@ -9,8 +24,9 @@
 #' \code{FALSE}.
 #' @seealso \code{\link[base]{file.exists}}.
 #' @examples
-#' assert_all_are_existing_files(c(dir(), "~", getwd()))
+#' assert_all_are_existing_files(dir())
 #' \dontrun{
+#' #These examples should fail.
 #' assert_all_are_existing_files("not an existing file (probably)")
 #' }
 #' @export
@@ -39,6 +55,30 @@ is_ex_file <- function(x)
 {
   x <- coerce_to(x, "character")
   call_and_name(file.access, x, mode = 1) == 0L
+}
+
+#' Is the directory a known R library?
+#' 
+#' Checks to see if the input directories are known R libraries.
+#' 
+#' @param x Directory paths
+#' @note Input paths are converted to character, and then normalized using
+#' \code{normalizePaths}.
+#' @return \code{is_library} returns \code{TRUE} if and only if the input
+#' paths are known R package libraries.  That is, they must be paths
+#' returned by \code{.libPaths}.
+#' 
+#' @export
+is_library <- function(x)
+{
+  x <- coerce_to(x, "character")
+  call_and_name(
+    function(x) 
+    {
+      normalizePath(x, winslash = "/", mustWork = FALSE) %in% .libPaths()
+    }, 
+    x
+  )
 }
 
 #' @rdname is_ex_file

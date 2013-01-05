@@ -18,6 +18,26 @@ is_debugged <- function(x, .xname = get_name_in_parent(x))
   TRUE
 }
 
+#' Does the code run without throwing an error?
+#' 
+#' Call the code inside a try block and report if an error was thrown.
+#' 
+#' @param x Code to check.
+#' @note Note that this has the side effect of running the code contained in
+#' \code{x}.
+#' @return \code{TRUE} if the code runs without throwing an error.
+is_error_free <- function(x)
+{
+  res <- try(x, silent = TRUE)
+  if(inherits(res, "try-error"))
+  {
+    return(false(attr(res, "condition")$message))
+  }
+  ok <- TRUE
+  attr(ok, "result") <- res
+  ok
+}
+
 #' Does the variable exist?
 #'
 #' Checks to see if the input variables exist.
@@ -40,6 +60,7 @@ is_debugged <- function(x, .xname = get_name_in_parent(x))
 #' e$y <- 2
 #' assert_all_are_existing(c("x", "y"), envir = e)
 #' \dontrun{
+#' #These examples should fail.
 #' assert_all_are_existing(c("x", "z"), envir = e)
 #' }
 #' @export
@@ -127,26 +148,6 @@ is_loaded <- function(x, PACKAGE = "", type = "", .xname = get_name_in_parent(x)
   }
 }
 
-#' Are you running R?
-#'
-#' Checks to see you are running R.
-#'
-#' @return \code{is_R} wraps \code{is.R}, providing more 
-#' information on failure.  \code{assert_is_R} returns nothing but
-#' throws an error if \code{is_R} returns \code{FALSE}.
-#' @seealso \code{\link[base]{is.R}}.
-#' @examples
-#' assert_is_R()
-#' @export
-is_R <- function()
-{
-  if(!is.R())
-  {
-    return(false("You are not running R."))
-  } 
-  TRUE
-}
-
 #' Is the input a symmetric matrix?
 #'
 #' Checks that the input is a symmetric matrix.
@@ -160,6 +161,7 @@ is_R <- function()
 #' m <- diag(3); m[3, 1] <- 1e-100
 #' assert_is_symmetric_matrix(m)
 #' \dontrun{
+#' #These examples should fail.
 #' assert_is_symmetric_matrix(m, tol = 0)
 #'}
 #' @export
@@ -178,7 +180,7 @@ is_symmetric_matrix <- function(x, tol = 100 * .Machine$double.eps, .xname = get
   {
     all.equal(x, t(x), tolerance = tol, ...)
   }
-  if(!is_true(symmetry_test))
+  if(!is_identical_to_true(symmetry_test))
   {
     return(false("%s is not a symmetric matrix.", .xname))
   }
@@ -207,7 +209,7 @@ is_symmetric_matrix <- function(x, tol = 100 * .Machine$double.eps, .xname = get
 #' assert_is_unsorted(c(1, 3, 2))
 #' assert_is_unsorted(c(1, 1, 2), strictly = TRUE)
 #' \dontrun{
-#' #These tests should fail:
+#' #These tests should fail.
 #' assert_is_unsorted(c(1, 1, 2))
 #' assert_is_unsorted(c(2, 1, 0))
 #' }

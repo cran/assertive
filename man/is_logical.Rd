@@ -34,7 +34,7 @@ assert_is_logical(runif(10) > 0.5)
 assert_is_a_bool(TRUE)
 assert_is_a_bool(NA)
 \dontrun{
-#These examples should fail:
+#These examples should fail.
 assert_is_logical(1)
 assert_is_a_bool(c(TRUE, FALSE))
 assert_is_a_bool(logical())

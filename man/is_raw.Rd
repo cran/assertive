@@ -36,7 +36,7 @@
 assert_is_raw(as.raw(1:10))
 assert_is_a_raw(as.raw(255))
 \dontrun{
-#These examples should fail:
+#These examples should fail.
 assert_is_raw(c(TRUE, FALSE))
 assert_is_a_raw(as.raw(1:10))
 assert_is_a_raw(raw())

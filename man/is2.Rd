@@ -32,8 +32,8 @@
 }
 \examples{
 assert_is_all_of(1:10, c("integer", "numeric"))
-#These examples should fail:
 \dontrun{
+#These examples should fail.
 assert_is_any_of(1:10, c("list", "data.frame"))
 }
 }
