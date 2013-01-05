@@ -12,8 +12,8 @@
 #' @seealso \code{\link[methods]{is}}.
 #' @examples
 #' assert_is_all_of(1:10, c("integer", "numeric"))
-#' #These examples should fail:
 #' \dontrun{
+#' #These examples should fail.
 #' assert_is_any_of(1:10, c("list", "data.frame"))
 #' }
 #' @export
@@ -22,16 +22,10 @@ is2 <- function(x, class, .xname = get_name_in_parent(x))
   if(is_empty(class)) stop("You must provide a class.")
   if(length(class) > 1L) 
   {
-    return(vapply(class, function(cl) is2(x, cl, ""), logical(1)))
+    return(bapply(class, function(cl) is2(x, cl, "")))
   }
-  fn <- try(match.fun(paste0("is.", class)), silent = TRUE)
-  condn <- if(inherits(fn, "try-error"))
-  {
-    is(x, class)
-  } else
-  {
-    fn(x)
-  }
+  ok <- is_error_free(match.fun(paste0("is.", class)))
+  condn <- if(ok) attr(ok, "result")(x) else is(x, class)
   if(!condn)
   {
     return(false("%s is not of type '%s'.", .xname, class))
@@ -55,7 +49,7 @@ is2 <- function(x, class, .xname = get_name_in_parent(x))
 #' assert_is_array(matrix())
 #' assert_is_matrix(matrix())
 #' \dontrun{
-#' #These examples should fail:
+#' #These examples should fail.
 #' assert_is_matrix(array())
 #' }
 #' @export
@@ -140,7 +134,7 @@ is_class <- function(x, .xname = get_name_in_parent(x))
 #' assert_is_a_complex(1 + 0i)
 #' assert_is_a_complex(NA_complex_)
 #' \dontrun{
-#' #These examples should fail:
+#' #These examples should fail.
 #' assert_is_complex(1:10)
 #' assert_is_a_complex(c(1i, 2i))
 #' assert_is_a_complex(complex())
@@ -251,7 +245,7 @@ is_function <- function(x, .xname = get_name_in_parent(x))
 #' assert_is_integer(1L:10L)
 #' assert_is_an_integer(99L)
 #' \dontrun{
-#' #These examples should fail:
+#' #These examples should fail.
 #' assert_is_integer(1:10)
 #' assert_is_an_integer(1L:10L)
 #' assert_is_an_integer(integer())
@@ -288,7 +282,7 @@ is_integer <- function(x, .xname = get_name_in_parent(x))
 #' assert_is_name(a_name)
 #' assert_is_language(a_name)
 #' \dontrun{
-#' #These tests should fail:
+#' #These examples should fail.
 #' assert_is_language(function(){})
 #' }
 #' @export
@@ -318,7 +312,7 @@ is_leaf <- function(x, .xname = get_name_in_parent(x))
   {
     return(false("%s has no 'leaf' attribute.", .xname))
   }
-  if(!(ok <- is_true(
+  if(!(ok <- is_identical_to_true(
     leaf, 
     TRUE,
     paste("The leaf attribute of", .xname)
@@ -341,7 +335,7 @@ is_leaf <- function(x, .xname = get_name_in_parent(x))
 #' @examples
 #' assert_is_list(list(1,2,3))
 #' \dontrun{
-#' #These tests should fail:
+#' #These examples should fail.
 #' assert_is_list(1:10)
 #' }
 #' @export
@@ -367,7 +361,7 @@ is_list <- function(x, .xname = get_name_in_parent(x))
 #' assert_is_a_bool(TRUE)
 #' assert_is_a_bool(NA)
 #' \dontrun{
-#' #These examples should fail:
+#' #These examples should fail.
 #' assert_is_logical(1)
 #' assert_is_a_bool(c(TRUE, FALSE))
 #' assert_is_a_bool(logical())
@@ -417,7 +411,7 @@ is_name <- function(x, .xname = get_name_in_parent(x))
 #' assert_is_a_number(1L)
 #' assert_is_a_number(NA_real_)
 #' \dontrun{
-#' #These examples should fail:
+#' #These examples should fail.
 #' assert_is_numeric(c(TRUE, FALSE))
 #' assert_is_a_number(1:10)
 #' assert_is_a_number(numeric())
@@ -486,7 +480,7 @@ is_qr <- function(x, .xname = get_name_in_parent(x))
 #' m <- matrix(hcl(0, 80, seq(50, 80, 10)), nrow=4, ncol=5)
 #' assert_is_raster(as.raster(m))
 #' \dontrun{
-#' #These examples should fail:
+#' #These examples should fail.
 #' assert_is_raster(m)
 #' }
 #' @export
@@ -511,7 +505,7 @@ is_raster <- function(x, .xname = get_name_in_parent(x))
 #' assert_is_raw(as.raw(1:10))
 #' assert_is_a_raw(as.raw(255))
 #' \dontrun{
-#' #These examples should fail:
+#' #These examples should fail.
 #' assert_is_raw(c(TRUE, FALSE))
 #' assert_is_a_raw(as.raw(1:10))
 #' assert_is_a_raw(raw())
@@ -536,7 +530,7 @@ is_raw <- function(x, .xname = get_name_in_parent(x))
 #' @examples
 #' assert_is_relistable(as.relistable(list(1,2,3)))
 #' \dontrun{
-#' #These examples should fail:
+#' #These examples should fail.
 #' assert_is_relistable(list(1,2,3))
 #' }
 #' @export
@@ -558,6 +552,7 @@ is_relistable <- function(x, .xname = get_name_in_parent(x))
 #' @examples
 #' assert_is_S4(getClass("MethodDefinition"))
 #' \dontrun{
+#' #These examples should fail.
 #' assert_is_S4(1:10)
 #' }
 #' @export

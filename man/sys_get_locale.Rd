@@ -1,0 +1,41 @@
+\name{sys_get_locale}
+\alias{sys_get_locale}
+\alias{sys_set_locale}
+\title{Get or set the system locale}
+\usage{
+  sys_get_locale(simplify = FALSE)
+
+  sys_set_locale(..., l = list())
+}
+\arguments{
+  \item{simplify}{If \code{TRUE}, the locale settings are
+  returned as a vector, otherwise, a list.}
+
+  \item{...}{Name-value pairs of locale categories to set.}
+
+  \item{l}{A list, as an alternative method of passing
+  local categories to set.}
+}
+\value{
+  A named list or vector giving the system locale names.
+}
+\description{
+  Wrappers to \code{Sys.getlocale} and \code{Sys.setlocale}
+  for getting and setting the system locale.
+}
+\examples{
+(current_locale <- sys_get_locale())
+\dontrun{
+english <- if(is_windows()) "English"
+  else if(is_mac()) "en_GB"
+  else if(is_linux()) "en_GB.utf8"
+  else "en"
+sys_set_locale(LC_MONETARY = english)
+sys_get_locale()
+sys_set_locale(l = current_locale)  #restore everything
+}
+}
+\seealso{
+  \code{\link[base]{Sys.getlocale}}.
+}
+

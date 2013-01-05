@@ -1,0 +1,29 @@
+\name{assert_all_are_libraries}
+\alias{assert_all_are_libraries}
+\alias{assert_any_are_libraries}
+\alias{is_library}
+\title{Is the directory a known R library?}
+\usage{
+  assert_all_are_libraries(x)
+
+  assert_any_are_libraries(x)
+
+  is_library(x)
+}
+\arguments{
+  \item{x}{Directory paths}
+}
+\value{
+  \code{is_library} returns \code{TRUE} if and only if the
+  input paths are known R package libraries.  That is, they
+  must be paths returned by \code{.libPaths}.
+}
+\description{
+  Checks to see if the input directories are known R
+  libraries.
+}
+\note{
+  Input paths are converted to character, and then
+  normalized using \code{normalizePaths}.
+}
+

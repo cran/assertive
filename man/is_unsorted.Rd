@@ -42,7 +42,7 @@
 assert_is_unsorted(c(1, 3, 2))
 assert_is_unsorted(c(1, 1, 2), strictly = TRUE)
 \dontrun{
-#These tests should fail:
+#These tests should fail.
 assert_is_unsorted(c(1, 1, 2))
 assert_is_unsorted(c(2, 1, 0))
 }

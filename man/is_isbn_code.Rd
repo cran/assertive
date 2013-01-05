@@ -1,0 +1,65 @@
+\name{assert_all_are_isbn_codes}
+\alias{assert_all_are_isbn_codes}
+\alias{assert_any_are_isbn_codes}
+\alias{is_isbn10_code}
+\alias{is_isbn13_code}
+\alias{is_isbn_code}
+\title{Does the character vector contain ISBN book codes?}
+\usage{
+  assert_all_are_isbn_codes(x, type = c("10", "13"))
+
+  assert_any_are_isbn_codes(x, type = c("10", "13"))
+
+  is_isbn10_code(x, .xname = get_name_in_parent(x))
+
+  is_isbn13_code(x, .xname = get_name_in_parent(x))
+
+  is_isbn_code(x, type = c("10", "13"),
+    .xname = get_name_in_parent(x))
+}
+\arguments{
+  \item{x}{Input to check.}
+
+  \item{type}{Either "isbn10", "isbn13" or both (for
+  matching either type).}
+
+  \item{.xname}{Not intended to be called directly.}
+}
+\value{
+  A logical vector that is \code{TRUE} when the input
+  contains valid ISBN book codes.
+}
+\description{
+  Checks that the input contains ISBN-10 or ISBN-13 book
+  codes.
+}
+\examples{
+x10 <- c(
+  hyphens             = "0-387-98503-4",
+  spaces              = "0 387 98503 4",
+  just_numbers        = "0387985034",
+  too_long            = "00-387-98503-4",
+  too_short           = "0-387-9850-4",
+  non_numeric         = "Z-387-98503-4",
+  invalid_check_digit = "0-387-98503-5"
+)
+x13 <- c(
+  hyphens             = "978-0-387-98503-9",
+  spaces              = "978 0 387 98503 9",
+  just_numbers        = "9780387985039",
+  too_long            = "9978-0-387-98503-9",
+  too_short           = "978-0-387-9850-9",
+  non_numeric         = "Z78-0-387-9850-9",
+  invalid_check_digit = "978-0-387-98503-8"
+)
+is_isbn_code(x10, type = "10")
+assert_any_are_isbn_codes(x10, type = "10")
+is_isbn_code(x13, type = "13")
+assert_any_are_isbn_codes(x13, type = "13")
+\dontrun{
+#These tests should fail.
+assert_all_are_isbn_codes(x10, type = "10")
+assert_all_are_isbn_codes(x13, type = "13")
+}
+}
+

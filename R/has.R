@@ -14,6 +14,7 @@
 #' assert_has_all_attributes(x, c("names", "b"))
 #' assert_has_any_attributes(x, c("names", "c"))
 #' \dontrun{
+#' #These examples should fail.
 #' assert_has_all_attributes(x, c("names", "c"))
 #' }
 #' @export
@@ -133,14 +134,6 @@ has_dims <- function(x)
   if(is.null(dimx)) return(false("Dimensions are NULL."))
   TRUE
 }
-    
-#' @rdname has_duplicates
-#' @export
-has_no_duplicates <- function(x)
-{
-  if(anyDuplicated(x)) return(false("There are duplicates."))
-  TRUE
-} 
 
 #' Does the input have duplicates?
 #'
@@ -185,6 +178,14 @@ has_names <- function(x)
   if(is.null(namesx)) return(false("Names are NULL."))
   TRUE
 } 
+
+#' @rdname has_duplicates
+#' @export
+has_no_duplicates <- function(x)
+{
+  if(anyDuplicated(x)) return(false("There are duplicates."))
+  TRUE
+}
 
 #' @rdname has_names
 #' @export

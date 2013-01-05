@@ -1,0 +1,46 @@
+\name{strip_invalid_chars}
+\alias{strip_invalid_chars}
+\alias{strip_non_alphanumeric}
+\alias{strip_non_numeric}
+\title{Removes invalid characters from a string.}
+\usage{
+  strip_invalid_chars(x, invalid_chars,
+    char_desc = "invalid")
+
+  strip_non_alphanumeric(x)
+
+  strip_non_numeric(x, allow_x = FALSE, allow_plus = FALSE)
+}
+\arguments{
+  \item{x}{Input to strip.}
+
+  \item{invalid_chars}{A regular expression detailing
+  characters to remove.}
+
+  \item{char_desc}{A string describing the characters to
+  remove.}
+
+  \item{allow_x}{If \code{TRUE}, the letter "X" is allowed
+  - useful for check digits.}
+
+  \item{allow_plus}{If \code{TRUE}, the symbol "+" is
+  allowed - useful for phone numbers.}
+}
+\value{
+  A character vector of the same length as \code{x},
+  consisting of strings without the characters detailed in
+  the \code{invalid_chars}.
+}
+\description{
+  Removes invalid characters from a string, leaving only
+  digits.
+}
+\examples{
+\dontrun{
+strip_invalid_chars("  We're floating\\tin    space\\n\\n\\n", "[[:space:]]", "whitespace")
+strip_non_numeric(" +44 800-123-456 ", allow_plus = TRUE)
+#Inputs such as factors as coerced to character.
+strip_non_alphanumeric(factor(c(" A1\\t1AA.", "*(B2^2BB)\%")))
+}
+}
+

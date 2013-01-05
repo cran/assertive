@@ -27,7 +27,7 @@
 m <- matrix(hcl(0, 80, seq(50, 80, 10)), nrow=4, ncol=5)
 assert_is_raster(as.raster(m))
 \dontrun{
-#These examples should fail:
+#These examples should fail.
 assert_is_raster(m)
 }
 }

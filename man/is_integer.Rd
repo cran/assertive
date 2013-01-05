@@ -33,7 +33,7 @@
 assert_is_integer(1L:10L)
 assert_is_an_integer(99L)
 \dontrun{
-#These examples should fail:
+#These examples should fail.
 assert_is_integer(1:10)
 assert_is_an_integer(1L:10L)
 assert_is_an_integer(integer())

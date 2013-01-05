@@ -3,7 +3,7 @@
 assert_all_are_finite <- function(x)
 {                                                     
   msg <- sprintf("%s are not all finite.", get_name_in_parent(x))
-  assert_engine(x, is.finite, msg)        
+  assert_engine(x, is_finite, msg)        
 }
 
 #' @rdname is_finite
@@ -11,7 +11,7 @@ assert_all_are_finite <- function(x)
 assert_any_are_finite <- function(x)
 {                                                     
   msg <- sprintf("%s are all not finite.", get_name_in_parent(x))
-  assert_engine(x, is.finite, msg, what = "any")        
+  assert_engine(x, is_finite, msg, what = "any")        
 }
 
 #' @rdname is_finite
@@ -19,7 +19,7 @@ assert_any_are_finite <- function(x)
 assert_all_are_infinite <- function(x)
 {                                                     
   msg <- sprintf("%s are not all infinite.", get_name_in_parent(x))
-  assert_engine(x, is.infinite, msg)        
+  assert_engine(x, is_infinite, msg)        
 }
 
 #' @rdname is_finite
@@ -27,7 +27,7 @@ assert_all_are_infinite <- function(x)
 assert_any_are_infinite <- function(x)
 {                                                     
   msg <- sprintf("%s are all not infinite.", get_name_in_parent(x))
-  assert_engine(x, is.infinite, msg, what = "any")        
+  assert_engine(x, is_infinite, msg, what = "any")        
 }
 
 #' @rdname is_nan

@@ -23,8 +23,9 @@
   Checks to see if the input files exist.
 }
 \examples{
-assert_all_are_existing_files(c(dir(), "~", getwd()))
+assert_all_are_existing_files(dir())
 \dontrun{
+#These examples should fail.
 assert_all_are_existing_files("not an existing file (probably)")
 }
 }

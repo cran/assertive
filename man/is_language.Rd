@@ -62,7 +62,7 @@ a_name <- as.name("foo")
 assert_is_name(a_name)
 assert_is_language(a_name)
 \dontrun{
-#These tests should fail:
+#These examples should fail.
 assert_is_language(function(){})
 }
 }

@@ -47,6 +47,7 @@ e$x <- 1
 e$y <- 2
 assert_all_are_existing(c("x", "y"), envir = e)
 \dontrun{
+#These examples should fail.
 assert_all_are_existing(c("x", "z"), envir = e)
 }
 }

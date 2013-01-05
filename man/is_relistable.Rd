@@ -22,7 +22,7 @@
 \examples{
 assert_is_relistable(as.relistable(list(1,2,3)))
 \dontrun{
-#These examples should fail:
+#These examples should fail.
 assert_is_relistable(list(1,2,3))
 }
 }

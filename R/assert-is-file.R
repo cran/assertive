@@ -1,3 +1,25 @@
+#' @rdname is_dir
+#' @export
+assert_all_are_dirs <- function(x)
+{
+  msg <- sprintf(
+    "The paths %s are not all directories.", 
+    get_name_in_parent(x)
+  )
+  assert_engine(x, is_dir, msg = msg)
+}
+
+#' @rdname is_dir
+#' @export
+assert_any_are_dirs <- function(x)
+{
+  msg <- sprintf(
+    "The paths %s are all not directories.", 
+    get_name_in_parent(x)
+  )
+  assert_engine(x, is_dir, msg = msg, what = "any")
+}
+
 #' @rdname is_existing_file
 #' @export
 assert_all_are_existing_files <- function(x)
@@ -42,6 +64,27 @@ assert_any_are_executable_files <- function(x)
   assert_engine(x, is_ex_file, msg = msg, what = "any")
 }
 
+#' @rdname is_library
+#' @export
+assert_all_are_libraries <- function(x)
+{
+  msg <- sprintf(
+    "The paths %s are not all libraries.", 
+    get_name_in_parent(x)
+  )
+  assert_engine(x, is_library, msg = msg)
+}
+
+#' @rdname is_library
+#' @export
+assert_any_are_libraries <- function(x)
+{
+  msg <- sprintf(
+    "The paths %s are all not libraries.", 
+    get_name_in_parent(x)
+  )
+  assert_engine(x, is_library, msg = msg, what = "any")
+}
 #' @rdname is_ex_file
 #' @export
 assert_all_are_readable_files <- function(x)

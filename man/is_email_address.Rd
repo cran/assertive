@@ -1,0 +1,55 @@
+\name{assert_all_are_email_addresses}
+\alias{assert_all_are_email_addresses}
+\alias{assert_any_are_email_addresses}
+\alias{is_email_address}
+\title{Does the character vector contain email addresses?}
+\usage{
+  assert_all_are_email_addresses(x,
+    method = c("simple", "rfc2822"))
+
+  assert_any_are_email_addresses(x,
+    method = c("simple", "rfc2822"))
+
+  is_email_address(x, method = c("simple", "rfc2822"),
+    .xname = get_name_in_parent(x))
+}
+\arguments{
+  \item{x}{Input to check.}
+
+  \item{method}{Name of method to check for validity.  See
+  notes below.}
+
+  \item{.xname}{Not intended to be called directly.}
+}
+\value{
+  A logical vector that is \code{TRUE} when the input
+  contains valid email addresses.
+}
+\description{
+  Checks that the input contains email addresses.  (It does
+  not check the the address exists, merely that the string
+  is in a suitable format.)
+}
+\note{
+  Each method specifies a regular expression (see
+  \code{\link[base]{regex}}) to match against. The
+  \code{simple} method matches most email addresses in use,
+  and is quite good at filtering out typos and nonsense.
+  It won't match \emph{every} email address however.  For
+  example, emails from a top level domain longer than 4
+  characters won't pass.  The \code{rfc822} method
+  implements the offical standard for emails.  Thus all
+  genuine emails will pass, but since the spec is very
+  broad, it isn't as good at filtering out nonsense.
+}
+\examples{
+addresses <- c("a@b.com", "a_at_b.com", "a@bcom", "a@b.comma", "a!$&@b.com")
+is_email_address(addresses)
+is_email_address(addresses, method = "rfc2822")
+}
+\references{
+  \url{http://www.regular-expressions.info/email.html}
+  contains the regexes used by this function and a good
+  discussion of the pros and cons of each.
+}
+

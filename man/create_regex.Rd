@@ -1,0 +1,33 @@
+\name{create_regex}
+\alias{create_regex}
+\title{Create a regex from components.}
+\usage{
+  create_regex(..., l = list(), sep = "[- ]?")
+}
+\arguments{
+  \item{...}{Character vectors of regex components.}
+
+  \item{l}{A list of character vectors for alternate
+  specification.}
+
+  \item{sep}{Regex for separating components of complete
+  regex. Defaults to "an optional space or hyphen".}
+}
+\value{
+  A string containing a regex. Each element in the vectors
+  are pasted together, separated by the \code{sep} value.
+  Those character vectors are then preceded by "^" (regex
+  for 'start of string'() and followed by "$" (regex for
+  end of string).  Finally, the regexes are collapsed with
+  "|" (regex for 'or').
+}
+\description{
+  Creates a regex from regex components.
+}
+\examples{
+\dontrun{
+cas_number_components <- c("[[:digit:]]{1,7}", "[[:digit:]]{2}", "[[:digit:]]")
+cas_number_rx <- create_regex(rx_components, sep = "-")
+}
+}
+
