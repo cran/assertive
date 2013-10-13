@@ -39,10 +39,34 @@ read_csv <- if(is_comma_for_decimal_point()) read.csv else read.csv2
 #Force locale and test (may require admin rights)
 \dontrun{
 current_locale <- sys_get_locale()
-a_period_locale <- if(is_windows()) "English_United Kingdom.1252" else if(is_mac()) "en_GB" else if(is_linux()) "en_GB.utf8" else "en"
+a_period_locale <- if(is_windows())
+{
+  "English_United Kingdom.1252"
+} else if(is_mac())
+{
+  "en_GB"
+} else if(is_linux())
+{
+  "en_GB.utf8"
+} else
+{
+  "en"
+}
 sys_set_locale(LC_ALL = a_period_locale)
 assert_is_period_for_decimal_point()
-a_comma_locale <- if(is_windows()) "French_France.1252" else if(is_mac()) "fr_FR" else if(is_linux()) "fr_FR.utf8" else "fr"
+a_comma_locale <- if(is_windows())
+{
+  "French_France.1252"
+} else if(is_mac())
+{
+  "fr_FR"
+} else if(is_linux())
+{
+  "fr_FR.utf8"
+} else
+{
+  "fr"
+}
 sys_set_locale(LC_ALL = a_comma_locale)
 assert_is_comma_for_decimal_point()
 suppressWarnings(sys_set_locale(l = current_locale))

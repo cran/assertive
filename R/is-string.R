@@ -36,7 +36,7 @@ is_cas_number <- function(x, .xname = get_name_in_parent(x))
   #Check checkdigit
   x[ok] <- suppressWarnings(strip_non_numeric(x[ok]))
   ok[ok] <- bapply(
-    character_to_list_of_numeric_vectors(x[ok]), 
+    character_to_list_of_integer_vectors(x[ok]), 
     function(x)
     {
       lenx <- length(x)
@@ -118,7 +118,7 @@ is_credit_card_number <- function(x, type = c("visa", "mastercard", "amex", "din
   
   #Check check digit with Luhn algorithm
   ok[ok] <- bapply(
-    character_to_list_of_numeric_vectors(x[ok]),
+    character_to_list_of_integer_vectors(x[ok]),
     function(x)
     {
       lenx <- length(x)
@@ -309,7 +309,7 @@ is_isbn10_code <- function(x, .xname = get_name_in_parent(x))
   
   #Check checkdigit
   ok[ok] <- bapply(
-    character_to_list_of_numeric_vectors(x[ok]),
+    character_to_list_of_integer_vectors(x[ok]),
     function(x)
     {
       actual_check_digit <- x[10L]
@@ -336,7 +336,7 @@ is_isbn13_code <- function(x, .xname = get_name_in_parent(x))
   
   #Check checkdigit
   ok[ok] <- bapply(
-    character_to_list_of_numeric_vectors(x[ok]),
+    character_to_list_of_integer_vectors(x[ok]),
     function(x)
     {
       (sum(suppressWarnings(x * c(1, 3))) %% 10L) == 0L

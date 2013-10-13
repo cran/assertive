@@ -80,20 +80,21 @@ call_and_name <- function(fn, x, ...)
   y
 }
 
-#' Convert a character vector to a list of numeric vectors.
+#' Convert a character vector to a list of integer vectors.
 #'
 #' Split strings by character, then convert to numeric.
 #' @param x Input to convert.
 #' @return A list of numeric vectors.
 #' @examples
 #' \dontrun{
-#' character_to_list_of_numeric_vectors(c("123", "4567a"))
+#' character_to_list_of_integer_vectors(c("123", "4567a"))
 #' }
-#' @seealso \code{\link[base]{strsplit}} and \code{\link[base]{as.numeric}}.
-character_to_list_of_numeric_vectors <- function(x)
+#' @seealso \code{\link[base]{strsplit}} and \code{\link[base]{as.integer}}.
+character_to_list_of_integer_vectors <- function(x)
 {
   x <- coerce_to(x, "character")
-  lapply(strsplit(x, ""), as.numeric)
+  names(x) <- x
+  lapply(strsplit(x, ""), as.integer)
 }
 
 #' Create a regex from components.
@@ -177,14 +178,16 @@ false <- function(...)
 #' The categories of locale that can be gotten/set.
 #'
 #' @param include_all If \code{TRUE}, the value \code{LC_ALL} is included.
+#' @param include_unix If \code{TRUE}, extra unix-specific categories are
+#' included.
 #' @return A character vector of locale categories.
 #' @seealso \code{\link{sys_get_locale}}.
-locale_categories <- function(include_all = TRUE)
+locale_categories <- function(include_all = TRUE, include_unix = is_unix())
 {
   allowed_categories <- c(
     if(include_all) "ALL",
     "COLLATE", "CTYPE", "MONETARY", "NUMERIC", "TIME",
-    if(is_unix()) c("MESSAGES", "PAPER", "MEASUREMENT")
+    if(include_unix) c("MESSAGES", "PAPER", "MEASUREMENT")
   )
   paste0("LC_", allowed_categories)
 }
@@ -195,14 +198,30 @@ locale_categories <- function(include_all = TRUE)
 #'
 #' @param x Input to check.
 #' @param rx A regular expression.
-#' @param ignore.case Should the case of alphabetic chracters be ignored?
+#' @param ignore.case Should the case of alphabetic characters be ignored?
 #' @param ... Passed to \code{\link{grepl}}.
 #' @note The default for \code{ignore.case} is different to the default in \code{grepl}.
 #' @return A logical vector that is \code{TRUE} when the input matches the regular expression.
 #' @seealso \code{\link{regex}} and \code{\link{regexpr}}.
 matches_regex <- function(x, rx, ignore.case = TRUE, ...)
 {
-  call_and_name(function(x) grepl(rx, x, ignore.case = ignore.case, ...), x)
+  call_and_name(
+    function(x) 
+    {
+      if(!nzchar(rx[1]))
+      {
+        warning("Regular expression is the empty string, and matches everything.")
+        return(rep.int(TRUE, length(x)))
+      }
+      #call to ifelse needed because grepl always returns TRUE or FALSE
+      ifelse(   
+        is.na(x),
+        NA,
+        grepl(rx, x, ignore.case = ignore.case, ...)
+      )
+    }, 
+    x
+  )
 }
 
 #' The most common value in a vector.

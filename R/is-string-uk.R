@@ -386,5 +386,6 @@ is_uk_telephone_number <- function(x)
     sep = ""
   )
   ok[ok] <- matches_regex(x[ok], second_rx)
+  ok[x == "999"] <- TRUE  #Emergency number
   ok
 }

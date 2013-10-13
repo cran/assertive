@@ -1,13 +1,13 @@
 Package: assertive
 Type: Package
 Title: Readable check functions to ensure code integrity.
-Version: 0.1-7
-Date: 2013-01-05
+Version: 0.1-8
+Date: 2013-10-13
 Authors@R: person("Richard", "Cotton", role = c("aut", "cre"), email =
-        "richierocks@gmail.com")
+    "richierocks@gmail.com")
 Description: assertive contains lots of is_* functions to check the
-        state of your variables, and assert_* functions to throw errors
-        if they aren't in the right form.
+    state of your variables, and assert_* functions to throw errors
+    if they aren't in the right form.
 Depends: R (>= 2.15.0)
 License: Unlimited
 LazyLoad: yes
@@ -27,8 +27,9 @@ Collate: 'assertive-package.R' 'internal.R' 'utils.R' 'zzz.R'
         'is-real-imaginary.R' 'is-reflection.R' 'is-string.R'
         'is-string-uk.R' 'is-string-us.R' 'is-time.R' 'is-true-false.R'
         'is-type.R'
-Packaged: 2013-01-05 20:45:24 UTC; richie
+Packaged: 2013-10-13 21:03:29 UTC; richie
 Author: Richard Cotton [aut, cre]
 Maintainer: Richard Cotton <richierocks@gmail.com>
+NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2013-01-05 22:23:44
+Date/Publication: 2013-10-13 23:44:27

@@ -35,7 +35,4 @@ assert_has_any_attributes(x, c("names", "c"))
 assert_has_all_attributes(x, c("names", "c"))
 }
 }
-\seealso{
-  \code{\link[stats]{terms.default}}.
-}
 

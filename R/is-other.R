@@ -8,6 +8,7 @@
 #' information on failure.  \code{assert_is_debugged} returns nothing but
 #' throws an error if \code{is_loaded} returns \code{FALSE}.
 #' @seealso \code{\link[base]{isdebugged}}.
+#' @export
 is_debugged <- function(x, .xname = get_name_in_parent(x))
 {
   assert_is_any_of(x, c("function", "character"), .xname)
@@ -26,6 +27,7 @@ is_debugged <- function(x, .xname = get_name_in_parent(x))
 #' @note Note that this has the side effect of running the code contained in
 #' \code{x}.
 #' @return \code{TRUE} if the code runs without throwing an error.
+#' @export
 is_error_free <- function(x)
 {
   res <- try(x, silent = TRUE)
@@ -78,10 +80,9 @@ is_existing <- function(
   if(is_empty(x)) return(logical(0))
   if(length(x) > 1L)
   {
-    return(vapply(
+    return(bapply(
       x, 
-      is_existing, 
-      logical(1), 
+      is_existing,
       where    = where,
       envir    = envir,
       frame    = frame,
@@ -248,6 +249,7 @@ is_unsorted <- function(x, na.rm = FALSE, strictly = FALSE, .xname = get_name_in
 #' that the input \code{x} need not have type \code{integer}.  In fact
 #' it is expected that \code{x} will be \code{numeric}.
 #' @return \code{TRUE} if the input is a whole number.
+#' @export
 is_whole_number <- function(x, tol = 100 * .Machine$double.eps)
 {
   x <- coerce_to(x, "numeric")

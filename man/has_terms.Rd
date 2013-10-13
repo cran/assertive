@@ -26,6 +26,6 @@
 assert_has_terms(lm(uptake ~ conc, CO2))
 }
 \seealso{
-  \code{\link[stats]{terms.default}}.
+  \code{\link{terms}}.
 }
 
