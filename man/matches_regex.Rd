@@ -10,7 +10,7 @@
   \item{rx}{A regular expression.}
 
   \item{ignore.case}{Should the case of alphabetic
-  chracters be ignored?}
+  characters be ignored?}
 
   \item{...}{Passed to \code{\link{grepl}}.}
 }

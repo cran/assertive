@@ -113,7 +113,7 @@ is_class <- function(x, .xname = get_name_in_parent(x))
 {
   if(is_empty(x)) return(logical())
   x <- coerce_to(x, "character")
-  vapply(x, isClass, logical(1))
+  bapply(x, isClass)
 }
 
 #' Is the input complex?

@@ -2,14 +2,18 @@
 \alias{has_arg}
 \title{Does the current call have an argument?}
 \usage{
-  has_arg(x)
+  has_arg(x, fn = sys.function(sys.parent()))
 }
 \arguments{
-  \item{x}{Input to check.}
+  \item{x}{Argument to check.}
+
+  \item{fn}{Function to find the argument in.}
 }
 \value{
-  \code{has_arg} wraps \code{hasArg}, providing more
-  information on failure.
+  \code{has_arg} reimplements
+  \code{\link[methods]{hasArg}}, letting you choose the
+  function to serach in, and providing more information on
+  failure.
 }
 \description{
   Checks to see if the current call has an argument with
@@ -20,10 +24,13 @@
   function, because evaluating in the correct call is hard.
 }
 \examples{
-assert_has_rows(data.frame(x = 1:10))
-assert_has_cols(matrix())
+has_arg(x, mean.default)
+has_arg(y, mean.default)
+f <- function(...) has_arg(z)
+f(z = 123)
+f(123)
 }
 \seealso{
-  \code{\link{ncol}}.
+  \code{\link[methods]{hasArg}}.
 }
 

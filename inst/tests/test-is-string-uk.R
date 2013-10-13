@@ -106,6 +106,7 @@ test.is_uk_postcode.a_character_vector.returns_true_when_string_contains_a_uk_po
 test.is_uk_telephone_number.a_character_vector.returns_true_when_string_contains_a_uk_telephone_number <- function()
 {
   x <- c(
+    "999",
     "+442001234567", "02011234567", #ok new style city
     "02031234567", "02071234567",
     "02081234567", "02301234567",
@@ -589,7 +590,7 @@ test.is_uk_telephone_number.a_character_vector.returns_true_when_string_contains
     "03112345678", "03212345678",    #bad UAN
     "03812345678", "03912345678"
   )
-  expected <- rep(c(TRUE, FALSE), times = c(884, 70))
+  expected <- rep(c(TRUE, FALSE), times = c(885, 70))
   names(expected) <- x
   checkEquals(
     expected,
