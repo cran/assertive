@@ -46,6 +46,22 @@ assert_any_are_nan <- function(x)
   assert_engine(x, is_nan, msg, what = "any")
 }
 
+#' @rdname is_finite
+#' @export
+assert_all_are_negative_infinity <- function(x)
+{                                                     
+  msg <- sprintf("%s are not all negative infinity.", get_name_in_parent(x))
+  assert_engine(x, is_negative_infinity, msg)        
+}
+
+#' @rdname is_finite
+#' @export
+assert_any_are_negative_infinity <- function(x)
+{                                                     
+  msg <- sprintf("%s are all not negative infinity.", get_name_in_parent(x))
+  assert_engine(x, is_negative_infinity, msg, what = "any")        
+}
+
 #' @rdname is_na
 #' @export
 assert_all_are_not_na <- function(x)
@@ -91,4 +107,20 @@ assert_is_null <- function(x)
 {                                                         
   
   assert_engine(x, is_null, .xname = get_name_in_parent(x))       
+}
+
+#' @rdname is_finite
+#' @export
+assert_all_are_positive_infinity <- function(x)
+{                                                     
+  msg <- sprintf("%s are not all positive infinity.", get_name_in_parent(x))
+  assert_engine(x, is_positive_infinity, msg)        
+}
+
+#' @rdname is_finite
+#' @export
+assert_any_are_positive_infinity <- function(x)
+{                                                     
+  msg <- sprintf("%s are all not positive infinity.", get_name_in_parent(x))
+  assert_engine(x, is_positive_infinity, msg, what = "any")        
 }

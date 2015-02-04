@@ -10,13 +10,34 @@
 #' \code{is_*} function returns \code{FALSE}.
 #' @seealso \code{\link[base]{is.finite}}
 #' @examples
+#' x <- c(0, Inf, -Inf, NA, NaN)
+#' is_finite(x)
+#' is_infinite(x)
+#' is_positive_infinity(x)
+#' is_negative_infinity(x)
 #' assert_all_are_finite(1:10)
 #' assert_any_are_finite(c(1, Inf))
+#' assert_all_are_infinite(c(Inf, -Inf))
+#' dont_stop(assert_all_are_finite(c(0, Inf, -Inf, NA, NaN)))
 #' @export
 is_finite <- function(x)
 {
   x <- coerce_to(x, "numeric")
-  call_and_name(is.finite, x)
+  call_and_name(
+    function(x)
+    {
+      ok <- is.finite(x)
+      set_cause(
+        ok, 
+        ifelse(
+          is.infinite(x),
+          "infinite",
+          ifelse(is.nan(x), "not a number", "missing")
+        )
+      )
+    }, 
+    x
+  )
 }
 
 #' @rdname is_finite
@@ -24,7 +45,21 @@ is_finite <- function(x)
 is_infinite <- function(x)
 {
   x <- coerce_to(x, "numeric")
-  call_and_name(is.infinite, x)
+  call_and_name(
+    function(x)
+    {
+      ok <- is.infinite(x)
+      set_cause(
+        ok, 
+        ifelse(
+          is.finite(x),
+          "finite",
+          ifelse(is.nan(x), "not a number", "missing")
+        )
+      )
+    }, 
+    x
+  )
 }
 
 
@@ -36,15 +71,26 @@ is_infinite <- function(x)
 #' @return \code{is_na} wraps \code{is.na}, showing the names of 
 #' the inputs in the answer.  \code{is_not_na} is the negation. 
 #' The \code{assert_*} functions return nothing but throw an error
-#'if the corresponding \code{is_*} function returns \code{FALSE}.
+#' if the corresponding \code{is_*} function returns \code{FALSE}.
 #' @seealso \code{\link[base]{is.na}}
 #' @examples
+#' x <- c(0, NaN, NA)
+#' is_na(x)
+#' is_not_na(x)
 #' assert_all_are_not_na(1:10)
-#' assert_any_are_not_na(c(NA, 1))
+#' assert_any_are_not_na(x)
+#' dont_stop(assert_all_are_not_na(x))
 #' @export
 is_na <- function(x)
 {
-  call_and_name(is.na, x)
+  call_and_name(
+    function(x)
+    {
+      ok <- is.na(x)
+      set_cause(ok, "not missing")
+    }, 
+    x
+  )
 }
 
 #' Is the input (not) NaN?
@@ -59,20 +105,38 @@ is_na <- function(x)
 #' \code{FALSE}.
 #' @seealso \code{\link[base]{is.nan}}
 #' @examples
+#' x <- c(0, NaN, NA)
+#' is_nan(x)
+#' is_not_nan(x)
 #' assert_all_are_not_nan(1:10)
-#' assert_any_are_not_nan(c(NaN, 1))
+#' assert_any_are_not_nan(x)
+#' dont_stop(assert_all_are_not_nan(x))
 #' @export
 is_nan <- function(x)
 {
   x <- coerce_to(x, "numeric")  
-  call_and_name(is.nan, x)
+  call_and_name(
+    function(x)
+    {
+      ok <- is.nan(x)
+      set_cause(ok, "a number")
+    }, 
+    x
+  )
 }
 
 #' @rdname is_na
 #' @export
 is_not_na <- function(x)
 {
-  !call_and_name(is.na, x)
+  call_and_name(
+    function(x)
+    {
+      ok <- !is.na(x)
+      set_cause(ok, "missing")
+    }, 
+    x
+  )
 }
 
 #' @rdname is_nan
@@ -80,7 +144,14 @@ is_not_na <- function(x)
 is_not_nan <- function(x)
 {
   x <- coerce_to(x, "numeric")
-  !call_and_name(is.nan, x)
+  call_and_name(
+    function(x)
+    {
+      ok <- !is.nan(x)
+      set_cause(ok, "not a number")
+    }, 
+    x
+  )
 }
 
 #' @rdname is_null
@@ -118,4 +189,56 @@ is_null <- function(x, .xname = get_name_in_parent(x))
     return(false("%s is not NULL.", .xname))
   }
   TRUE
+}
+
+#' @rdname is_finite
+#' @export
+is_negative_infinity <- function(x)
+{
+  x <- coerce_to(x, "numeric")
+  call_and_name(
+    function(x)
+    {
+      ok <- is.infinite(x) & x < 0
+      set_cause(
+        ok, 
+        ifelse(
+          is.finite(x),
+          "finite",
+          ifelse(
+            is.nan(x), 
+            "not a number",
+            ifelse(is.na(x), "missing", "positive inf")
+          )
+        )
+      )
+    }, 
+    x
+  )
+}
+
+#' @rdname is_finite
+#' @export
+is_positive_infinity <- function(x)
+{
+  x <- coerce_to(x, "numeric")
+  call_and_name(
+    function(x)
+    {
+      ok <- is.infinite(x) & x > 0
+      set_cause(
+        ok, 
+        ifelse(
+          is.finite(x),
+          "finite",
+          ifelse(
+            is.nan(x), 
+            "not a number",
+            ifelse(is.na(x), "missing", "negative inf")
+          )
+        )
+      )
+    }, 
+    x
+  )
 }

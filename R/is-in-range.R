@@ -46,16 +46,21 @@ is_in_open_range <- function(x, lower = -Inf, upper = Inf)
 #' assert_all_are_proportions(c(0, 0.5, 1))
 #' assert_all_are_in_left_open_range(1 + .Machine$double.eps, lower = 1)
 #' @export
-is_in_range <- function(x, lower = -Inf, upper = Inf, lower_is_strict = FALSE, upper_is_strict = FALSE)
+is_in_range <- function(x, lower = -Inf, upper = Inf, lower_is_strict = FALSE, 
+  upper_is_strict = FALSE)
 {
+  x <- coerce_to(x, "numeric")
   ok <- rep.int(TRUE, length(x))
   ok[is.na(x)] <- NA
-  ok[x < lower] <- FALSE                     
-  ok[x > upper] <- FALSE
-  if(lower_is_strict) ok[x == lower] <- FALSE
-  if(upper_is_strict) ok[x == upper] <- FALSE
+  too_low <- (if(lower_is_strict) `<=` else `<`)(x, lower)
+  too_high <- (if(upper_is_strict) `>=` else `>`)(x, upper)
+  ok[too_low] <- FALSE                     
+  ok[too_high] <- FALSE
   names(ok) <- x
-  ok
+  set_cause(
+    ok,
+    ifelse(too_low, "too low", "too high")
+  )
 }
 
 #' @rdname is_in_range

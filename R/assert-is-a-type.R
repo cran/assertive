@@ -53,3 +53,15 @@ assert_is_an_integer <- function(x)
 {
   assert_engine(x, is_an_integer, .xname = get_name_in_parent(x)) 
 }
+
+#' @rdname is_inherited_from
+#' @export
+assert_is_inherited_from <- function(x, classes)
+{
+  assert_engine(
+    x, 
+    is_inherited_from, 
+    classes = classes, 
+    .xname = get_name_in_parent(x)
+  )
+}

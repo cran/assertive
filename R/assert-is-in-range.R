@@ -11,7 +11,14 @@ assert_all_are_in_closed_range <- function(x, lower = -Inf, upper = Inf)
 assert_any_are_in_closed_range <- function(x, lower = -Inf, upper = Inf)
 {                                                     
   msg <- sprintf("%s are all out of range.", get_name_in_parent(x))
-  assert_engine(x, is_in_closed_range, msg, what = "any", lower = lower, upper = upper)  
+  assert_engine(
+    x, 
+    is_in_closed_range, 
+    msg, 
+    what = "any", 
+    lower = lower, 
+    upper = upper
+  )  
 }
 
 #' @rdname is_in_range
@@ -27,7 +34,14 @@ assert_all_are_in_left_open_range <- function(x, lower = -Inf, upper = Inf)
 assert_any_are_in_left_open_range <- function(x, lower = -Inf, upper = Inf)
 {                                                     
   msg <- sprintf("%s are all out of range.", get_name_in_parent(x))
-  assert_engine(x, is_in_left_open_range, msg, what = "any", lower = lower, upper = upper)  
+  assert_engine(
+    x, 
+    is_in_left_open_range, 
+    msg, 
+    what = "any", 
+    lower = lower, 
+    upper = upper
+  )  
 }
 
 #' @rdname is_in_range
@@ -43,12 +57,20 @@ assert_all_are_in_open_range <- function(x, lower = -Inf, upper = Inf)
 assert_any_are_in_open_range <- function(x, lower = -Inf, upper = Inf)
 {                                                     
   msg <- sprintf("%s are all out of range.", get_name_in_parent(x))
-  assert_engine(x, is_in_open_range, msg, what = "any", lower = lower, upper = upper)  
+  assert_engine(
+    x, 
+    is_in_open_range, 
+    msg, 
+    what = "any", 
+    lower = lower, 
+    upper = upper
+  )  
 }
 
 #' @rdname is_in_range
 #' @export
-assert_all_are_in_range <- function(x, lower = -Inf, upper = Inf, lower_is_strict = FALSE, upper_is_strict = FALSE)
+assert_all_are_in_range <- function(x, lower = -Inf, upper = Inf, 
+  lower_is_strict = FALSE, upper_is_strict = FALSE)
 {                                                     
   msg <- sprintf("%s are not all in range.", get_name_in_parent(x))
   assert_engine(
@@ -64,7 +86,8 @@ assert_all_are_in_range <- function(x, lower = -Inf, upper = Inf, lower_is_stric
 
 #' @rdname is_in_range
 #' @export
-assert_any_are_in_range <- function(x, lower = -Inf, upper = Inf, lower_is_strict = FALSE, upper_is_strict = FALSE)
+assert_any_are_in_range <- function(x, lower = -Inf, upper = Inf, 
+  lower_is_strict = FALSE, upper_is_strict = FALSE)
 {                                                     
   msg <- sprintf("%s are all out of range.", get_name_in_parent(x))
   assert_engine(
@@ -92,7 +115,14 @@ assert_all_are_in_right_open_range <- function(x, lower = -Inf, upper = Inf)
 assert_any_are_in_right_open_range <- function(x, lower = -Inf, upper = Inf)
 {                                                     
   msg <- sprintf("%s are all out of range.", get_name_in_parent(x))
-  assert_engine(x, is_in_right_open_range, msg, what = "any", lower = lower, upper = upper)  
+  assert_engine(
+    x, 
+    is_in_right_open_range, 
+    msg, 
+    what = "any", 
+    lower = lower, 
+    upper = upper
+  )  
 }
 
 #' @rdname is_in_range
@@ -145,7 +175,8 @@ assert_any_are_non_positive <- function(x)
 
 #' @rdname is_in_range
 #' @export
-assert_all_are_percentages <- function(x, lower_is_strict = FALSE, upper_is_strict = FALSE)
+assert_all_are_percentages <- function(x, lower_is_strict = FALSE, 
+  upper_is_strict = FALSE)
 {                                                       
   msg <- sprintf("%s are not all percentages.", get_name_in_parent(x))
   assert_engine(
@@ -159,7 +190,8 @@ assert_all_are_percentages <- function(x, lower_is_strict = FALSE, upper_is_stri
 
 #' @rdname is_in_range
 #' @export
-assert_any_are_percentages <- function(x, lower_is_strict = FALSE, upper_is_strict = FALSE)
+assert_any_are_percentages <- function(x, lower_is_strict = FALSE, 
+  upper_is_strict = FALSE)
 {                                                       
   msg <- sprintf("%s are all not percentages.", get_name_in_parent(x))
   assert_engine(
@@ -190,7 +222,8 @@ assert_any_are_positive <- function(x)
 
 #' @rdname is_in_range
 #' @export
-assert_all_are_proportions <- function(x, lower_is_strict = FALSE, upper_is_strict = FALSE)
+assert_all_are_proportions <- function(x, lower_is_strict = FALSE, 
+  upper_is_strict = FALSE)
 {                                                       
   msg <- sprintf("%s are not all proportions.", get_name_in_parent(x))
   assert_engine(
@@ -204,7 +237,8 @@ assert_all_are_proportions <- function(x, lower_is_strict = FALSE, upper_is_stri
 
 #' @rdname is_in_range
 #' @export
-assert_any_are_proportions <- function(x, lower_is_strict = FALSE, upper_is_strict = FALSE)
+assert_any_are_proportions <- function(x, lower_is_strict = FALSE, 
+  upper_is_strict = FALSE)
 {                                                       
   msg <- sprintf("%s are all not proportions.", get_name_in_parent(x))
   assert_engine(

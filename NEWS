@@ -1,3 +1,10 @@
+0.2-1 Vectorised cause attributes.
+      Error messages give clearer indication of problem elements.
+      Many more reflection functions.
+      More flexible length/dimension checks.
+0.2-0 Added more connection checks, and capability checks. 
+      Tests now use testthat rather than RUnit.
+0.1-9 coerce_to handles multiple classes. Regex and doc fixes. More tests.
 0.1-8 NA handled correctly in regex fns.
 0.1-7 Added time and US string fns.
 0.1-6 Added UK string fns.

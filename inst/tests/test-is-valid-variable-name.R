@@ -1,101 +1,75 @@
-                                        
-test_is_valid_variable_name_x_returns_true <- function()
-{
-  checkTrue(is_valid_variable_name("x"))
-}
-                                         
-test_is_valid_variable_name_dot_returns_true <- function()
-{
-  checkTrue(is_valid_variable_name("."))
-}
-                                           
-test_is_valid_variable_name_2_dots_returns_true <- function()
-{
-  checkTrue(is_valid_variable_name(".."))
-}
-                                             
-test_is_valid_variable_name_3_dots_returns_allow_reserved <- function()
-{
-  checkTrue(is_valid_variable_name("..."))             
-  checkTrue(!is_valid_variable_name("...", allow_reserved = FALSE))
-}
-                       
-test_is_valid_variable_name_4_dots_returns_true <- function()
-{
-  checkTrue(is_valid_variable_name("...."))
-}
-                       
-test_is_valid_variable_name_5_dots_returns_true <- function()
-{
-  checkTrue(is_valid_variable_name("....."))
-}
+test_that("test.is_valid_variable_name.1_x.returns_false", {
+  expect_false(is_valid_variable_name("1x"))
+})
 
-test_is_valid_variable_name_dash_returns_false <- function()
-{
-  checkTrue(!is_valid_variable_name("_"))
-}
+test_that("test.is_valid_variable_name.2_dots.returns_true", {
+  expect_true(is_valid_variable_name(".."))
+})
 
-test_is_valid_variable_name_1_x_returns_false <- function()
-{
-  checkTrue(!is_valid_variable_name("1x"))
-}
-                                   
-test_is_valid_variable_name_dot_dash_returns_true <- function()
-{
-  checkTrue(is_valid_variable_name("._"))
-}
-                                   
-test_is_valid_variable_name_dot_1_returns_false <- function()
-{
-  checkTrue(!is_valid_variable_name(".1"))
-}
-                    
-test_is_valid_variable_name_dot_x_returns_true <- function()
-{
-  checkTrue(is_valid_variable_name(".x"))
-}
-                    
-test_is_valid_variable_name_dot_dash_1_returns_true <- function()
-{
-  checkTrue(is_valid_variable_name("._1"))
-}
-                    
-test_is_valid_variable_name_dot_dot_1_returns_allow_reserved <- function()
-{
-  checkTrue(is_valid_variable_name("..1")) 
-  checkTrue(!is_valid_variable_name("..1", allow_reserved = FALSE))
-}
-                                          
-test_is_valid_variable_name_dot_dot_2_returns_allow_reserved <- function()
-{
-  checkTrue(is_valid_variable_name("..2")) 
-  checkTrue(!is_valid_variable_name("..2", allow_reserved = FALSE))
-}
-                    
-test_is_valid_variable_name_dot_dot_dot_1_returns_true <- function()
-{
-  checkTrue(is_valid_variable_name("...1"))
-}
-                    
-test_is_valid_variable_name_dot_dot_dot_dot_1_returns_true <- function()
-{
-  checkTrue(is_valid_variable_name("....1"))
-}
-                    
-test_is_valid_variable_name_dot_dot_x_returns_true <- function()
-{
-  checkTrue(is_valid_variable_name("..x"))
-}
-                  
-test_is_valid_variable_name_long_name_returns_false <- function()
-{
+test_that("test.is_valid_variable_name.3_dots.returns_allow_reserved", {
+  expect_true(is_valid_variable_name("..."))
+  expect_false(is_valid_variable_name("...", allow_reserved = FALSE))
+})
+
+test_that("test.is_valid_variable_name.4_dots.returns_true", {
+  expect_true(is_valid_variable_name("...."))
+})
+
+test_that("test.is_valid_variable_name.5_dots.returns_true", {
+  expect_true(is_valid_variable_name("....."))
+})
+
+test_that("test.is_valid_variable_name.dash.returns_false", {
+  expect_false(is_valid_variable_name("_"))
+})
+
+test_that("test.is_valid_variable_name.dot.returns_true", {
+  expect_true(is_valid_variable_name("."))
+})
+
+test_that("test.is_valid_variable_name.dot_1.returns_false", {
+  expect_false(is_valid_variable_name(".1"))
+})
+
+test_that("test.is_valid_variable_name.dot_dash.returns_true", {
+  expect_true(is_valid_variable_name("._"))
+})
+
+test_that("test.is_valid_variable_name.dot_dash_1.returns_true", {
+  expect_true(is_valid_variable_name("._1"))
+})
+
+test_that("test.is_valid_variable_name.dot_dot_1.returns_allow_reserved", {
+  expect_true(is_valid_variable_name("..1"))
+  expect_false(is_valid_variable_name("..1", allow_reserved = FALSE))
+})
+
+test_that("test.is_valid_variable_name.dot_dot_2.returns_allow_reserved", {
+  expect_true(is_valid_variable_name("..2"))
+  expect_false(is_valid_variable_name("..2", allow_reserved = FALSE))
+})
+
+test_that("test.is_valid_variable_name.dot_dot_dot_1.returns_true", {
+  expect_true(is_valid_variable_name("...1"))
+})
+
+test_that("test.is_valid_variable_name.dot_dot_dot_dot_1.returns_true", {
+  expect_true(is_valid_variable_name("....1"))
+})
+
+test_that("test.is_valid_variable_name.dot_dot_x.returns_true", {
+  expect_true(is_valid_variable_name("..x"))
+})
+
+test_that("test.is_valid_variable_name.dot_x.returns_true", {
+  expect_true(is_valid_variable_name(".x"))
+})
+
+test_that("test.is_valid_variable_name.long_name.returns_false", {
   vn <- paste(rep.int("a", 10001L), collapse = "")
-  checkTrue(!is_valid_variable_name(vn))
-}      
-                 
-test_is_valid_variable_name_same_names_returns_allow_duplicates <- function()
-{
-  vn <- rep.int("foo", 2)
-  checkTrue(all(is_valid_variable_name(vn)))
-  checkTrue(!all(is_valid_variable_name(vn, allow_duplicates = FALSE)))
-}
+  expect_false(is_valid_variable_name(vn))
+})
+
+test_that("test.is_valid_variable_name.x.returns_true", {
+  expect_true(is_valid_variable_name("x"))
+}) 

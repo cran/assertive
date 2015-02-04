@@ -12,14 +12,13 @@
 #' @seealso \code{\link[methods]{is}}.
 #' @examples
 #' assert_is_all_of(1:10, c("integer", "numeric"))
-#' \dontrun{
 #' #These examples should fail.
-#' assert_is_any_of(1:10, c("list", "data.frame"))
-#' }
+#' dont_stop(assert_is_any_of(1:10, c("list", "data.frame")))
 #' @export
 is2 <- function(x, class, .xname = get_name_in_parent(x))
 {    
-  if(is_empty(class)) stop("You must provide a class.")
+  # Can't use is_empty in next line because that function calls this one.
+  if(length(class) == 0L) stop("You must provide a class.")
   if(length(class) > 1L) 
   {
     return(bapply(class, function(cl) is2(x, cl, "")))
@@ -48,10 +47,8 @@ is2 <- function(x, class, .xname = get_name_in_parent(x))
 #' assert_is_array(array())
 #' assert_is_array(matrix())
 #' assert_is_matrix(matrix())
-#' \dontrun{
 #' #These examples should fail.
-#' assert_is_matrix(array())
-#' }
+#' dont_stop(assert_is_matrix(array()))
 #' @export
 is_array <- function(x, .xname = get_name_in_parent(x))
 {
@@ -83,13 +80,18 @@ is_call <- function(x, .xname = get_name_in_parent(x))
 #' corresponding \code{is_*} function returns \code{FALSE}.
 #' @seealso \code{\link[base]{is.character}} and \code{\link{is_scalar}}.
 #' @examples
+#' x <- c("a", "", NA)
+#' is_empty_character(x)
+#' is_missing_or_empty_character(x)
+#' is_not_missing_nor_empty_character(x)
+#' is_an_empty_string(x)
+#' is_numeric_string(c("1", "1.1", "-1.1e1", "one", NA))
 #' assert_is_character(letters)
 #' assert_is_a_string("foo bar baz")
-#' assert_is_an_empty_string("")
-#' assert_all_are_numeric_strings(c("1", "2.3", "-4.5", "6e7", "8E-9"))
-#' assert_any_are_numeric_strings(c("1", "Not a number"))
 #' assert_all_strings_are_missing_or_empty(c("", NA))
 #' assert_any_strings_are_missing_or_empty(c("a", NA, "b"))
+#' assert_all_are_numeric_strings(c("1", "2.3", "-4.5", "6e7", "8E-9"))
+#' assert_any_are_numeric_strings(c("1", "Not a number"))
 #' @export
 is_character <- function(x, .xname = get_name_in_parent(x))
 {
@@ -113,7 +115,7 @@ is_class <- function(x, .xname = get_name_in_parent(x))
 {
   if(is_empty(x)) return(logical())
   x <- coerce_to(x, "character")
-  bapply(x, isClass)
+  bapply(x, methods::isClass)
 }
 
 #' Is the input complex?
@@ -133,12 +135,10 @@ is_class <- function(x, .xname = get_name_in_parent(x))
 #' assert_is_a_complex(1i)
 #' assert_is_a_complex(1 + 0i)
 #' assert_is_a_complex(NA_complex_)
-#' \dontrun{
 #' #These examples should fail.
-#' assert_is_complex(1:10)
-#' assert_is_a_complex(c(1i, 2i))
-#' assert_is_a_complex(complex())
-#' }
+#' dont_stop(assert_is_complex(1:10))
+#' dont_stop(assert_is_a_complex(c(1i, 2i)))
+#' dont_stop(assert_is_a_complex(complex()))
 #' @export
 is_complex <- function(x, .xname = get_name_in_parent(x))
 {
@@ -242,14 +242,12 @@ is_function <- function(x, .xname = get_name_in_parent(x))
 #' returns \code{FALSE}.
 #' @seealso \code{\link[base]{is.integer}} and \code{\link{is_scalar}}.
 #' @examples
-#' assert_is_integer(1L:10L)
-#' assert_is_an_integer(99L)
-#' \dontrun{
-#' #These examples should fail.
 #' assert_is_integer(1:10)
-#' assert_is_an_integer(1L:10L)
-#' assert_is_an_integer(integer())
-#' }
+#' assert_is_an_integer(99L)
+#' #These examples should fail.
+#' dont_stop(assert_is_integer(c(1, 2, 3)))
+#' dont_stop(assert_is_an_integer(1:10))
+#' dont_stop(assert_is_an_integer(integer()))
 #' @export
 is_integer <- function(x, .xname = get_name_in_parent(x))
 {
@@ -281,16 +279,19 @@ is_integer <- function(x, .xname = get_name_in_parent(x))
 #' a_name <- as.name("foo")
 #' assert_is_name(a_name)
 #' assert_is_language(a_name)
-#' \dontrun{
 #' #These examples should fail.
-#' assert_is_language(function(){})
-#' }
+#' dont_stop(assert_is_language(function(){}))
 #' @export
 is_language <- function(x, .xname = get_name_in_parent(x))
 {
   if(!is.language(x)) 
   {
-    return(false("%s is not a language object (name, call or expression).", .xname))
+    return(
+      false(
+        "%s is not a language object (name, call or expression).", 
+        .xname
+      )
+    )
   }
   TRUE
 }
@@ -312,11 +313,12 @@ is_leaf <- function(x, .xname = get_name_in_parent(x))
   {
     return(false("%s has no 'leaf' attribute.", .xname))
   }
-  if(!(ok <- is_identical_to_true(
+  ok <- is_identical_to_true(
     leaf, 
-    TRUE,
+    allow_attributes = TRUE,
     paste("The leaf attribute of", .xname)
-    )))
+  )
+  if(!ok)
   {
     return(ok)
   }
@@ -334,10 +336,8 @@ is_leaf <- function(x, .xname = get_name_in_parent(x))
 #' @seealso \code{\link[base]{is.list}}.
 #' @examples
 #' assert_is_list(list(1,2,3))
-#' \dontrun{
 #' #These examples should fail.
-#' assert_is_list(1:10)
-#' }
+#' dont_stop(assert_is_list(1:10))
 #' @export
 is_list <- function(x, .xname = get_name_in_parent(x))
 {
@@ -360,12 +360,10 @@ is_list <- function(x, .xname = get_name_in_parent(x))
 #' assert_is_logical(runif(10) > 0.5)
 #' assert_is_a_bool(TRUE)
 #' assert_is_a_bool(NA)
-#' \dontrun{
 #' #These examples should fail.
-#' assert_is_logical(1)
-#' assert_is_a_bool(c(TRUE, FALSE))
-#' assert_is_a_bool(logical())
-#' }
+#' dont_stop(assert_is_logical(1))
+#' dont_stop(assert_is_a_bool(c(TRUE, FALSE)))
+#' dont_stop(assert_is_a_bool(logical()))
 #' @export
 is_logical <- function(x, .xname = get_name_in_parent(x))
 {
@@ -401,8 +399,8 @@ is_name <- function(x, .xname = get_name_in_parent(x))
 #' @param .xname Not intended to be used directly.
 #' @return \code{is_numeric} wraps \code{is.numeric}, providing more 
 #' information on failure. \code{is_a_number} returns \code{TRUE} if the 
-#' input is numeric and scalar.  The \code{assert_*} functions return nothing but
-#' throw an error if the corresponding \code{is_*} function returns 
+#' input is numeric and scalar.  The \code{assert_*} functions return nothing
+#' but throw an error if the corresponding \code{is_*} function returns 
 #' \code{FALSE}.
 #' @seealso \code{\link[base]{is.numeric}} and \code{\link{is_scalar}}.
 #' @examples
@@ -410,12 +408,10 @@ is_name <- function(x, .xname = get_name_in_parent(x))
 #' assert_is_a_number(pi)
 #' assert_is_a_number(1L)
 #' assert_is_a_number(NA_real_)
-#' \dontrun{
 #' #These examples should fail.
-#' assert_is_numeric(c(TRUE, FALSE))
-#' assert_is_a_number(1:10)
-#' assert_is_a_number(numeric())
-#' }
+#' dont_stop(assert_is_numeric(c(TRUE, FALSE)))
+#' dont_stop(assert_is_a_number(1:10))
+#' dont_stop(assert_is_a_number(numeric()))
 #' @export
 is_numeric <- function(x, .xname = get_name_in_parent(x))
 {
@@ -504,12 +500,10 @@ is_raster <- function(x, .xname = get_name_in_parent(x))
 #' @examples
 #' assert_is_raw(as.raw(1:10))
 #' assert_is_a_raw(as.raw(255))
-#' \dontrun{
 #' #These examples should fail.
-#' assert_is_raw(c(TRUE, FALSE))
-#' assert_is_a_raw(as.raw(1:10))
-#' assert_is_a_raw(raw())
-#' }
+#' dont_stop(assert_is_raw(c(TRUE, FALSE)))
+#' dont_stop(assert_is_a_raw(as.raw(1:10)))
+#' dont_stop(assert_is_a_raw(raw()))
 #' @export
 is_raw <- function(x, .xname = get_name_in_parent(x))
 {
@@ -529,10 +523,8 @@ is_raw <- function(x, .xname = get_name_in_parent(x))
 #' @seealso \code{\link[utils]{is.relistable}} and \code{\link{is_scalar}}.
 #' @examples
 #' assert_is_relistable(as.relistable(list(1,2,3)))
-#' \dontrun{
 #' #These examples should fail.
-#' assert_is_relistable(list(1,2,3))
-#' }
+#' dont_stop(assert_is_relistable(list(1,2,3)))
 #' @export
 is_relistable <- function(x, .xname = get_name_in_parent(x))
 {
@@ -551,10 +543,8 @@ is_relistable <- function(x, .xname = get_name_in_parent(x))
 #' @seealso \code{\link[base]{isS4}}.
 #' @examples
 #' assert_is_S4(getClass("MethodDefinition"))
-#' \dontrun{
 #' #These examples should fail.
-#' assert_is_S4(1:10)
-#' }
+#' dont_stop(assert_is_S4(1:10))
 #' @export
 is_S4 <- function(x, .xname = get_name_in_parent(x))
 {
@@ -615,7 +605,7 @@ is_table <- function(x, .xname = get_name_in_parent(x))
 is_ts <- function(x, .xname = get_name_in_parent(x))
 {
   if(!(ok <- is2(x, "ts", .xname))) return(ok)
-  if(!(ok <- is_non_empty(x, .xname))) return(ok)
+  if(!(ok <- is_non_empty(x, .xname = .xname))) return(ok)
   TRUE
 }
 

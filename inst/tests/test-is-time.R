@@ -1,25 +1,15 @@
-test.is_in_past.then_now_soon.returns_true_in_past <- function()
-{  
-  #Can't test _now_ (x == Sys.time()) easily because on slow 
-  #machines time has moved on, but this isn't the case for 
-  #fast machines.  5secs should be plenty of leaway.
-  x <- Sys.time() + c(-1, 5)
-  expected <- c(TRUE, FALSE)
-  names(expected) <- x
-  checkEquals(
-    expected,
-    is_in_past(x)
-  )
-}
+test_that("test.is_in_future.then_now_soon.returns_true_in_past", {
+  x <- Sys.time() + c(-1, 5, NA)
+  expected <- c(FALSE, TRUE, NA)
+  expect_equal(strip_attributes(actual <- is_in_future(x)), expected)
+  expect_equal(names(actual), as.character(x))
+  expect_equal(cause(actual), noquote(c("in past", "", "missing")))
+})
 
-test.is_in_future.then_now_soon.returns_true_in_past <- function()
-{
-  #See problem in test.is_in_past
-  x <- Sys.time() + c(-1, 5)
-  expected <- c(FALSE, TRUE)
-  names(expected) <- x
-  checkEquals(
-    expected,
-    is_in_future(x)
-  )
-}
+test_that("test.is_in_past.then_now_soon.returns_true_in_past", {
+  x <- Sys.time() + c(-1, 5, NA)
+  expected <- c(TRUE, FALSE, NA)
+  expect_equal(strip_attributes(actual <- is_in_past(x)), expected)
+  expect_equal(names(actual), as.character(x))
+  expect_equal(cause(actual), noquote(c("", "in future", "missing")))
+}) 

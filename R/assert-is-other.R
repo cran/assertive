@@ -1,3 +1,37 @@
+#' @rdname is_divisible_by
+#' @export
+assert_all_are_divisible_by <- function(x, n, tol = 100 * .Machine$double.eps)
+{  
+  msg <- sprintf("%s are not all divisible by %s.", get_name_in_parent(x), toString(n, width = 20))
+  assert_engine(x, is_divisible_by, msg, n = n, tol = tol)  
+}
+
+#' @rdname is_divisible_by
+#' @export
+assert_any_are_divisible_by <- function(x, n, tol = 100 * .Machine$double.eps)
+{  
+  msg <- sprintf("%s are all not divisible by %s.", get_name_in_parent(x), toString(n, width = 20))
+  assert_engine(
+    x, is_divisible_by, msg, what = "any", n = n, tol = tol
+  )  
+}
+
+#' @rdname is_divisible_by
+#' @export
+assert_all_are_even <- function(x, tol = 100 * .Machine$double.eps)
+{  
+  msg <- sprintf("%s are not all even.", get_name_in_parent(x))
+  assert_engine(x, is_even, msg, tol = tol)  
+}
+
+#' @rdname is_divisible_by
+#' @export
+assert_any_are_even <- function(x, tol = 100 * .Machine$double.eps)
+{  
+  msg <- sprintf("%s are all not even.", get_name_in_parent(x))
+  assert_engine(x, is_even, msg, what = "any", tol = tol)  
+}
+
 #' @rdname is_existing
 #' @export
 assert_all_are_existing <- function(
@@ -47,6 +81,22 @@ assert_any_are_existing <- function(
   )       
 }
 
+#' @rdname is_divisible_by
+#' @export
+assert_all_are_odd <- function(x, tol = 100 * .Machine$double.eps)
+{  
+  msg <- sprintf("%s are not all odd.", get_name_in_parent(x))
+  assert_engine(x, is_odd, msg, tol = tol)  
+}
+
+#' @rdname is_divisible_by
+#' @export
+assert_any_are_odd <- function(x, tol = 100 * .Machine$double.eps)
+{  
+  msg <- sprintf("%s are all not odd.", get_name_in_parent(x))
+  assert_engine(x, is_odd, msg, what = "any", tol = tol)  
+}
+
 #' @rdname is_debugged
 #' @export
 assert_is_debugged <- function(x)
@@ -67,6 +117,24 @@ assert_is_debugged <- function(x)
 assert_is_loaded <- function(x)
 {                                                         
   assert_engine(x, is_loaded, .xname = get_name_in_parent(x))       
+}
+
+#' @rdname is_divisible_by
+#' @export
+assert_all_are_odd <- function(x, n, tol = 100 * .Machine$double.eps)
+{  
+  msg <- sprintf("%s are not all odd.", get_name_in_parent(x), toString(n, width = 20))
+  assert_engine(x, is_odd, msg, tol = tol)  
+}
+
+#' @rdname is_divisible_by
+#' @export
+assert_any_are_odd <- function(x, n, tol = 100 * .Machine$double.eps)
+{  
+  msg <- sprintf("%s are all not odd.", get_name_in_parent(x), toString(n, width = 20))
+  assert_engine(
+    x, is_odd, msg, what = "any", tol = tol
+  )  
 }
 
 #' @rdname is_symmetric_matrix
@@ -97,7 +165,26 @@ assert_is_unsorted <- function(x, na.rm = FALSE, strictly = FALSE)
 
 #' @rdname is_whole_number
 #' @export
-assert_all_numbers_are_whole_numbers <- function(x, tol = .Machine$double.eps)
+assert_all_numbers_are_whole_numbers <- function(x,
+  tol = 100 * .Machine$double.eps)
+{                                                       
+  .Deprecated("assert_all_are_whole_numbers")
+  assert_all_are_whole_numbers(x, tol)
+}
+
+#' @rdname is_whole_number
+#' @export
+assert_any_numbers_are_whole_numbers <- function(x, 
+  tol = 100 * .Machine$double.eps)
+{                                                      
+  .Deprecated("assert_any_are_whole_numbers")
+  assert_any_are_whole_numbers(x, tol)  
+}
+
+#' @rdname is_whole_number
+#' @export
+assert_all_are_whole_numbers <- function(x, 
+  tol = 100 * .Machine$double.eps)
 {                                                       
   msg <- sprintf("%s are not all whole numbers.", get_name_in_parent(x))
   assert_engine(x, is_whole_number, msg, tol = tol)
@@ -105,7 +192,8 @@ assert_all_numbers_are_whole_numbers <- function(x, tol = .Machine$double.eps)
 
 #' @rdname is_whole_number
 #' @export
-assert_any_numbers_are_whole_numbers <- function(x, tol = .Machine$double.eps)
+assert_any_are_whole_numbers <- function(x, 
+  tol = 100 * .Machine$double.eps)
 {                                                      
   msg <- sprintf("%s are all not whole numbers.", get_name_in_parent(x))
   assert_engine(x, is_whole_number, msg, what = "any", tol = tol)

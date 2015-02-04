@@ -19,6 +19,35 @@ is_debugged <- function(x, .xname = get_name_in_parent(x))
   TRUE
 }
 
+#' Is the input divisible by a number?
+#' 
+#' Checks to see if the input is divisible by some number.
+#' @param x A numeric vector to divide.
+#' @param n A numeric vector to divide by.
+#' @param tol Differences from zero smaller than \code{tol} are not considered.
+#' @return \code{TRUE} if the input \code{x} is divisible by \code{n}, within 
+#' the specified tolerance.
+#' @note \code{is_even} and \code{is_odd} are shortcuts for divisibility by two.
+#' @seealso \code{is_whole_number}
+#' @examples
+#' is_divisible_by(1:10, 3)
+#' is_divisible_by(-5:5, -2)
+#' is_divisible_by(1.5:10.5, c(1.5, 3.5))
+#' assert_any_are_even(1:10)
+#' dont_stop(assert_all_are_even(1:10))
+#' @export
+is_divisible_by <- function(x, n, tol = 100 * .Machine$double.eps)
+{
+  call_and_name(
+    function(x) 
+    {
+      ok <- abs(x %% n) <= tol
+      set_cause(ok, "indivisible")
+    }, 
+    x
+  ) 
+}
+
 #' Does the code run without throwing an error?
 #' 
 #' Call the code inside a try block and report if an error was thrown.
@@ -38,6 +67,13 @@ is_error_free <- function(x)
   ok <- TRUE
   attr(ok, "result") <- res
   ok
+}
+
+#' @rdname is_divisible_by
+#' @export
+is_even <- function(x, tol = 100 * .Machine$double.eps)
+{
+  is_divisible_by(x, 2L, tol = tol)  
 }
 
 #' Does the variable exist?
@@ -61,10 +97,8 @@ is_error_free <- function(x)
 #' e$x <- 1
 #' e$y <- 2
 #' assert_all_are_existing(c("x", "y"), envir = e)
-#' \dontrun{
 #' #These examples should fail.
-#' assert_all_are_existing(c("x", "z"), envir = e)
-#' }
+#' dont_stop(assert_all_are_existing(c("x", "z"), envir = e))
 #' @export
 is_existing <- function(
   x, 
@@ -104,31 +138,6 @@ is_existing <- function(
   TRUE
 }
 
-# ' Is the input generic?
-# '
-# ' Checks to see if the input is a generic function.
-# '
-# ' @param x Input to check.
-# ' @param .xname Not intended to be used directly.
-# ' @return \code{TRUE} if the input is a generic function. 
-# ' \code{assert_is_generic} functions return nothing but throws an error
-# ' if \code{is_generic} returns \code{FALSE}.
-# ' @seealso \code{\link[methods]{GenericFunctions}}.
-# ' @examples
-# ' 
-# ' @export
-# is_generic <- function(x)
-# {       
-#   x <- use_first(x)  
-#   if(!is.function(x)) return(false("Input is not a function"))  
-#   fn_name <- get_name_in_parent(x)
-#   if(fn_name %in% utils:::getKnownS3generics()) return(TRUE)      
-#   where <- find(fn_name, mode = "function")
-#   gen <- utils:::findGeneric(fn_name, envir = as.environment(where))
-#   if(!nzchar(gen)) return(false("Input is not generic."))
-#   TRUE
-# }     
-
 #' Is the input DLL loaded?
 #'
 #' Checks to see if the input DLL (a.k.a. shared object) is loaded.
@@ -141,12 +150,20 @@ is_existing <- function(
 #' information on failure.  \code{assert_is_loaded} returns nothing but
 #' throws an error if \code{is_loaded} returns \code{FALSE}.
 #' @seealso \code{\link[base]{is.loaded}}.
-is_loaded <- function(x, PACKAGE = "", type = "", .xname = get_name_in_parent(x))
+is_loaded <- function(x, PACKAGE = "", type = "", 
+  .xname = get_name_in_parent(x))
 {
   if(!is.loaded(x, PACKAGE = PACKAGE, type = type))
   {
     return(false("%s is not loaded.", .xname))
   }
+}
+
+#' @rdname is_divisible_by
+#' @export
+is_odd <- function(x, tol = 100 * .Machine$double.eps)
+{
+  is_divisible_by(x - 1, 2L, tol = tol)  
 }
 
 #' Is the input a symmetric matrix?
@@ -157,16 +174,16 @@ is_loaded <- function(x, PACKAGE = "", type = "", .xname = get_name_in_parent(x)
 #' @param tol Differences smaller than \code{tol} are not considered.
 #' @param .xname Not intended to be used directly.
 #' @param ... Passed to \code{all.equal}.
-#' @return \code{TRUE} if the input is symmetrix (after coersion to be a matrix).
+#' @return \code{TRUE} if the input is symmetrix (after coersion to be a 
+#' matrix).
 #' @examples
 #' m <- diag(3); m[3, 1] <- 1e-100
 #' assert_is_symmetric_matrix(m)
-#' \dontrun{
 #' #These examples should fail.
-#' assert_is_symmetric_matrix(m, tol = 0)
-#'}
+#' dont_stop(assert_is_symmetric_matrix(m, tol = 0))
 #' @export
-is_symmetric_matrix <- function(x, tol = 100 * .Machine$double.eps, .xname = get_name_in_parent(x), ...)
+is_symmetric_matrix <- function(x, tol = 100 * .Machine$double.eps, 
+  .xname = get_name_in_parent(x), ...)
 {
   x <- coerce_to(x, "matrix")
   dimx <- dim(x)
@@ -209,19 +226,20 @@ is_symmetric_matrix <- function(x, tol = 100 * .Machine$double.eps, .xname = get
 #' @examples
 #' assert_is_unsorted(c(1, 3, 2))
 #' assert_is_unsorted(c(1, 1, 2), strictly = TRUE)
-#' \dontrun{
 #' #These tests should fail.
-#' assert_is_unsorted(c(1, 1, 2))
-#' assert_is_unsorted(c(2, 1, 0))
-#' }
+#' dont_stop(assert_is_unsorted(c(1, 1, 2)))
+#' dont_stop(assert_is_unsorted(c(2, 1, 0)))
 #' @export
-is_unsorted <- function(x, na.rm = FALSE, strictly = FALSE, .xname = get_name_in_parent(x))
+is_unsorted <- function(x, na.rm = FALSE, strictly = FALSE, 
+  .xname = get_name_in_parent(x))
 {
   if(!(ok <- is_not_null(x))) return(ok)
   if(!is.atomic(x) && length(x) > 1)
   {
     #See notes in Value section of ?is.unsorted.
-    return(na("Sortability is not tested for recursive objects of length greater than one."))
+    return(na(
+      "Sortability is not tested for recursive objects of length greater than one."
+    ))
   }
   nas <- is.na(x)
   if(any(nas))
@@ -249,9 +267,21 @@ is_unsorted <- function(x, na.rm = FALSE, strictly = FALSE, .xname = get_name_in
 #' that the input \code{x} need not have type \code{integer}.  In fact
 #' it is expected that \code{x} will be \code{numeric}.
 #' @return \code{TRUE} if the input is a whole number.
+#' @seealso \code{is_divisible_by}
+#' @examples
+#' x <- 1 + c(0, .Machine$double.eps, -.Machine$double.neg.eps)
+#' is_whole_number(x)
+#' is_whole_number(x, 0)
 #' @export
 is_whole_number <- function(x, tol = 100 * .Machine$double.eps)
 {
   x <- coerce_to(x, "numeric")
-  abs(x - floor(x)) < tol
+  call_and_name(
+    function(x) 
+    {
+      ok <- abs(x - round(x)) <= tol & !is.infinite(x)
+      set_cause(ok, ifelse(is.infinite(x), "infinite", "fractional"))
+    }, 
+    x
+  )
 }

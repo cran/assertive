@@ -12,16 +12,20 @@
 #' @param ... Passed to the \code{predicate} function.
 #' @return \code{FALSE} with the attribute \code{message}, as provided
 #' in the input.
+#' @note Missing values are considered as \code{FALSE} for the purposes of
+#' whether or not an error is thrown.
 assert_engine <- function(x, predicate, msg, what = c("all", "any"), ...)
 {
-  handler <- match.fun(match.arg(
-    getOption("assertive.severity"),
-    c("stop", "warning", "message")
-    ))
+  handler <- match.fun(
+    match.arg(
+      getOption("assertive.severity"),
+      c("stop", "warning", "message")
+    )
+  )
   what <- match.fun(match.arg(what))
   #Some functions, e.g., is.R take no args
   ok <- if(missing(x)) predicate() else predicate(x, ...)
-  if(!what(ok))
+  if(!what(ok & !is.na(ok)))
   {
     if(missing(msg)) 
     {
@@ -33,16 +37,42 @@ assert_engine <- function(x, predicate, msg, what = c("all", "any"), ...)
         stop("Bug in assertive; error message is missing")
       }
     }
+    if(!is_scalar(ok))
+    {
+      # Append first few failure values and positions to the error message.
+      fail_index <- which(!ok | is.na(ok))
+      n <- length(fail_index)
+      fail_index <- head(fail_index)
+      failures <- data.frame(
+        Position = fail_index,
+        Value    = truncate(names(ok[fail_index])),
+        Cause    = unclass(cause(ok)[fail_index]), # See bug 15997
+        row.names = seq_along(fail_index)
+      )
+      msg <- paste0(
+        msg, 
+        "\nThere were ", n, " failures",
+        if(nrow(failures) < n) 
+        {
+          paste0(" (showing the first ", nrow(failures), ")")
+        },
+        ":\n",
+        print_and_capture(failures)
+      )
+    }
+    # Throw error/warning/message
     handler(msg, call. = FALSE)
   }
 }
 
 #' Wrapper to vapply that returns booleans.
 #' 
-#' Wrapper to \code{\link{vapply}} for functions that return a boolean (logical scalar) value.
+#' Wrapper to \code{\link{vapply}} for functions that return a boolean (logical 
+#' scalar) value.
 #' 
 #' @param x A vector (atomic or list).
-#' @param predicate A predicate (function that returns a bool) to apply elementwise to \code{x}.
+#' @param predicate A predicate (function that returns a bool) to apply 
+#' elementwise to \code{x}.
 #' @param USE.NAMES Passed to \code{vapply}.
 #' @param ... Passed to \code{vapply}.
 #' @return A logical vector.
@@ -65,7 +95,7 @@ bapply <- function(x, predicate, ..., USE.NAMES = TRUE)
 #' same length as the input \code{x}.
 #' @examples
 #' \dontrun{
-#' call_and_name(is.finite, c(1, Inf, Na))
+#' call_and_name(is.finite, c(1, Inf, NA))
 #' }
 #' @seealso \code{\link{cause}} and \code{\link{na}}.
 call_and_name <- function(fn, x, ...)
@@ -73,16 +103,19 @@ call_and_name <- function(fn, x, ...)
   y <- fn(x, ...)
   if(!is_identical_to_true(length(y) == length(x)))
   {
-    warning("Vector of names is different length to results.  Trying to resize.")
+    warning(
+      "Vector of names is different length to results.  Trying to resize."
+    )
     length(x) <- length(y)
   }
+  dim(y) <- dim(x)
   names(y) <- x
   y
 }
 
 #' Convert a character vector to a list of integer vectors.
 #'
-#' Split strings by character, then convert to numeric.
+#' Split strings by character, then convert to numbers
 #' @param x Input to convert.
 #' @return A list of numeric vectors.
 #' @examples
@@ -112,13 +145,22 @@ character_to_list_of_integer_vectors <- function(x)
 #' 'or').
 #' @examples
 #' \dontrun{
-#' cas_number_components <- c("[[:digit:]]{1,7}", "[[:digit:]]{2}", "[[:digit:]]")
+#' cas_number_components <- c(
+#'   "[[:digit:]]{1,7}", "[[:digit:]]{2}", "[[:digit:]]"
+#' )
 #' cas_number_rx <- create_regex(rx_components, sep = "-")
 #' }
-create_regex <- function(..., l = list(), sep = "[- ]?")
+create_regex <- function (..., l = list(), sep = "[- ]?")
 {
   x <- merge_dots_with_list(..., l = l)
-  rx <- vapply(x, function(x) paste0(x, collapse = sep), character(1))
+  rx <- vapply(
+    x,
+    function(x)
+    {
+      parenthesise(paste0(parenthesise(x), collapse = sep))
+    },
+    character(1)
+  )
   paste0("^", rx, "$", collapse = "|")
 }
 
@@ -129,27 +171,55 @@ create_regex <- function(..., l = list(), sep = "[- ]?")
 #' @param lo Minimum number of digits to match.
 #' @param hi Optional maximum number of digits to match.
 #' @param optional If \code{TRUE}, the digits are optional.
-#' @note If \code{hi} is omitted, the returned regex will only match the exact number
-#' of digits given by \code{lo}.
+#' @note If \code{hi} is omitted, the returned regex will only match the exact 
+#' number of digits given by \code{lo}.
 #' @return A character vector of regexes.
 #' @examples
 #' \dontrun{
-#' d(3)
-#' d(3, 4)
-#' d(1:5, 6)
+#' d(1:5)
+#' d(1:5, 6:8)
+#' d(0:2, Inf)
 #' }
-d <- function(lo, hi, optional = FALSE)
+d <- function(lo, hi = NA_integer_, optional = FALSE)
 {
   lo <- as.integer(lo)
   assert_all_are_non_negative(lo)
-  if(!missing(hi))
-  {
-    hi <- as.integer(hi)
-    assert_all_are_true(hi > lo)
-    lo <- paste(lo, hi, sep = ",")
-  }
-  rx <- paste0("[[:digit:]]{", lo, "}")
-  rx <- sub("{1}", "", rx, fixed = TRUE)
+  l <- recycle(lo = lo, hi = hi)
+  lo <- l$lo
+  hi <- l$hi
+  rx <- ifelse(
+    is.na(hi),
+    {    
+      sub("{1}", "", paste0("[[:digit:]]{", lo, "}"), fixed = TRUE)
+    },
+    {
+      ifelse(
+        is_positive_infinity(hi),
+        {
+          ifelse(
+            lo == 0,
+            {
+              "[[:digit:]]*"
+            },
+            ifelse(
+              lo == 1,
+              {
+                "[[:digit:]]+"
+              },
+              {
+                paste0("[[:digit:]]{", lo, ",}")
+              }
+            )
+          )
+        },
+        {
+          hi <- as.integer(hi)
+          assert_all_are_true(hi > lo)
+          rx <- paste0("[[:digit:]]{", lo, ",", hi, "}")
+        }
+      )
+    } 
+  )
   if(optional)
   {
     rx <- paste0("(", rx, ")?")
@@ -173,13 +243,21 @@ false <- function(...)
   x
 }
 
+get_metric <- function(metric = c("length", "elements"))
+{
+  switch(
+    match.arg(force(metric)[1], eval(formals(sys.function())$metric)),
+    length   = is_of_length,
+    elements = has_elements
+  )
+}
+
 #' Allowed locale categories.
 #'
 #' The categories of locale that can be gotten/set.
 #'
 #' @param include_all If \code{TRUE}, the value \code{LC_ALL} is included.
-#' @param include_unix If \code{TRUE}, extra unix-specific categories are
-#' included.
+#' @param include_unix If \code{TRUE}, the extra unix-only values are included.
 #' @return A character vector of locale categories.
 #' @seealso \code{\link{sys_get_locale}}.
 locale_categories <- function(include_all = TRUE, include_unix = is_unix())
@@ -200,8 +278,10 @@ locale_categories <- function(include_all = TRUE, include_unix = is_unix())
 #' @param rx A regular expression.
 #' @param ignore.case Should the case of alphabetic characters be ignored?
 #' @param ... Passed to \code{\link{grepl}}.
-#' @note The default for \code{ignore.case} is different to the default in \code{grepl}.
-#' @return A logical vector that is \code{TRUE} when the input matches the regular expression.
+#' @note The default for \code{ignore.case} is different to the default in 
+#' \code{grepl}.
+#' @return A logical vector that is \code{TRUE} when the input matches the 
+#' regular expression.
 #' @seealso \code{\link{regex}} and \code{\link{regexpr}}.
 matches_regex <- function(x, rx, ignore.case = TRUE, ...)
 {
@@ -210,12 +290,17 @@ matches_regex <- function(x, rx, ignore.case = TRUE, ...)
     {
       if(!nzchar(rx[1]))
       {
-        warning("Regular expression is the empty string, and matches everything.")
+        warning(
+          "Regular expression is the empty string, and matches everything."
+        )
         return(rep.int(TRUE, length(x)))
       }
-      #call to ifelse needed because grepl always returns TRUE or FALSE
+      # call to ifelse needed because grepl always returns TRUE or FALSE
+      # need to unname, because ifelse preserves x's names, when we want to
+      # name result with values of x, and merge.list throws a warning about
+      # duplicate names attr.
       ifelse(   
-        is.na(x),
+        is.na(unname(x)),
         NA,
         grepl(rx, x, ignore.case = ignore.case, ...)
       )
@@ -251,6 +336,42 @@ na <- function(...)
   x
 }
 
+#' Print a variable and capture the output
+#' 
+#' Prints a variable and captures the output, collapsing the value to a single 
+#' string.
+#' @param x A variable.
+#' @return A string.
+#' @seealso \code{\link[base]{print}}, \code{\link[utils]{capture.output}}
+#' @examples
+#' \dontrun{
+#' # This is useful for including data frames in warnings or errors
+#' message("This is the CO2 dataset:\n", print_and_capture(CO2))
+#' }
+print_and_capture <- function(x)
+{
+  paste(capture.output(print(x)), collapse = "\n")
+}
+
+#' Recycle arguments
+#' 
+#' Explicit recycling of arguments to make them all have the same length.
+#' @param ... Arguments, usually vectors.
+#' @return A \code{list} of vectors, all with the same length.
+#' @note The function is based on \code{rep_len}, which drops attributes (hence
+#' this being most appropriate for vector inputs).
+#' @seealso \code{\link[base]{rep_len}}.
+#' @examples
+#' \dontrun{
+#' # z is the longest argument, with 6 elements
+#' recycle(x = 1:4, y = list(a = month.abb, b = pi), z = matrix(1:6, nrow = 3))
+#' }
+recycle <- function(...)
+{
+  dots <- list(...)
+  n <- max(vapply(dots, length, integer(1)))
+  lapply(dots, rep_len, length.out = n)
+}
 
 #' Removes invalid characters from a string.
 #'
@@ -258,13 +379,17 @@ na <- function(...)
 #' @param x Input to strip.
 #' @param invalid_chars A regular expression detailing characters to remove.
 #' @param char_desc A string describing the characters to remove.
-#' @param allow_x If \code{TRUE}, the letter "X" is allowed - useful for check digits.
-#' @param allow_plus If \code{TRUE}, the symbol "+" is allowed - useful for phone numbers.
-#' @return A character vector of the same length as \code{x}, consisting of strings without
-#' the characters detailed in the \code{invalid_chars}.
+#' @param allow_x If \code{TRUE}, the letter "X" is allowed - useful for check 
+#' digits.
+#' @param allow_plus If \code{TRUE}, the symbol "+" is allowed - useful for 
+#' phone numbers.
+#' @return A character vector of the same length as \code{x}, consisting of 
+#' strings without the characters detailed in the \code{invalid_chars}.
 #' @examples
 #' \dontrun{
-#' strip_invalid_chars("  We're floating\tin    space\n\n\n", "[[:space:]]", "whitespace")
+#' strip_invalid_chars(
+#'   "  We're floating\tin    space\n\n\n", "[[:space:]]", "whitespace"
+#' )
 #' strip_non_numeric(" +44 800-123-456 ", allow_plus = TRUE)
 #' #Inputs such as factors as coerced to character.
 #' strip_non_alphanumeric(factor(c(" A1\t1AA.", "*(B2^2BB)%")))
@@ -289,6 +414,35 @@ strip_non_alphanumeric <- function(x)
 #' @rdname strip_invalid_chars
 strip_non_numeric <- function(x, allow_x = FALSE, allow_plus = FALSE)
 {
-  invalid_chars <-paste0("[^[:digit:]", if(allow_x) "X", if(allow_plus) "\\+", "]+", collapse = "")
+  invalid_chars <- paste0(
+    "[^[:digit:]", 
+    if(allow_x) "X", 
+    if(allow_plus) "\\+", 
+    "]+", 
+    collapse = ""
+  )
   strip_invalid_chars(x, invalid_chars, "non-numeric")
 }
+
+#' Truncate a string
+#' 
+#' Truncates a character vector to have a maximum length.
+#' @param x A character vector, or something coercible to one.
+#' @param width A positive integer.
+#' @return A character vector
+#' @examples
+#' \dontrun{
+#' truncate(c("abcd", "efghi", "jklmno", "pqrstuv"), 5)
+#' }
+truncate <- function(x, width = getOption("width"))
+{
+  x <- as.character(x)
+  ifelse(
+    nchar(x) > width,
+    # paste0(substring(x, 1, width - 1), "\u2026") would be better, but some
+    # setups don't display unicode properly.
+    paste0(substring(x, 1, width - 3), "..."),
+    x
+  )
+} 
+
