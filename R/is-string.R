@@ -184,7 +184,7 @@ is_date_string <- function(x, format = "%F %T", .xname = get_name_in_parent(x))
 #' most email addresses in use, and is quite good at filtering out typos and 
 #' nonsense.  It won't match \emph{every} email address however.  For example, 
 #' emails from a top level domain longer than 4 characters won't pass.  The 
-#' \code{rfc822} method implements the offical standard for emails.  Thus all 
+#' \code{rfc5322} method implements the official standard for emails.  Thus all 
 #' genuine emails will pass, but since the spec is very broad, it isn't as good 
 #' at filtering out nonsense.
 #' @return A logical vector that is \code{TRUE} when the input contains valid 
@@ -199,12 +199,12 @@ is_date_string <- function(x, format = "%F %T", .xname = get_name_in_parent(x))
 #'   missing  = NA
 #' )
 #' is_email_address(addresses)
-#' is_email_address(addresses, method = "rfc2822")
+#' is_email_address(addresses, method = "rfc5322")
 #' @references \url{http://www.regular-expressions.info/email.html} contains the 
 #' regexes used by this function and a good discussion of the pros and cons of 
 #' each.
 #' @export
-is_email_address <- function(x, method = c("simple", "rfc2822"), 
+is_email_address <- function(x, method = c("simple", "rfc5322"), 
   .xname = get_name_in_parent(x))
 {
   method <- match.arg(method)
@@ -212,7 +212,7 @@ is_email_address <- function(x, method = c("simple", "rfc2822"),
   rx <- switch(
     method,
     simple = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$",
-    rfc2822 = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"
+    rfc5322 = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"
   )
   ok <- matches_regex(x, rx, perl = TRUE)
   set_cause(ok, "bad format")
@@ -233,9 +233,9 @@ is_empty_character <- function(x)
   )
 }
 
-#' Does the character vector contain hex colours?
+#' Does the character vector contain hex colors?
 #'
-#' Checks that the input contains hexadecimal colours.
+#' Checks that the input contains hexadecimal colors.
 #' 
 #' @param x Input to check.
 #' @note A string is considered to represent a hexadecimal colour when contains 
@@ -251,10 +251,10 @@ is_empty_character <- function(x)
 #'   "#01 23 45",                      #contains spaces
 #'   "#12345", "#1234567"              #wrong length
 #' )
-#' is_hex_colour(x)
-#' assert_any_are_hex_colours(x)
+#' is_hex_color(x)
+#' assert_any_are_hex_colors(x)
 #' #These examples should fail.
-#' dont_stop(assert_all_are_hex_colours(x))
+#' dont_stop(assert_all_are_hex_colors(x))
 #' @export
 is_hex_color <- function(x)
 {
@@ -605,8 +605,8 @@ is_valid_r_code <- function(x, .xname = get_name_in_parent(x))
 #' }
 #' long <- c(make_random_string(10000), make_random_string(10001))
 #' x <- c("x", "y_y0.Y", ".", "x y", "...", "..1", long)
-#' is_valid_variable_name(x)
-#' is_valid_variable_name(x, allow_reserved = FALSE)
+#' unname(is_valid_variable_name(x))
+#' unname(is_valid_variable_name(x, allow_reserved = FALSE))
 #' #These examples should fail.
 #' dont_stop(assert_all_are_valid_variable_names(c("...", "..1"), allow_reserved = FALSE))
 #' @references

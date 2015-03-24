@@ -1,0 +1,38 @@
+#' @rdname is_set_equal
+#' @export
+assert_is_set_equal <- function(x, y)
+{
+  assert_engine(
+    x, 
+    is_set_equal, 
+    y = y, 
+    .xname = get_name_in_parent(x), 
+    .yname = get_name_in_parent(y)
+  )
+}
+
+#' @rdname is_set_equal
+#' @export
+assert_is_subset <- function(x, y)
+{
+  assert_engine(
+    x, 
+    is_subset, 
+    y = y, 
+    .xname = get_name_in_parent(x), 
+    .yname = get_name_in_parent(y)
+  ) 
+}
+
+#' @rdname is_set_equal
+#' @export
+assert_is_superset <- function(x, y)
+{
+  assert_engine(
+    x, 
+    is_superset, 
+    y = y, 
+    .xname = get_name_in_parent(x), 
+    .yname = get_name_in_parent(y)
+  ) 
+}

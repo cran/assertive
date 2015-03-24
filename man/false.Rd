@@ -7,7 +7,7 @@
 false(...)
 }
 \arguments{
-\item{...}{Passed to sprintf to create a cause of failure message.}
+\item{...}{Passed to \code{gettextf} to create a cause of failure message.}
 }
 \value{
 \code{FALSE} with the attribute \code{cause}, as provided

@@ -182,7 +182,7 @@ test_that(
   "test.has_names.named_vector.returns_true",
   {
     x <- c(foo = 1, 2, 3)
-    expect_true(has_names(x))
+    expect_true(assertive::has_names(x))
   }
 )
 
@@ -190,7 +190,7 @@ test_that(
   "test.has_names.data_frame.returns_true",
   {
     dfr <- data.frame(x = 1:5, y = runif(5))
-    expect_true(has_names(dfr))
+    expect_true(assertive::has_names(dfr))
   }
 )
 
@@ -198,7 +198,7 @@ test_that(
   "test.has_names.unnamed_vector.returns_false",
   {
     x <- 1:3
-    actual <- has_names(x)
+    actual <- assertive::has_names(x)
     expect_false(actual)
     expect_equal(cause(actual), noquote("The names of x are NULL."))
   }

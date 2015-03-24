@@ -3,16 +3,22 @@
 \name{assert_is_architect}
 \alias{assert_is_architect}
 \alias{assert_is_r}
+\alias{assert_is_r_alpha}
+\alias{assert_is_r_beta}
 \alias{assert_is_r_devel}
 \alias{assert_is_r_patched}
+\alias{assert_is_r_release_candidate}
 \alias{assert_is_r_stable}
 \alias{assert_is_revo_r}
 \alias{assert_is_rstudio}
 \alias{assert_is_slave_r}
 \alias{is_architect}
 \alias{is_r}
+\alias{is_r_alpha}
+\alias{is_r_beta}
 \alias{is_r_devel}
 \alias{is_r_patched}
+\alias{is_r_release_candidate}
 \alias{is_r_stable}
 \alias{is_revo_r}
 \alias{is_rstudio}
@@ -23,9 +29,15 @@ assert_is_architect()
 
 assert_is_r()
 
+assert_is_r_alpha()
+
+assert_is_r_beta()
+
 assert_is_r_devel()
 
 assert_is_r_patched()
+
+assert_is_r_release_candidate()
 
 assert_is_r_stable()
 
@@ -39,9 +51,15 @@ is_architect()
 
 is_r()
 
+is_r_alpha()
+
+is_r_beta()
+
 is_r_devel()
 
 is_r_patched()
+
+is_r_release_candidate()
 
 is_r_stable()
 
@@ -71,14 +89,20 @@ is_r()
 is_r_stable()
 is_r_patched()
 is_r_devel()
+is_r_alpha()
+is_r_beta()
+is_r_release_candidate()
 is_architect()
 is_revo_r()
 is_rstudio()
 is_slave_r()
 switch(
   version$status,
-  "Patched"                      = assert_is_r_patched(),
+  Patched                        = assert_is_r_patched(),
   "Under development (unstable)" = assert_is_r_devel(),
+  alpha                          = assert_is_r_alpha(),
+  beta                           = assert_is_r_beta(),
+  RC                             = assert_is_r_release_candidate(),
   assert_is_r_stable()
 )
 dont_stop(assert_is_r())

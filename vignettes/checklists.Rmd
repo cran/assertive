@@ -1,0 +1,65 @@
+---
+title: "Checklists of checks"
+author: "Richard Cotton"
+date: '`r Sys.Date()`'
+output: html_document
+---
+  
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{3. Checklists of checks}
+-->
+  
+### How to use this vignette
+
+Find the section related to your variable type or use case, run through the
+checklist to help you think about what state your variable should be in, then
+add some assertions to your code.
+
+### Checks for all argument types
+
+1. Is the variable the correct type? (`is_numeric`, `is_character`, 
+`is_data.frame`, `coerce_to`, etc.)
+2. Is the variable the correct size? (`is_scalar`, `is_empty`, `is_non_empty`, 
+`use_first`, `has_dims`, `DIM`, etc.)
+3. Are missing values allowed? (`is_na`, `is_not_na`)
+4. Is `NULL` allowed? (`is_null`, `is_not_null`)
+5. Are duplicate values allowed? (`has_duplicates`, `has_no_duplicates`)
+6. Are attributes allowed? (`has_any_attributes`)
+
+### Checks for numeric arguments
+
+1. Are finite/infinite/NaN values allowed? (`is_finite`, `is_infinite`, 
+`is_nan`, `is_not_nan`, etc.).
+2. Are the values in range? (`is_in_range`, `is_positive`, `is_percentage`, etc.)
+3. Are complex numbers allowed? (`is_complex`, `is_real`, `is_imaginary`)
+4. Are the values whole numbers? (`is_whole_number`, `is_integer`)
+5. Should the values be divisible by something? (`is_divisible_by`, `is_even`, 
+`is_odd`)
+
+### Checks for character arguments
+
+1. Are empty strings allowed? (`is_empty_character`, 
+`is_missing_or_empty_character`, `is_not_missing_nor_empty_character`)
+2. Do you actually want a factor? (`is_factor`, and `base::factor`)
+3. Does the string represent a complex data type? (`is_email_address`, 
+`is_credit_card_number`, `is_uk_postcode`, `is_us_zip_code`, and many more)
+4. Does the string represent R code? (`is_valid_variable_name`, 
+`is_valid_r_code`)
+
+### Checks for working with files
+
+1. Does the path represent an existing file or dir? (`is_existing_file`, 
+`is_dir`)
+2. Do you have permission to read/write/execute to that location? 
+(`is_readable_file`, `is_writable_file`, `is_executable_file`)
+3. Is your file connection readable/writable? (`is_readable_connection`, 
+`is_writable_connection`)
+4. Which operating system am I using? (`is_windows`, `is_linux`, `is_mac`, 
+`is_solaris`, `is_unix`)
+5. Does the current working dir have an effect? (`standardize_path` in 
+[`pathological`](http://github.com/richierocks/pathological), `in_dir` in 
+[`devtools`](https://github.com/hadley/devtools/))
+7. Does the operating system `PATH` environment variable have an effect? (`is_on_os_path`)
+6. Can R create that plot file type? (`r_has_png_capability`, 
+`r_has_jpeg_capability`, `r_has_tiff_capability`)

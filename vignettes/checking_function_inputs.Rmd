@@ -1,0 +1,161 @@
+---
+title: "Checking function inputs"
+author: "Richard Cotton"
+date: '`r Sys.Date()`'
+output: html_document
+---
+  
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{2. Checking function inputs}
+-->
+  
+```{r, Setup, echo = FALSE, results = "hide"}
+set.seed(19790801)
+library(assertive)
+knitr::opts_chunk$set(error = FALSE)
+```
+
+### Case study: calculating geometric means
+
+By far the most common use of assertions is for checking input to functions.
+Consider this function for calculating the 
+[geometric mean](https://en.wikipedia.org/wiki/Geometric_mean):
+
+```{r}
+geomean <- function(x, na.rm = FALSE)
+{
+  exp(mean(log(x), na.rm = na.rm))
+}
+```
+
+In a statically-typed language, we could enforce `x` being a numeric vector.
+R's dynamic typing (while mostly helping us be more productive) gives us some 
+rope to hang ourselves with: `x` and `na.rm` can be absolutely anything.  We
+need to handle the cases when `x` is not numeric, or when x contains
+negative values, or when `na.rm` is not a single logical value.
+
+The built-in functions `exp`, `mean` and `log` have some of their own logic for
+handling bad inputs, and it is possible to simply rely on that logic rather than 
+writing your own.  For demonstration purposes, let's see how they behave, and
+then see if we can improve upon it.
+
+If we pass a non-numeric `x`, we see:
+
+```{r, GeomeanNonNumeric, error = TRUE, purl = FALSE}
+geomean("a")
+```
+
+The error message is OK, but it since it is appearing to come from `log(x)`, it 
+isn't totally clear to the user where the problem originates.  The *assertive* 
+fix isto include `assert_is_numeric(x)` in the function.
+
+Where should this line go?  In accordance with the first clause of the 
+programming principle "fail early, fail often", the assertion belongs at the 
+start of the function.
+
+```{r, Geomean2}
+geomean2 <- function(x, na.rm = FALSE)
+{
+  assert_is_numeric(x)
+  exp(mean(log(x), na.rm = na.rm))
+}
+```
+
+```{r, Geomean2NonNumeric, error = TRUE, purl = FALSE}
+geomean2("a")
+```
+
+The geometric mean doesn't make any mathematical sense for (real) negative
+numbers, and will return `NaN` if the input contains any.
+
+```{r, GeomeanNegative, error = TRUE, purl = FALSE}
+geomean(rnorm(20))
+```
+
+The warning here is not so informative (why were the NaNs produced?), and 
+appears to come from `log(x)`.  We could be strict and throw an error if there
+are negative values by adding a call to `assert_all_are_non_negative`.  To
+replicate the base-R behaviour we can define custom actions based upon the
+result of `is_non_negative`:
+
+```{r, Geomean3}
+geomean3 <- function(x, na.rm = FALSE)
+{
+  assert_is_numeric(x)
+  if(!all(is_non_negative(x), na.rm = TRUE)) # Don't worry about NAs here
+  {
+    warning("x contains negative values, so the geometric mean makes no sense.")
+    return(NaN)
+  }
+  exp(mean(log(x), na.rm = na.rm))
+}
+```
+
+```{r, Geomean3Negative, error = TRUE, purl = FALSE}
+geomean3(rnorm(20))
+```
+
+For `na.rm`, the `mean` function coerces its input to be a logical value,
+warning if the value's length is more than one.
+
+```{r, GeomeanMissing, error = TRUE, purl = FALSE}
+x <- rlnorm(20)
+x[sample(20, 5)] <- NA
+geomean(x, c(1.5, 0))
+```
+
+The warning about the length is OK, but again its source is not totally clear 
+for users.  The coercion to logical happens silently, which isn't ideal.
+
+Again, we could be strict and throw an error when `na.rm` isn't a scalar logical
+value using `assert_is_a_bool`.  (This is a compound assertion checking both the
+type and the length of the object).  In this case, to replicate the base-R 
+behaviour, we will use some utility functions provided by *assertive*.
+
+```{r}
+geomean4 <- function(x, na.rm = FALSE)
+{
+  assert_is_numeric(x)
+  if(!all(is_non_negative(x), na.rm = TRUE)) # Don't worry about NAs here
+  {
+    warning("x contains negative values, so the geometric mean makes no sense.")
+    return(NaN)
+  }
+  na.rm <- coerce_to(use_first(na.rm), "logical")
+  exp(mean(log(x), na.rm = na.rm))
+}
+```
+
+`use_first` takes the first element of an object, warning if it has length more 
+than one.  `coerce_to` checks and object's `class`, then converts it to the 
+requested type, with a warning, using an appropriate `as.*` function if it 
+exists, or `as` if it doesn't.
+
+```{r, Geomean4Missing, error = TRUE, purl = FALSE}
+geomean4(x, c(1.5, 0))
+```
+
+Whether to throw an error on bad input or fix it is personal preference and 
+depends upon context.  For end-user functions should should usually try to be
+flexible and fix things unless they've done something very silly.  For 
+lower-level functions, you can often afford to be stricter.
+
+### Summary
+
+1. Check function inputs at the start of the function to "fail early".
+2. Don't be afriad of having lots of assertions to "fail often".
+3. Use `assert_` functions to throw errors for inputs that you can't salvage.
+4. Use `is_` functions in an `if` condition to provide custom behaviour.
+5. Fix inputs with `use_first` and `coerce_to` where possible.
+
+### Exercises
+
+1. The `mad` function in the `stats` package calculates the [median absolute 
+deviation](https://en.wikipedia.org/wiki/Median_absolute_deviation).  Type `mad` 
+to see its contents, and run `example(mad)` to get a feel for how it works.  
+Update the function (either copy and paste, or use `fixInNamespace` if you are 
+feeling fancy) to include some assertions checking the inputs.  Hint: Some of 
+the inputs should be numeric; others should be logical.  Some should be only 
+allow a single value. [15 mins].
+

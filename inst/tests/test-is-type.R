@@ -273,13 +273,13 @@ test_that("test.is_relistable.not_relistable.returns_false", {
   expect_false(is_relistable(list(1, 2, 3)))
 })
 
-test_that("test.is_S4.an_S4_instance.returns_true", {
+test_that("test.is_s4.an_S4_instance.returns_true", {
   x <- getClass("MethodDefinition")
-  expect_true(is_S4(x))
+  expect_true(is_s4(x))
 })
 
-test_that("test.is_S4.not_an_S4_instance.returns_true", {
-  expect_false(is_S4(1:10))
+test_that("test.is_s4.not_an_S4_instance.returns_true", {
+  expect_false(is_s4(1:10))
 })
 
 test_that("test.is_stepfun.a_regular_function.returns_false", {

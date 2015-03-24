@@ -17,15 +17,15 @@
 \usage{
 assert_has_elements(x, n)
 
-assert_is_empty(x)
+assert_is_empty(x, metric = c("length", "elements"))
 
-assert_is_non_empty(x)
+assert_is_non_empty(x, metric = c("length", "elements"))
 
 assert_is_of_dimension(x, n)
 
 assert_is_of_length(x, n)
 
-assert_is_scalar(x)
+assert_is_scalar(x, metric = c("length", "elements"))
 
 has_elements(x, n, .xname = get_name_in_parent(x))
 
@@ -48,10 +48,10 @@ is_scalar(x, metric = c("length", "elements"),
 \item{n}{Non-negative integer(s) of the expected length/number of elements/
 lengths of dimensions.  See note.}
 
-\item{.xname}{Not intended to be used directly.}
-
 \item{metric}{A string. Should be length or the number of elements be used to
 determine if the object is empty/non-empty/scalar?}
+
+\item{.xname}{Not intended to be used directly.}
 }
 \value{
 \code{is_empty} returns \code{TRUE} if the input has length
@@ -106,7 +106,7 @@ is_scalar(list(1:5), "elements")
 is_scalar(var)
 is_scalar(var, "elements")
 
-# Simliarly, is_empty is a shortcut for length zero/zero elements.
+# Similarly, is_empty is a shortcut for length zero/zero elements.
 assert_is_empty(NULL)
 assert_is_empty(numeric())
 assert_is_non_empty(1:10)

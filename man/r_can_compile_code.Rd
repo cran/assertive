@@ -23,4 +23,7 @@ to compile code.
 r_can_compile_code()
 dont_stop(assert_r_can_compile_code())
 }
+\seealso{
+\code{\link{r_can_build_translations}}
+}
 

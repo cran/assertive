@@ -2,9 +2,22 @@
 #' @export
 assert_is_64_bit_os <- function()
 {
-  assert_engine(predicate = is_64_bit_os)
+  .Deprecated("assert_is_64_bit")
+  assert_engine(predicate = is_64_bit)
 }
 
+#' @rdname is_windows
+#' @export
+assert_is_32_bit <- function()
+{
+  assert_engine(predicate = is_32_bit)
+}
+#' @rdname is_windows
+#' @export
+assert_is_64_bit <- function()
+{
+  assert_engine(predicate = is_64_bit)
+}
 #' @rdname is_r
 #' @export
 assert_is_architect <- function()
@@ -58,7 +71,7 @@ assert_is_mac <- function()
 #' @export
 assert_all_are_on_os_path <- function(x)
 {                                                     
-  msg <- sprintf("%s are not all on the operating system path.", get_name_in_parent(x))
+  msg <- gettextf("%s are not all on the operating system path.", get_name_in_parent(x))
   assert_engine(x, is_on_os_path, msg)        
 }
 
@@ -66,7 +79,7 @@ assert_all_are_on_os_path <- function(x)
 #' @export
 assert_any_are_on_os_path <- function(x)
 {                                                     
-  msg <- sprintf("%s are all not on the operating system path.", get_name_in_parent(x))
+  msg <- gettextf("%s are all not on the operating system path.", get_name_in_parent(x))
   assert_engine(x, is_on_os_path, msg, what = "any")        
 }
 
@@ -86,6 +99,20 @@ assert_is_r <- function()
 
 #' @rdname is_r
 #' @export
+assert_is_r_alpha <- function()
+{                                                         
+  assert_engine(predicate = is_r_alpha)        
+}
+
+#' @rdname is_r
+#' @export
+assert_is_r_beta <- function()
+{                                                         
+  assert_engine(predicate = is_r_beta)        
+}
+
+#' @rdname is_r
+#' @export
 assert_is_r_devel <- function()
 {                                                         
   assert_engine(predicate = is_r_devel)        
@@ -96,6 +123,13 @@ assert_is_r_devel <- function()
 assert_is_r_patched <- function()
 {                                                         
   assert_engine(predicate = is_r_patched)        
+}
+
+#' @rdname is_r
+#' @export
+assert_is_r_release_candidate <- function()
+{                                                         
+  assert_engine(predicate = is_r_release_candidate)        
 }
 
 #' @rdname is_r

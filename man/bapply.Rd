@@ -9,7 +9,7 @@ bapply(x, predicate, ..., USE.NAMES = TRUE)
 \arguments{
 \item{x}{A vector (atomic or list).}
 
-\item{predicate}{A predicate (function that returns a bool) to apply
+\item{predicate}{A predicate (function that returns a bool) to apply.
 elementwise to \code{x}.}
 
 \item{...}{Passed to \code{vapply}.}

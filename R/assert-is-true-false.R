@@ -2,7 +2,7 @@
 #' @export
 assert_all_are_false <- function(x)
 {                                                     
-  msg <- sprintf("%s are not all false.", get_name_in_parent(x))
+  msg <- gettextf("%s are not all false.", get_name_in_parent(x))
   assert_engine(x, is_false, msg)        
 }
 
@@ -10,7 +10,7 @@ assert_all_are_false <- function(x)
 #' @export
 assert_any_are_false <- function(x)
 {                                                     
-  msg <- sprintf("%s are all not false.", get_name_in_parent(x))
+  msg <- gettextf("%s are all not false.", get_name_in_parent(x))
   assert_engine(x, is_false, msg, what = "any")        
 }
 
@@ -42,7 +42,7 @@ assert_is_identical_to_true <- function(x, allow_attributes = FALSE)
 #' @export
 assert_all_are_true <- function(x)
 {                                                     
-  msg <- sprintf("%s are not all true.", get_name_in_parent(x))
+  msg <- gettextf("%s are not all true.", get_name_in_parent(x))
   assert_engine(x, is_true, msg)        
 }
 
@@ -50,6 +50,6 @@ assert_all_are_true <- function(x)
 #' @export
 assert_any_are_true <- function(x)
 {                                                     
-  msg <- sprintf("%s are all not true.", get_name_in_parent(x))
+  msg <- gettextf("%s are all not true.", get_name_in_parent(x))
   assert_engine(x, is_true, msg, what = "any")        
 }

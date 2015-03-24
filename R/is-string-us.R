@@ -53,7 +53,7 @@ is_us_telephone_number <- function(x)
    
   # npa = "numbering plan area" code   
   npa1 <- "[2-9]"
-  npa23 <- parenthesise(     
+  npa23 <- parenthesize(     
     paste(
       c(
         "0[1-9]", "1[02-9]", "2[013-9]", "3[0-24-9]", "4[0-35-9]", 
@@ -65,7 +65,7 @@ is_us_telephone_number <- function(x)
   
   # nxx = "central office exchange" code
   nxx1 <- "[2-9]"
-  nxx23 <- parenthesise(paste(c("1[02-9]", "[02-9][0-9]"), collapse = "|"))
+  nxx23 <- parenthesize(paste(c("1[02-9]", "[02-9][0-9]"), collapse = "|"))
   
   # xxxx = "subscriber" number
   xxxx <- d(4)

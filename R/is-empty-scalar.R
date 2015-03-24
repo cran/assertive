@@ -76,7 +76,7 @@ has_elements <- function(x, n, .xname = get_name_in_parent(x))
 #' is_scalar(var)
 #' is_scalar(var, "elements")
 #' 
-#' # Simliarly, is_empty is a shortcut for length zero/zero elements.
+#' # Similarly, is_empty is a shortcut for length zero/zero elements.
 #' assert_is_empty(NULL)
 #' assert_is_empty(numeric())
 #' assert_is_non_empty(1:10)

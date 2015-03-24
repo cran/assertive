@@ -35,9 +35,12 @@ that the input \code{x} need not have type \code{integer}.  In fact
 it is expected that \code{x} will be \code{numeric}.
 }
 \examples{
+# 1, plus or minus a very small number
 x <- 1 + c(0, .Machine$double.eps, -.Machine$double.neg.eps)
+# By default, you get a bit of tolerance for rounding errors
 is_whole_number(x)
-is_whole_number(x, 0)
+# Set the tolerance to zero for exact matching.
+is_whole_number(x, tol = 0)
 }
 \seealso{
 \code{is_divisible_by}

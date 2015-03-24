@@ -7,7 +7,7 @@
 \alias{assert_any_are_hex_colours}
 \alias{is_hex_color}
 \alias{is_hex_colour}
-\title{Does the character vector contain hex colours?}
+\title{Does the character vector contain hex colors?}
 \usage{
 assert_all_are_hex_colors(x)
 
@@ -29,7 +29,7 @@ A logical vector that is \code{TRUE} when the input contains hex
 colours.
 }
 \description{
-Checks that the input contains hexadecimal colours.
+Checks that the input contains hexadecimal colors.
 }
 \note{
 A string is considered to represent a hexadecimal colour when contains
@@ -44,9 +44,9 @@ x <- c(
   "#01 23 45",                      #contains spaces
   "#12345", "#1234567"              #wrong length
 )
-is_hex_colour(x)
-assert_any_are_hex_colours(x)
+is_hex_color(x)
+assert_any_are_hex_colors(x)
 #These examples should fail.
-dont_stop(assert_all_are_hex_colours(x))
+dont_stop(assert_all_are_hex_colors(x))
 }
 

@@ -7,9 +7,10 @@ assert_has_elements <- function(x, n)
 
 #' @rdname is_empty
 #' @export
-assert_is_empty <- function(x)
-{                                                  
-  assert_engine(x, is_empty, .xname = get_name_in_parent(x))      
+assert_is_empty <- function(x, metric = c("length", "elements"))
+{                             
+  metric <- match.arg(metric)                             
+  assert_engine(x, is_empty, metric = metric, .xname = get_name_in_parent(x))      
 }
 
 #' @rdname is_empty_model
@@ -21,9 +22,10 @@ assert_is_empty_model <- function(x)
 
 #' @rdname is_empty
 #' @export
-assert_is_non_empty <- function(x)
-{                                                     
-  assert_engine(x, is_non_empty, .xname = get_name_in_parent(x))    
+assert_is_non_empty <- function(x, metric = c("length", "elements"))
+{                            
+  metric <- match.arg(metric)                                 
+  assert_engine(x, is_non_empty, metric = metric, .xname = get_name_in_parent(x))    
 }
 
 #' @rdname is_empty_model
@@ -49,7 +51,8 @@ assert_is_of_length <- function(x, n)
 
 #' @rdname is_empty
 #' @export
-assert_is_scalar <- function(x)
-{                                                     
-  assert_engine(x, is_scalar, .xname = get_name_in_parent(x))    
+assert_is_scalar <- function(x, metric = c("length", "elements"))
+{                                        
+  metric <- match.arg(metric)
+  assert_engine(x, is_scalar, metric = metric, .xname = get_name_in_parent(x))    
 }

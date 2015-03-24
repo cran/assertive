@@ -2,10 +2,16 @@
 % Please edit documentation in R/assert-is-type.R, R/is-type.R
 \name{assert_is_S4}
 \alias{assert_is_S4}
+\alias{assert_is_s4}
 \alias{is_S4}
+\alias{is_s4}
 \title{Is the input an S4 object?}
 \usage{
 assert_is_S4(x)
+
+assert_is_s4(x)
+
+is_s4(x, .xname = get_name_in_parent(x))
 
 is_S4(x, .xname = get_name_in_parent(x))
 }
@@ -23,9 +29,9 @@ failure.  \code{assert_is_S4} returns nothing but throws an error if
 Checks to see if the input is an S4 object.
 }
 \examples{
-assert_is_S4(getClass("MethodDefinition"))
+assert_is_s4(getClass("MethodDefinition"))
 #These examples should fail.
-dont_stop(assert_is_S4(1:10))
+dont_stop(assert_is_s4(1:10))
 }
 \seealso{
 \code{\link[base]{isS4}}.

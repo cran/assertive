@@ -34,7 +34,7 @@ is_existing(x, where = -1, envir = if (missing(frame)) as.environment(where)
 \item{.xname}{Not intended to be used directly.}
 }
 \value{
-\code{is_existing} is a vectorised wrapper to \code{exists},
+\code{is_existing} is a vectorized wrapper to \code{exists},
 providing more information on failure.  The \code{assert_*} functions
 return nothing but throw an error if \code{is_existing} returns
 \code{FALSE}.

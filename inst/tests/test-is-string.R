@@ -54,13 +54,13 @@ test_that("test.is_date_string.a_character_vector.returns_true_when_string_conta
   )
 })
 
-test_that("test.is_email_address.a_character_vector_rfc2822_match.returns_true_when_string_contains_an_email_address", 
+test_that("test.is_email_address.a_character_vector_rfc5322_match.returns_true_when_string_contains_an_email_address", 
 {
   x <- c("foo@bar.com", "foo@@bar.com", "@bar.com", "foo@bar", "foo@bar.comma", 
     "foo!@bar.com", NA)
   expected <- c(TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, NA)
   expect_equal(
-    strip_attributes(actual <- is_email_address(x, method = "rfc2822")), 
+    strip_attributes(actual <- is_email_address(x, method = "rfc5322")), 
     expected
   )
   expect_equal(names(actual), unname(x))

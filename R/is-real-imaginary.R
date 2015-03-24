@@ -1,11 +1,11 @@
 #' @rdname is_real
 #' @export
-is_imaginary <- function(x)
+is_imaginary <- function(x, tol = 100 * .Machine$double.eps)
 {
   call_and_name(
     function(x)
     {
-      ok <- Re(x) == 0
+      ok <- ok <- abs(Re(x)) < tol
       set_cause(ok, "real")
     },
     x
@@ -17,6 +17,8 @@ is_imaginary <- function(x)
 #' Checks to see if the input is real or imaginary.
 #'
 #' @param x Input to check.
+#' @param tol Imaginary/real components smaller than \code{tol} are not 
+#' considered.
 #' @return \code{TRUE} if the input has imaginary component equal to zero.
 #' The \code{assert_*} functions return nothing but
 #' throw an error if the corresponding \code{is_*} function returns 
@@ -26,6 +28,13 @@ is_imaginary <- function(x)
 #' (x <- with(expand.grid(re = -1:1, im = -1:1), re + im * 1i))
 #' is_real(x)
 #' is_imaginary(x)
+#' 
+#' # By default, very small imaginary/real components are ignored.
+#' x <- .Machine$double.eps * (1 + 1i)
+#' is_real(x)
+#' is_real(x, 0)
+#' is_imaginary(x)
+#' is_imaginary(x, 0)
 #' assert_all_are_real(1:10)
 #' assert_all_are_real(1:10 + 0i)
 #' assert_any_are_real(c(1i, 0))
@@ -34,12 +43,12 @@ is_imaginary <- function(x)
 #' dont_stop(assert_all_are_real(x))
 #' dont_stop(assert_all_are_imaginary(x))
 #' @export
-is_real <- function(x)
+is_real <- function(x, tol = 100 * .Machine$double.eps)
 {
   call_and_name(
     function(x)
     {
-      ok <- Im(x) == 0
+      ok <- abs(Im(x)) < tol
       set_cause(ok, "imaginary")
     },
     x

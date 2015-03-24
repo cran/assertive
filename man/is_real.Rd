@@ -9,20 +9,23 @@
 \alias{is_real}
 \title{Is the input real/imaginary?}
 \usage{
-assert_all_are_imaginary(x)
+assert_all_are_imaginary(x, tol = 100 * .Machine$double.eps)
 
-assert_any_are_imaginary(x)
+assert_any_are_imaginary(x, tol = 100 * .Machine$double.eps)
 
-assert_all_are_real(x)
+assert_all_are_real(x, tol = 100 * .Machine$double.eps)
 
-assert_any_are_real(x)
+assert_any_are_real(x, tol = 100 * .Machine$double.eps)
 
-is_imaginary(x)
+is_imaginary(x, tol = 100 * .Machine$double.eps)
 
-is_real(x)
+is_real(x, tol = 100 * .Machine$double.eps)
 }
 \arguments{
 \item{x}{Input to check.}
+
+\item{tol}{Imaginary/real components smaller than \code{tol} are not
+considered.}
 }
 \value{
 \code{TRUE} if the input has imaginary component equal to zero.
@@ -37,6 +40,13 @@ Checks to see if the input is real or imaginary.
 (x <- with(expand.grid(re = -1:1, im = -1:1), re + im * 1i))
 is_real(x)
 is_imaginary(x)
+
+# By default, very small imaginary/real components are ignored.
+x <- .Machine$double.eps * (1 + 1i)
+is_real(x)
+is_real(x, 0)
+is_imaginary(x)
+is_imaginary(x, 0)
 assert_all_are_real(1:10)
 assert_all_are_real(1:10 + 0i)
 assert_any_are_real(c(1i, 0))

@@ -14,7 +14,7 @@ test_that(
       
       if(caps[i])
       {
-        expect_true(actual)
+        expect_true(actual, info = fns[i])
       } else
       {
         expect_false(actual)

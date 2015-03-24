@@ -6,7 +6,7 @@
 \alias{strip_non_numeric}
 \title{Removes invalid characters from a string.}
 \usage{
-strip_invalid_chars(x, invalid_chars, char_desc = "invalid")
+strip_invalid_chars(x, invalid_chars, char_desc = gettext("invalid"))
 
 strip_non_alphanumeric(x)
 

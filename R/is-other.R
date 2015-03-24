@@ -87,7 +87,7 @@ is_even <- function(x, tol = 100 * .Machine$double.eps)
 #' @param mode Passed to \code{exists}.
 #' @param inherits Passed to \code{exists}.
 #' @param .xname Not intended to be used directly.
-#' @return \code{is_existing} is a vectorised wrapper to \code{exists}, 
+#' @return \code{is_existing} is a vectorized wrapper to \code{exists}, 
 #' providing more information on failure.  The \code{assert_*} functions
 #' return nothing but throw an error if \code{is_existing} returns 
 #' \code{FALSE}.
@@ -269,9 +269,12 @@ is_unsorted <- function(x, na.rm = FALSE, strictly = FALSE,
 #' @return \code{TRUE} if the input is a whole number.
 #' @seealso \code{is_divisible_by}
 #' @examples
+#' # 1, plus or minus a very small number
 #' x <- 1 + c(0, .Machine$double.eps, -.Machine$double.neg.eps)
+#' # By default, you get a bit of tolerance for rounding errors
 #' is_whole_number(x)
-#' is_whole_number(x, 0)
+#' # Set the tolerance to zero for exact matching.
+#' is_whole_number(x, tol = 0)
 #' @export
 is_whole_number <- function(x, tol = 100 * .Machine$double.eps)
 {

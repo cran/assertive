@@ -12,7 +12,7 @@ cause(x) <- value
 \arguments{
 \item{x}{Any variable.}
 
-\item{value}{Passed to \code{sprintf} and stored in the \code{"cause"}
+\item{value}{Passed to \code{gettextf} and stored in the \code{"cause"}
 attribute.}
 }
 \value{

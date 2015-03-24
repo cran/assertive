@@ -34,7 +34,7 @@ assert_engine <- function(x, predicate, msg, what = c("all", "any"), ...)
         msg <- cause(ok)
       } else
       {
-        stop("Bug in assertive; error message is missing")
+        stop("Bug in assertive; error message is missing.")
       }
     }
     if(!is_scalar(ok))
@@ -51,7 +51,12 @@ assert_engine <- function(x, predicate, msg, what = c("all", "any"), ...)
       )
       msg <- paste0(
         msg, 
-        "\nThere were ", n, " failures",
+        "\nThere ", 
+        ngettext(n, "was", "were"), 
+        " ", 
+        n, 
+        " ", 
+        ngettext(n, "failure", "failures"),
         if(nrow(failures) < n) 
         {
           paste0(" (showing the first ", nrow(failures), ")")
@@ -71,7 +76,7 @@ assert_engine <- function(x, predicate, msg, what = c("all", "any"), ...)
 #' scalar) value.
 #' 
 #' @param x A vector (atomic or list).
-#' @param predicate A predicate (function that returns a bool) to apply 
+#' @param predicate A predicate (function that returns a bool) to apply.
 #' elementwise to \code{x}.
 #' @param USE.NAMES Passed to \code{vapply}.
 #' @param ... Passed to \code{vapply}.
@@ -231,13 +236,13 @@ d <- function(lo, hi = NA_integer_, optional = FALSE)
 #'
 #' Always returns the value \code{FALSE}, with a cause attribute.
 #'
-#' @param ... Passed to sprintf to create a cause of failure message.
+#' @param ... Passed to \code{gettextf} to create a cause of failure message.
 #' @return \code{FALSE} with the attribute \code{cause}, as provided
 #' in the input.
 #' @seealso \code{\link{cause}} and \code{\link{na}}.
 false <- function(...)
 {
-  msg <- if(length(list(...)) > 0L) sprintf(...) else ""
+  msg <- if(length(list(...)) > 0L) gettextf(...) else ""
   x <- FALSE
   cause(x) <- msg
   x
@@ -324,13 +329,13 @@ modal_value <- function(x)
 #'
 #' Always returns the value (logical) \code{NA}, with a cause attribute.
 #'
-#' @param ... Passed to sprintf to create a cause of failure message.
+#' @param ... Passed to \code{gettextf} to create a cause of failure message.
 #' @return \code{NA} with the attribute \code{cause}, as provided
 #' in the input.
 #' @seealso \code{\link{cause}} and \code{\link{false}}.
 na <- function(...)
 {
-  msg <- if(length(list(...)) > 0L) sprintf(...) else ""
+  msg <- if(length(list(...)) > 0L) gettextf(...) else ""
   x <- NA
   cause(x) <- msg
   x
@@ -394,12 +399,12 @@ recycle <- function(...)
 #' #Inputs such as factors as coerced to character.
 #' strip_non_alphanumeric(factor(c(" A1\t1AA.", "*(B2^2BB)%")))
 #' }
-strip_invalid_chars <- function(x, invalid_chars, char_desc = "invalid")
+strip_invalid_chars <- function(x, invalid_chars, char_desc = gettext("invalid"))
 {
   x <- coerce_to(x, "character")
   if(any(grepl(invalid_chars, x)))
   {
-    warning("Removing ", char_desc, " characters from input.")
+    warning(gettextf("Removing %s characters from input.", char_desc))
     x <- gsub(invalid_chars, "", x)
   }
   x

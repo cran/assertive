@@ -173,7 +173,7 @@ is_readable_file <- function(x)
       ok <- file.access(x, mode = 4) == 0L
       set_cause(
         ok, 
-        ifelse(file.exists(x, "unreadable", "nonexistent"))
+        ifelse(file.exists(x), "unreadable", "nonexistent")
       )
     }, 
     x

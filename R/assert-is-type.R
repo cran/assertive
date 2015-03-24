@@ -2,7 +2,7 @@
 #' @export
 assert_is_all_of <- function(x, classes, .xname = get_name_in_parent(x))
 {  
-  msg <- sprintf(
+  msg <- gettextf(
     "%s is not in all of the classes %s.", 
     .xname, 
     toString(sQuote(classes))
@@ -14,7 +14,7 @@ assert_is_all_of <- function(x, classes, .xname = get_name_in_parent(x))
 #' @export
 assert_is_any_of <- function(x, classes, .xname = get_name_in_parent(x))
 {  
-  msg <- sprintf(
+  msg <- gettextf(
     "%s is not in any of the classes %s.", 
     .xname, 
     toString(sQuote(classes))
@@ -204,11 +204,19 @@ assert_is_relistable <- function(x)
   assert_engine(x, is_relistable, .xname = get_name_in_parent(x))
 }
 
-#' @rdname is_S4
+#' @rdname is_s4
 #' @export
 assert_is_S4 <- function(x)
 {                                                         
-  assert_engine(x, is_S4, .xname = get_name_in_parent(x))
+  .Deprecated("assert_is_s4")
+  assert_is_s4(x)
+}
+
+#' @rdname is_s4
+#' @export
+assert_is_s4 <- function(x)
+{                                                         
+  assert_engine(x, is_s4, .xname = get_name_in_parent(x))
 }
 
 #' @rdname is_function

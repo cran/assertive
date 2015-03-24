@@ -57,11 +57,11 @@ Checks to see if the input is \code{TRUE}.
 providing more information on failure.  Likewise,
 \code{is_identical_to_false} checks that the input is identical to FALSE.  If
 \code{allow_attributes} is \code{TRUE}, a scalar value of \code{TRUE} with
-attributes is allowed. \code{is_true} and \code{is_false} are vectorised,
+attributes is allowed. \code{is_true} and \code{is_false} are vectorized,
 returning \code{TRUE} when the inputs are \code{TRUE} and \code{FALSE}
 respectively.
 Note that in version 0.1-4 and prior, \code{is_identical_to_true/false} was
-named \code{is_true/false} and the vectorised versions were not present.
+named \code{is_true/false} and the vectorized versions were not present.
 }
 \examples{
 assert_is_identical_to_true(TRUE)

@@ -1,3 +1,8 @@
+0.2-4 Support for alpha/beta versions of R.
+0.2-3 Added Vignettes
+      Started infrastructure for message translation: currently American and British English supported.
+      A few more reflection checks.
+      Some functions for working with sets.
 0.2-1 Vectorised cause attributes.
       Error messages give clearer indication of problem elements.
       Many more reflection functions.

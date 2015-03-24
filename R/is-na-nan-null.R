@@ -155,7 +155,7 @@ is_not_nan <- function(x)
 }
 
 #' @rdname is_null
-#' export
+#' @export
 is_not_null <- function(x, .xname = get_name_in_parent(x))
 {
   if(is.null(x))

@@ -1,0 +1,43 @@
+---
+title: "Exercise answers"
+author: "Richard Cotton"
+date: '`r Sys.Date()`'
+output: html_document
+---
+  
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{A1. Exercise answers}
+-->
+  
+```{r, Setup, echo = FALSE, results = "hide"}
+set.seed(19790801)
+library(assertive)
+knitr::opts_chunk$set(error = FALSE)
+```
+
+### 1. Introduction
+
+1. Just type the code in the question!
+2. `example(assert_is_vector)`.
+3. `example(assert_all_are_whole_numbers)`
+4. `example(is_us_zip_code)`
+
+### 2. Checking function inputs
+
+1. The answer is a little subjective.  
+
+    For `x`, I suggest simply enforcing that it is `numeric` using 
+    `assert_is_numeric(x)`.  
+    
+    `center` and `constant` are expected to be single numbers.  You can either throw
+    an error if this is not the case using `assert_is_a_number(center)`, etc., or 
+    have a slightly more forgiving check for numeric followed by retrieving of the 
+    first value using `center <- use_first(center)`, etc..  For very strict 
+    checking, you may also wish to ensure that `center` and `constant` are not 
+    missing or NaN using `assert_all_are_not_na(c(center, constant))`.
+    
+    `na.rm`, `low` and `high` are expected to be logical values.  You can throw an 
+    error for inputs that don't conform using `assert_is_a_bool(na.rm)`, etc..  I 
+    suggest being more forgiving by extracting the first element and coercing to 
+    logical using `na.rm <- coerce_to(use_first(na.rm), "logical")`, etc.

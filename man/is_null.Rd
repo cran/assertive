@@ -3,12 +3,15 @@
 \name{assert_is_not_null}
 \alias{assert_is_not_null}
 \alias{assert_is_null}
+\alias{is_not_null}
 \alias{is_null}
 \title{Is the input (not) null?}
 \usage{
 assert_is_not_null(x)
 
 assert_is_null(x)
+
+is_not_null(x, .xname = get_name_in_parent(x))
 
 is_null(x, .xname = get_name_in_parent(x))
 }

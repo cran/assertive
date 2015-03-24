@@ -2,6 +2,25 @@
 #' @export
 is_64_bit_os <- function()
 {
+  .Deprecated("is_64_bit")
+  is_64_bit()
+}
+
+#' @rdname is_windows
+#' @export
+is_32_bit <- function()
+{
+  if(.Machine$sizeof.pointer != 4)
+  {
+    return(false("R is not 32 bit."))
+  }
+  TRUE
+}
+
+#' @rdname is_windows
+#' @export
+is_64_bit <- function()
+{
   if(.Machine$sizeof.pointer != 8)
   {
     return(false("R is not 64 bit."))
@@ -150,14 +169,20 @@ is_period_for_decimal_point <- function(type = c("numbers", "money"))
 #' is_r_stable()
 #' is_r_patched()
 #' is_r_devel()
+#' is_r_alpha()
+#' is_r_beta()
+#' is_r_release_candidate()
 #' is_architect()
 #' is_revo_r()
 #' is_rstudio()
 #' is_slave_r()
 #' switch(
 #'   version$status,
-#'   "Patched"                      = assert_is_r_patched(),
+#'   Patched                        = assert_is_r_patched(),
 #'   "Under development (unstable)" = assert_is_r_devel(),
+#'   alpha                          = assert_is_r_alpha(),
+#'   beta                           = assert_is_r_beta(),
+#'   RC                             = assert_is_r_release_candidate(),
 #'   assert_is_r_stable()
 #' )
 #' dont_stop(assert_is_r())
@@ -168,6 +193,28 @@ is_r <- function()
   {
     return(false("You are not running R."))
   } 
+  TRUE
+}
+
+#' @rdname is_r
+#' @export
+is_r_alpha <- function()
+{
+  if(version$status != "alpha")
+  {
+    return(false("You are not running an alpha build of R."))
+  }
+  TRUE
+}
+
+#' @rdname is_r
+#' @export
+is_r_beta <- function()
+{
+  if(version$status != "beta")
+  {
+    return(false("You are not running a beta build of R."))
+  }
   TRUE
 }
 
@@ -189,6 +236,17 @@ is_r_patched <- function()
   if(version$status != "Patched")
   {
     return(false("You are not running a patched build of R."))
+  }
+  TRUE
+}
+
+#' @rdname is_r
+#' @export
+is_r_release_candidate <- function()
+{
+  if(version$status != "RC")
+  {
+    return(false("You are not running a release candidate build of R."))
   }
   TRUE
 }
@@ -237,7 +295,8 @@ is_rstudio <- function()
 #' @export
 is_slave_r <- function()
 {
-  if(!("--slave" %in% commandArgs()))
+  cargs <- commandArgs()
+  if(!"--slave" %in% cargs && !all(c("--quiet", "--no-save") %in% cargs))
   {
     return(false("You are not running a slave instance of R."))
   }
@@ -298,7 +357,8 @@ is_unix <- function()
 #' is_linux()
 #' is_bsd()
 #' is_solaris()
-#' is_64_bit_os()
+#' is_32_bit()
+#' is_64_bit()
 #' dont_stop(assert_is_windows())
 #' dont_stop(assert_is_unix())
 #' @export

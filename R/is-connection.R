@@ -40,7 +40,8 @@ is_bzfile_connection <- function(x, .xname = get_name_in_parent(x))
 #' assert_is_readable_connection(stdin())
 #' assert_is_open_connection(stdin())
 #' assert_is_stdin(stdin())
-#' assert_is_terminal_connection(stdout())
+#' # Next line is usually true but, e.g., devtools::run_examples overrides it
+#' dont_stop(assert_is_terminal_connection(stdout()))
 #' assert_is_writable_connection(stdout())
 #' assert_is_open_connection(stdout())
 #' assert_is_stdout(stdout())
@@ -177,12 +178,11 @@ is_socket_connection <- function(x, .xname = get_name_in_parent(x))
 #' @export
 is_stderr <- function(x, .xname = get_name_in_parent(x))
 {
-  if(!(ok <- is_terminal_connection(x))) 
+  if(!(ok <- is_connection(x))) 
   {
     return(ok)
   }
-  summary_of_x <- summary(x)
-  if(summary_of_x$description != "stderr")
+  if(!identical(x, stderr()))
   {
     return(false("The connection %s is not stderr.", .xname))
   }
@@ -193,12 +193,11 @@ is_stderr <- function(x, .xname = get_name_in_parent(x))
 #' @export
 is_stdin <- function(x, .xname = get_name_in_parent(x))
 {
-  if(!(ok <- is_terminal_connection(x))) 
+  if(!(ok <- is_connection(x))) 
   {
     return(ok)
   }
-  summary_of_x <- summary(x)
-  if(summary_of_x$description != "stdin")
+  if(!identical(x, stdin()))
   {
     return(false("The connection %s is not stdin.", .xname))
   }
@@ -209,12 +208,13 @@ is_stdin <- function(x, .xname = get_name_in_parent(x))
 #' @export
 is_stdout <- function(x, .xname = get_name_in_parent(x))
 {
-  if(!(ok <- is_terminal_connection(x))) 
+  if(!(ok <- is_connection(x))) 
   {
     return(ok)
   }
-  summary_of_x <- summary(x)
-  if(summary_of_x$description != "stdout")
+  # Can't just test summary(x)$description because, e.g., devtools::run_examples
+  # overrides this
+  if(!identical(x, stdout()))
   {
     return(false("The connection %s is not stdout.", .xname))
   }

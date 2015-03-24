@@ -2,7 +2,7 @@
 #' @export
 assert_all_are_cas_numbers <- function(x)
 {                                                     
-  msg <- sprintf("%s are not all CAS numbers.", get_name_in_parent(x))
+  msg <- gettextf("%s are not all CAS numbers.", get_name_in_parent(x))
   assert_engine(x, is_cas_number, msg)        
 }
 
@@ -10,7 +10,7 @@ assert_all_are_cas_numbers <- function(x)
 #' @export
 assert_any_are_cas_numbers <- function(x)
 {                                                     
-  msg <- sprintf("%s are all not CAS numbers.", get_name_in_parent(x))
+  msg <- gettextf("%s are all not CAS numbers.", get_name_in_parent(x))
   assert_engine(x, is_cas_number, msg, what = "any")        
 }
 
@@ -18,7 +18,7 @@ assert_any_are_cas_numbers <- function(x)
 #' @export
 assert_all_are_credit_card_numbers <- function(x)
 {                                                     
-  msg <- sprintf("%s are not all credit card numbers.", get_name_in_parent(x))
+  msg <- gettextf("%s are not all credit card numbers.", get_name_in_parent(x))
   assert_engine(x, is_credit_card_number, msg)        
 }
 
@@ -26,7 +26,7 @@ assert_all_are_credit_card_numbers <- function(x)
 #' @export
 assert_any_are_credit_card_numbers <- function(x)
 {                                                     
-  msg <- sprintf("%s are all not credit card numbers.", get_name_in_parent(x))
+  msg <- gettextf("%s are all not credit card numbers.", get_name_in_parent(x))
   assert_engine(x, is_credit_card_number, msg, what = "any")        
 }
 
@@ -34,7 +34,7 @@ assert_any_are_credit_card_numbers <- function(x)
 #' @export
 assert_all_are_date_strings <- function(x, format = "%F %T")
 {                                                     
-  msg <- sprintf(
+  msg <- gettextf(
     "%s is not a character vector of dates.", 
     get_name_in_parent(x)
   )
@@ -45,7 +45,7 @@ assert_all_are_date_strings <- function(x, format = "%F %T")
 #' @export
 assert_any_are_date_strings <- function(x, format = "%F %T")
 {                                                     
-  msg <- sprintf(
+  msg <- gettextf(
     "%s is not a character vector of dates.", 
     get_name_in_parent(x)
   )
@@ -54,19 +54,19 @@ assert_any_are_date_strings <- function(x, format = "%F %T")
 
 #' @rdname is_email_address
 #' @export
-assert_all_are_email_addresses <- function(x, method = c("simple", "rfc2822"))
+assert_all_are_email_addresses <- function(x, method = c("simple", "rfc5322"))
 {                    
   method <- match.arg(method)
-  msg <- sprintf("%s are not all email addresses.", get_name_in_parent(x))
+  msg <- gettextf("%s are not all email addresses.", get_name_in_parent(x))
   assert_engine(x, is_email_address, msg, method = method)        
 }
 
 #' @rdname is_email_address
 #' @export
-assert_any_are_email_addresses <- function(x, method = c("simple", "rfc2822"))
+assert_any_are_email_addresses <- function(x, method = c("simple", "rfc5322"))
 {                                 
   method <- match.arg(method)                    
-  msg <- sprintf("%s are all not email addresses.", get_name_in_parent(x))
+  msg <- gettextf("%s are all not email addresses.", get_name_in_parent(x))
   assert_engine(x, is_email_address, msg, method = method, what = "any")        
 }
 
@@ -74,7 +74,7 @@ assert_any_are_email_addresses <- function(x, method = c("simple", "rfc2822"))
 #' @export
 assert_all_are_hex_colors <- function(x)
 {                    
-  msg <- sprintf("%s are not all hex colours.", get_name_in_parent(x))
+  msg <- gettextf("%s are not all hex colors.", get_name_in_parent(x))
   assert_engine(x, is_hex_color, msg)        
 }
 
@@ -82,7 +82,7 @@ assert_all_are_hex_colors <- function(x)
 #' @export
 assert_any_are_hex_colors <- function(x)
 {                                                
-  msg <- sprintf("%s are all not hex colours.", get_name_in_parent(x))
+  msg <- gettextf("%s are all not hex colors.", get_name_in_parent(x))
   assert_engine(x, is_hex_color, msg, what = "any")        
 }
 
@@ -98,7 +98,7 @@ assert_any_are_hex_colours <- assert_any_are_hex_colors
 #' @export
 assert_all_are_ip_addresses <- function(x)
 {                                                     
-  msg <- sprintf("%s are not all IP addresses.", get_name_in_parent(x))
+  msg <- gettextf("%s are not all IP addresses.", get_name_in_parent(x))
   assert_engine(x, is_ip_address, msg)        
 }
 
@@ -106,7 +106,7 @@ assert_all_are_ip_addresses <- function(x)
 #' @export
 assert_any_are_ip_addresses <- function(x)
 {                                                     
-  msg <- sprintf("%s are all not IP addresses.", get_name_in_parent(x))
+  msg <- gettextf("%s are all not IP addresses.", get_name_in_parent(x))
   assert_engine(x, is_ip_address, msg, what = "any")        
 }
 
@@ -114,7 +114,7 @@ assert_any_are_ip_addresses <- function(x)
 #' @export
 assert_all_are_isbn_codes <- function(x, type = c("10", "13"))
 {                                                     
-  msg <- sprintf("%s are not all ISBN codes.", get_name_in_parent(x))
+  msg <- gettextf("%s are not all ISBN codes.", get_name_in_parent(x))
   assert_engine(x, is_isbn_code, msg, type = type)        
 }
 
@@ -122,7 +122,7 @@ assert_all_are_isbn_codes <- function(x, type = c("10", "13"))
 #' @export
 assert_any_are_isbn_codes <- function(x, type = c("10", "13"))
 {                                                     
-  msg <- sprintf("%s are all not ISBN codes.", get_name_in_parent(x))
+  msg <- gettextf("%s are all not ISBN codes.", get_name_in_parent(x))
   assert_engine(x, is_isbn_code, msg, what = "any", type = type)        
 }
 
@@ -130,7 +130,7 @@ assert_any_are_isbn_codes <- function(x, type = c("10", "13"))
 #' @export
 assert_all_are_numeric_strings <- function(x)
 {                                                     
-  msg <- sprintf(
+  msg <- gettextf(
     "%s is not a character vector of numbers.", 
     get_name_in_parent(x)
   )
@@ -141,7 +141,7 @@ assert_all_are_numeric_strings <- function(x)
 #' @export
 assert_any_are_numeric_strings <- function(x)
 {                                                     
-  msg <- sprintf(
+  msg <- gettextf(
     "%s is not a character vector of numbers.", 
     get_name_in_parent(x)
   )
@@ -152,7 +152,7 @@ assert_any_are_numeric_strings <- function(x)
 #' @export
 assert_all_are_single_characters <- function(x)
 {                                                     
-  msg <- sprintf("%s are not all single characters.", get_name_in_parent(x))
+  msg <- gettextf("%s are not all single characters.", get_name_in_parent(x))
   assert_engine(x, is_single_character, msg)        
 }
 
@@ -160,7 +160,7 @@ assert_all_are_single_characters <- function(x)
 #' @export
 assert_any_are_single_characters <- function(x)
 {                                                     
-  msg <- sprintf("%s are all not single characters.", get_name_in_parent(x))
+  msg <- gettextf("%s are all not single characters.", get_name_in_parent(x))
   assert_engine(x, is_single_character, msg, what = "any")        
 }
 
@@ -168,7 +168,7 @@ assert_any_are_single_characters <- function(x)
 #' @export
 assert_all_strings_are_missing_or_empty <- function(x)
 {                                                       
-  msg <- sprintf(
+  msg <- gettextf(
     "%s are not all missing or empty strings.", 
     get_name_in_parent(x)
   )
@@ -179,7 +179,7 @@ assert_all_strings_are_missing_or_empty <- function(x)
 #' @export
 assert_any_strings_are_missing_or_empty <- function(x)
 {                                                      
-  msg <- sprintf(
+  msg <- gettextf(
     "%s are all not missing or empty strings.", 
     get_name_in_parent(x)
   )
@@ -206,7 +206,7 @@ assert_any_strings_are_not_missing_nor_empty <- function(x)
 #' @export
 assert_all_are_not_missing_nor_empty_characters <- function(x)
 {                                                       
-  msg <- sprintf("%s contains missing or empty strings.", get_name_in_parent(x))
+  msg <- gettextf("%s contains missing or empty strings.", get_name_in_parent(x))
   assert_engine(x, is_not_missing_nor_empty_character, msg)
 }
 
@@ -214,7 +214,7 @@ assert_all_are_not_missing_nor_empty_characters <- function(x)
 #' @export
 assert_any_are_not_missing_nor_empty_characters <- function(x)
 {                                                      
-  msg <- sprintf("%s are all missing or empty strings.", get_name_in_parent(x))
+  msg <- gettextf("%s are all missing or empty strings.", get_name_in_parent(x))
   assert_engine(x, is_not_missing_nor_empty_character, msg, what = "any")
 }
 
@@ -230,7 +230,7 @@ assert_all_are_valid_variable_names <- function(x, allow_reserved = TRUE,
       msg = "The 'allow_duplicates' argument is deprecated and will be ignored."
     )
   }
-  msg <- sprintf("%s are not all valid variable names.", get_name_in_parent(x))
+  msg <- gettextf("%s are not all valid variable names.", get_name_in_parent(x))
   assert_engine(
     x, 
     is_valid_variable_name, 
@@ -250,7 +250,7 @@ assert_any_are_valid_variable_names <- function(x, allow_reserved = TRUE,
       msg = "The 'allow_duplicates' argument is deprecated and will be ignored."
     )
   }
-  msg <- sprintf("%s are all not valid variable names.", get_name_in_parent(x))
+  msg <- gettextf("%s are all not valid variable names.", get_name_in_parent(x))
   assert_engine(
     x, 
     is_valid_variable_name, 

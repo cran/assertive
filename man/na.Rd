@@ -7,7 +7,7 @@
 na(...)
 }
 \arguments{
-\item{...}{Passed to sprintf to create a cause of failure message.}
+\item{...}{Passed to \code{gettextf} to create a cause of failure message.}
 }
 \value{
 \code{NA} with the attribute \code{cause}, as provided

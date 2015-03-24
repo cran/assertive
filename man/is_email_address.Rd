@@ -6,11 +6,11 @@
 \alias{is_email_address}
 \title{Does the character vector contain email addresses?}
 \usage{
-assert_all_are_email_addresses(x, method = c("simple", "rfc2822"))
+assert_all_are_email_addresses(x, method = c("simple", "rfc5322"))
 
-assert_any_are_email_addresses(x, method = c("simple", "rfc2822"))
+assert_any_are_email_addresses(x, method = c("simple", "rfc5322"))
 
-is_email_address(x, method = c("simple", "rfc2822"),
+is_email_address(x, method = c("simple", "rfc5322"),
   .xname = get_name_in_parent(x))
 }
 \arguments{
@@ -34,7 +34,7 @@ Each method specifies a regular expression (see
 most email addresses in use, and is quite good at filtering out typos and
 nonsense.  It won't match \emph{every} email address however.  For example,
 emails from a top level domain longer than 4 characters won't pass.  The
-\code{rfc822} method implements the offical standard for emails.  Thus all
+\code{rfc5322} method implements the official standard for emails.  Thus all
 genuine emails will pass, but since the spec is very broad, it isn't as good
 at filtering out nonsense.
 }
@@ -48,7 +48,7 @@ addresses <- c(
   missing  = NA
 )
 is_email_address(addresses)
-is_email_address(addresses, method = "rfc2822")
+is_email_address(addresses, method = "rfc5322")
 }
 \references{
 \url{http://www.regular-expressions.info/email.html} contains the
