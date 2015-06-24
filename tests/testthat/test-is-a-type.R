@@ -4,7 +4,7 @@ test_that("test.is_a_bool.a_vector.returns_false", {
   expect_false(actual)
   expect_equal(
     cause(actual), 
-    noquote("x does not have length 1.")
+    noquote("x has length 2, not 1.")
   )
 })
 
@@ -14,7 +14,7 @@ test_that("test.is_a_bool.empty_logical.returns_false", {
   expect_false(actual)
   expect_equal(
     cause(actual), 
-    noquote("x does not have length 1.")
+    noquote("x has length 0, not 1.")
   )
 })
 
@@ -36,7 +36,7 @@ test_that("test.is_a_complex.1.returns_false", {
   expect_false(actual)
   expect_equal(
     cause(actual), 
-    noquote("x is not of type 'complex'.")
+    noquote("x is not of type 'complex'; it has class 'integer'.")
   )
 })
 
@@ -54,7 +54,7 @@ test_that("test.is_a_complex.a_vector.returns_false", {
   expect_false(actual)
   expect_equal(
     cause(actual), 
-    noquote("x does not have length 1.")
+    noquote("x has length 2, not 1.")
   )
 })
 

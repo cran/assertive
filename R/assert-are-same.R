@@ -47,11 +47,11 @@ assert_any_are_identical <- function(...)
 
 #' @rdname are_same_length
 #' @export
-assert_all_are_same_length <- function(...)
+assert_all_are_same_length <- function(..., l = list())
 {
   # Nasty reimplementation of functionality since assert_engine doesn't work
   # ... inputs right now.
-  ok <- are_same_length(...)
+  ok <- are_same_length(..., l = l)
   if(!all(ok))
   {
     handler <- match.fun(
@@ -71,10 +71,10 @@ assert_all_are_same_length <- function(...)
 
 #' @rdname are_same_length
 #' @export
-assert_any_are_same_length <- function(...)
+assert_any_are_same_length <- function(..., l = list())
 {
   # Also nasty.
-  ok <- are_same_length(...)
+  ok <- are_same_length(..., l = l)
   if(!any(ok))
   {
     handler <- match.fun(

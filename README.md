@@ -11,13 +11,13 @@ To install the stable version, type:
 install.packages("assertive")
 ```
 
-To install the development version, you first need the devtools package.
+To install the development version, you first need the *devtools* package.
 
 ```{r}
 install.packages("devtools")
 ```
 
-Then you can install the assertive package using
+Then you can install the *assertive* package using
 
 ```{r}
 library(devtools)
@@ -27,7 +27,7 @@ install_bitbucket("richierocks/assertive")
 
 ### How to use the package
 
-assertive contains lots of *assert* functions that throw errors if conditions 
+*assertive* contains lots of *assert* functions that throw errors if conditions 
 aren't met.  They are very useful for checking user input to your functions.
 
 For example,
@@ -179,6 +179,16 @@ specialized types including `is_file_connection`, `is_fifo_connection`,
 `is_pipe_connection`, `is_readable_connection`, `is_open_connection`, 
 `is_writable_connection`, `is_stdin`, `is_stdout` and `is_stderr`.
 
+### Testing time
+
+`is_in_future` and `is_in_past` test when a date-time object is.
+
+### Testing sets
+
+`is_set_equal` tests if two vectors contain the same elements, regardless of 
+order.
+
+`is_subset` and `is_superset` test if one vector contains another.
 
 ### Testing complex data types
 
@@ -203,8 +213,8 @@ page.
 You can test the operating system with `is_windows`, `is_linux`, `is_mac`, 
 `is_solaris` and the more general `is_unix`.
 
-`is_r`, `is_r_devel`, `is_r_patched`, `is_r_release_candidate` and `is_r_stable`
-test if you are running R, and if so what type.
+`is_r`, `is_r_devel`, `is_r_alpha`, `is_r_beta`, `is_r_release_candidate`,
+`is_r_stable` and `is_r_patched` test if you are running R, and if so what type.
 
 `is_rstudio`, `is_architect` and `is_revo_r` test for specific IDEs.
 
@@ -254,3 +264,6 @@ allow users to pass arguments to your function in either form.
 demonstrating errors in examples.
 
 `parenthesise` wraps a string in parentheses.
+
+`sys_get_locale` and `sys_set_locale` are convenience wrappers for getting and 
+setting locale components.

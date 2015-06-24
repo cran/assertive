@@ -1,11 +1,18 @@
-#' @rdname r_can_compile_code
+#' @rdname r_can_find_tools
+#' @export
+assert_r_can_find_tools <- function()
+{
+  assert_engine(predicate = r_can_find_tools)
+}
+
+#' @rdname r_can_find_tools
 #' @export
 assert_r_can_compile_code <- function()
 {
   assert_engine(predicate = r_can_compile_code)
 }
 
-#' @rdname r_can_build_translations
+#' @rdname r_can_find_tools
 #' @export
 assert_r_can_build_translations <- function()
 {

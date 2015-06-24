@@ -38,6 +38,13 @@ assert_is_identical_to_true <- function(x, allow_attributes = FALSE)
   )    
 }
 
+#' @rdname is_if_condition
+#' @export
+assert_is_if_condition <- function(x)
+{
+  assert_engine(x, is_if_condition, .xname = get_name_in_parent(x))
+}
+
 #' @rdname is_true
 #' @export
 assert_all_are_true <- function(x)

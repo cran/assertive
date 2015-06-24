@@ -1,6 +1,6 @@
 #' @rdname is_set_equal
 #' @export
-assert_is_set_equal <- function(x, y)
+assert_are_set_equal <- function(x, y)
 {
   assert_engine(
     x, 
@@ -9,6 +9,14 @@ assert_is_set_equal <- function(x, y)
     .xname = get_name_in_parent(x), 
     .yname = get_name_in_parent(y)
   )
+}
+
+#' @rdname is_set_equal
+#' @export
+assert_is_set_equal <- function(x, y)
+{
+  .Deprecated("assert_are_set_equal")
+  assert_are_set_equal(x, y)
 }
 
 #' @rdname is_set_equal

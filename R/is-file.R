@@ -76,6 +76,8 @@ is_empty_file <- function(x)
 #' the names of the inputs in the answer.   \code{assert_*_are_existing_files} 
 #' return nothing but throws an error if \code{is_existing_file} returns
 #' \code{FALSE}.
+#' @note Trailing slashes are removed from paths to avoid a lot of false 
+#' negatives by the underlying function \code{file.exists}.
 #' @seealso \code{\link[base]{file.exists}}.
 #' @examples
 #' assert_all_are_existing_files(dir())
@@ -87,6 +89,8 @@ is_empty_file <- function(x)
 is_existing_file <- function(x)
 {
   x <- coerce_to(x, "character")
+  # file.exists returns FALSE under Windows when there is a trailing slash
+  x <- sub("[\\/]+$", "", x)
   call_and_name(
     function(x)
     {
@@ -122,7 +126,7 @@ is_executable_file <- function(x)
       ok <- file.access(x, mode = 1) == 0L
       set_cause(
         ok, 
-        ifelse(file.exists(x, "unexecutable", "nonexistent"))
+        ifelse(file.exists(x), "unexecutable", "nonexistent")
       )
     }, 
     x

@@ -40,20 +40,27 @@ are_identical <- function(...)
 #' Are the inputs the same length
 #' 
 #' Checks if the inputs are the same length.
-#' @param ... Some R expressions
+#' @param ... Some R expressions.
+#' @param l A list of R expressions.
 #' @return A symmetric square logical matrix which is \code{TRUE} where pairs
 #' of inputs are the same length.
 #' @seealso \code{\link[base]{length}}, \code{\link{are_identical}}
 #' @examples
 #' x <- 1:5
-#' are_same_length(runif(5), x, list(1, 2:3, 4:6, 7:10, 11:15), 1:6)
+#' are_same_length(
+#'   runif(5), x, list(1, 2:3, 4:6, 7:10, 11:15), 1:6, 
+#'   l = list(seq.int(0, 1, 0.2), rnorm(5))
+#' )
 #' assert_any_are_same_length(runif(5), x, list(1, 2:3, 4:6, 7:10, 11:15), 1:6)
 #' dont_stop(assert_all_are_same_length(runif(5), x, list(1, 2:3, 4:6, 7:10, 11:15), 1:6))
 #' @export
-are_same_length <- function(...)
+are_same_length <- function(..., l = list())
 {
+  #merge_dots_with_list(..., l)
   envir <- parent.frame()
   inputs <- as.list(match.call())[-1]
+  inputs_in_list <- as.list(inputs$l)[-1]
+  inputs <- c(inputs[names(inputs) != "l"], inputs_in_list)
   input_pairs <- expand.grid(expr1 = inputs, expr2 = inputs)
   equality <- apply(
     input_pairs, 
@@ -68,7 +75,7 @@ are_same_length <- function(...)
   )
   matrix(
     equality,
-    nrow     = nargs(),
+    nrow     = length(inputs),
     dimnames = list(inputs, inputs) 
   )
 }

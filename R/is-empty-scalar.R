@@ -5,14 +5,16 @@ has_elements <- function(x, n, .xname = get_name_in_parent(x))
   n <- use_first(n)
   assert_all_are_non_negative(n)
   assert_all_are_whole_numbers(n)
-  if(n_elements(x) != n)
+  n_elements_x <- n_elements(x)
+  if(n_elements_x != n)
   {
     return(
       false(
-        "%s does not have %d %s.", 
+        "%s has %d %s, not %d.", 
         .xname, 
-        n, 
-        ngettext(n, "element", "elements")
+        n_elements_x, 
+        ngettext(n_elements_x, "element", "elements"),
+        n
       )
     )
   }
@@ -40,7 +42,7 @@ has_elements <- function(x, n, .xname = get_name_in_parent(x))
 #' dimensions.
 #' @seealso \code{\link{length}}.
 #' @examples
-#' #' # is_of_length returns TRUE if the length of an object
+#' # is_of_length returns TRUE if the length of an object
 #' # matches a specified value.
 #' is_of_length(1:5, 5)
 #' assert_is_of_length(1:5, 5)
@@ -160,31 +162,49 @@ is_non_empty_model <- function(x, .xname = get_name_in_parent(x))
 #' @export
 is_of_dimension <- function(x, n, .xname = get_name_in_parent(x))
 {
-  # There are two cases two test: n is NULL, or n is a vector of natural 
+  dim_x <- dim(x)
+  # There are two cases to test: n is NULL, or n is a vector of natural 
   # numbers.
   if(is.null(n))
   {
     if(has_dims(x))
     {
-      return(false("%s does not have NULL dimension.", .xname))
+      return(
+        false(
+          "%s has %s %s, not NULL.", 
+          .xname, 
+          ngettext(length(dim_x), "dimension", "dimensions"), 
+          deparse(dim_x)
+        )
+      )
     }
     return(TRUE)
   }
   assert_all_are_non_negative(n)
   assert_all_are_whole_numbers(n)
-  dim_x <- dim(x)
   if(!is_of_length(dim_x, length(n)))
   {
-    return(false("%s does not have %d dimensions.", .xname, length(n)))
+    return(
+      false(
+        "%s has %d %s, not %d.", 
+        .xname, 
+        length(dim_x), 
+        ngettext(length(dim_x), "dimension", "dimensions"), 
+        length(n)
+      )
+    )
   }
   differences <- dim_x != n
   if(any(differences))
   {
+    bad <- which(differences)
     return(
       false(
-        "Dimensions %s of %s are incorrect.", 
-        toString(which(differences)), 
-        .xname
+        "%s %s of %s %s incorrect.", 
+        ngettext(length(bad), "Dimension", "Dimensions"), 
+        toString(bad), 
+        .xname,
+        ngettext(length(bad), "is", "are")
       )
     )
   }
@@ -198,16 +218,18 @@ is_of_length <- function(x, n, .xname = get_name_in_parent(x))
   n <- use_first(n)
   assert_all_are_non_negative(n)
   assert_all_are_whole_numbers(n)
-  if(length(x) != n)
+  length_x <- length(x)
+  if(length_x != n)
   {
-    return(false("%s does not have length %d.", .xname, n))
+    return(false("%s has length %d, not %d.", .xname, length_x, n))
   }
   TRUE
 }
 
 #' @rdname is_empty
 #' @export
-is_scalar <- function(x, metric = c("length", "elements"), .xname = get_name_in_parent(x))
+is_scalar <- function(x, metric = c("length", "elements"), 
+  .xname = get_name_in_parent(x))
 {
   metric <- get_metric(metric)
   metric(x, 1L, .xname)

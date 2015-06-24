@@ -1,75 +1,3 @@
-#' Throws an error if a condition isn't met.
-#'
-#' The workhorse of the package.  If a condition isn't met, then an error
-#' is thrown.
-#'
-#' @param x Input to check.  If missing, pass no args to \code{predicate}.
-#' @param predicate Function that returns a logical value (possibly 
-#' a vector).
-#' @param msg The error message, in the event of failure.
-#' @param what Either 'all' or 'any', to reduce vectorised tests to a 
-#' single value.
-#' @param ... Passed to the \code{predicate} function.
-#' @return \code{FALSE} with the attribute \code{message}, as provided
-#' in the input.
-#' @note Missing values are considered as \code{FALSE} for the purposes of
-#' whether or not an error is thrown.
-assert_engine <- function(x, predicate, msg, what = c("all", "any"), ...)
-{
-  handler <- match.fun(
-    match.arg(
-      getOption("assertive.severity"),
-      c("stop", "warning", "message")
-    )
-  )
-  what <- match.fun(match.arg(what))
-  #Some functions, e.g., is.R take no args
-  ok <- if(missing(x)) predicate() else predicate(x, ...)
-  if(!what(ok & !is.na(ok)))
-  {
-    if(missing(msg)) 
-    {
-      if(is_scalar(ok))
-      {
-        msg <- cause(ok)
-      } else
-      {
-        stop("Bug in assertive; error message is missing.")
-      }
-    }
-    if(!is_scalar(ok))
-    {
-      # Append first few failure values and positions to the error message.
-      fail_index <- which(!ok | is.na(ok))
-      n <- length(fail_index)
-      fail_index <- head(fail_index)
-      failures <- data.frame(
-        Position = fail_index,
-        Value    = truncate(names(ok[fail_index])),
-        Cause    = unclass(cause(ok)[fail_index]), # See bug 15997
-        row.names = seq_along(fail_index)
-      )
-      msg <- paste0(
-        msg, 
-        "\nThere ", 
-        ngettext(n, "was", "were"), 
-        " ", 
-        n, 
-        " ", 
-        ngettext(n, "failure", "failures"),
-        if(nrow(failures) < n) 
-        {
-          paste0(" (showing the first ", nrow(failures), ")")
-        },
-        ":\n",
-        print_and_capture(failures)
-      )
-    }
-    # Throw error/warning/message
-    handler(msg, call. = FALSE)
-  }
-}
-
 #' Wrapper to vapply that returns booleans.
 #' 
 #' Wrapper to \code{\link{vapply}} for functions that return a boolean (logical 
@@ -78,11 +6,11 @@ assert_engine <- function(x, predicate, msg, what = c("all", "any"), ...)
 #' @param x A vector (atomic or list).
 #' @param predicate A predicate (function that returns a bool) to apply.
 #' elementwise to \code{x}.
-#' @param USE.NAMES Passed to \code{vapply}.
 #' @param ... Passed to \code{vapply}.
 #' @return A logical vector.
+#' @note \code{USE.NAMES} is set to \code{TRUE}
 #' @seealso \code{\link{vapply}}.
-bapply <- function(x, predicate, ..., USE.NAMES = TRUE)
+bapply <- function(x, predicate, ...)
 {
   vapply(x, predicate, logical(1L), ..., USE.NAMES = TRUE)
 }
@@ -232,22 +160,6 @@ d <- function(lo, hi = NA_integer_, optional = FALSE)
   rx
 }
 
-#' FALSE, with a cause of failure.
-#'
-#' Always returns the value \code{FALSE}, with a cause attribute.
-#'
-#' @param ... Passed to \code{gettextf} to create a cause of failure message.
-#' @return \code{FALSE} with the attribute \code{cause}, as provided
-#' in the input.
-#' @seealso \code{\link{cause}} and \code{\link{na}}.
-false <- function(...)
-{
-  msg <- if(length(list(...)) > 0L) gettextf(...) else ""
-  x <- FALSE
-  cause(x) <- msg
-  x
-}
-
 get_metric <- function(metric = c("length", "elements"))
 {
   switch(
@@ -323,22 +235,6 @@ matches_regex <- function(x, rx, ignore.case = TRUE, ...)
 modal_value <- function(x)
 {
   names(sort(table(x), descending = TRUE))[1]
-}
-
-#' NA, with a cause of failure.
-#'
-#' Always returns the value (logical) \code{NA}, with a cause attribute.
-#'
-#' @param ... Passed to \code{gettextf} to create a cause of failure message.
-#' @return \code{NA} with the attribute \code{cause}, as provided
-#' in the input.
-#' @seealso \code{\link{cause}} and \code{\link{false}}.
-na <- function(...)
-{
-  msg <- if(length(list(...)) > 0L) gettextf(...) else ""
-  x <- NA
-  cause(x) <- msg
-  x
 }
 
 #' Print a variable and capture the output

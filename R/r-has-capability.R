@@ -1,19 +1,26 @@
-#' Can R find tools for compiling code?
+#' Can R find tools?
 #' 
-#' Checks to see if R can see the \code{gcc} and \code{make} tools in order
-#' to compile code.
-#' @return \code{r_can_compile_code} returns \code{TRUE} if R can see \code{gcc} 
-#' and \code{make} tools, and \code{FALSE} (with a cause) otherwise.
-#' \code{assert_r_can_compile_code} returns nothing but throws an error if 
-#' \code{r_can_compile_code} function returns \code{FALSE}.
-#' @seealso \code{\link{r_can_build_translations}}
+#' Checks to see if R can see command line tools.
+#' @param tools A character vector of tools to look for.
+#' @return The \code{is_*} functions return \code{TRUE} if the input is 
+#' within an interval.  The \code{assert_*} functions return nothing but
+#' throw an error if the corresponding \code{is_*} function returns 
+#' \code{FALSE}. 
+#' @note \code{r_can_compile_code} is a convenience function looking for
+#' \code{gcc} and \code{make}.
+#' @note \code{r_can_build_translations} is a convenience function looking for
+#' \code{gettext} and \code{msgfmt}.
+#' @seealso \code{\link[base]{Sys.which}}
 #' @examples
+#' r_can_find_tools(c("latex", "pdflatex"))
 #' r_can_compile_code()
+#' r_can_build_translations()
+#' dont_stop(assert_r_can_find_tools(c("latex", "pdflatex")))
 #' dont_stop(assert_r_can_compile_code())
+#' dont_stop(r_can_build_translations())
 #' @export
-r_can_compile_code <- function()
+r_can_find_tools <- function(tools)
 {
-  tools <- c("gcc", "make")
   paths <- Sys.which(tools)
   not_found <- !nzchar(paths)
   if(any(not_found))
@@ -29,36 +36,18 @@ r_can_compile_code <- function()
   TRUE
 }
 
-#' Can R find tools for building translations?
-#' 
-#' Checks to see if R can see the \code{gettext} and \code{msgfmt} tools in 
-#' order to build binary translation files.
-#' @return \code{r_can_build_translations} returns \code{TRUE} if R can see 
-#' \code{gettext} and \code{msgfmt} tools, and \code{FALSE} (with a cause) 
-#' otherwise.
-#' \code{assert_r_can_build_translations} returns nothing but throws an error if 
-#' \code{r_can_build_translations} function returns \code{FALSE}.
-#' @seealso \code{\link{r_can_compile_code}}
-#' @examples
-#' r_can_build_translations()
-#' dont_stop(assert_r_can_build_translations())
+#' @rdname r_can_find_tools
+#' @export
+r_can_compile_code <- function()
+{
+  r_can_find_tools(c("gcc", "make"))
+}
+
+#' @rdname r_can_find_tools
 #' @export
 r_can_build_translations <- function()
 {
-  tools <- c("gettext", "msgfmt")
-  paths <- Sys.which(tools)
-  not_found <- !nzchar(paths)
-  if(any(not_found))
-  {
-    return(
-      false(
-        "R cannot find the %s %s.", 
-        toString(tools[not_found]),
-        ngettext(sum(not_found), "tool", "tools")
-      )
-    )
-  }
-  TRUE
+  r_can_find_tools(c("gettext", "msgfmt"))
 }
 
 #' Does R have a capability?

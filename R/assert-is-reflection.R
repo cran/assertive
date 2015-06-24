@@ -46,6 +46,13 @@ assert_is_comma_for_decimal_point <- function()
   assert_engine(predicate = is_comma_for_decimal_point)
 }
 
+#' @rdname is_current_r
+#' @export
+assert_is_current_r <- function()
+{
+  assert_engine(predicate = is_current_r)
+}
+
 #' @rdname is_batch_mode
 #' @export
 assert_is_interactive <- function()

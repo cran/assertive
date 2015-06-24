@@ -1,3 +1,5 @@
+0.2-6 Tests moved to new location; bug fixes.
+0.2-5 More informative error messages.
 0.2-4 Support for alpha/beta versions of R.
 0.2-3 Added Vignettes
       Started infrastructure for message translation: currently American and British English supported.

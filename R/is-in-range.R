@@ -34,7 +34,7 @@ is_in_open_range <- function(x, lower = -Inf, upper = Inf)
 #' if values are within a numeric interval.  The other functions restrict
 #' the input arguments for convience in common cases.  For example,
 #' \code{is_percentage} forces the interval to be from 0 to 100.
-#' @return The \code{is_*} function return \code{TRUE} if the input is 
+#' @return The \code{is_*} functions return \code{TRUE} if the input is 
 #' within an interval.  The \code{assert_*} functions return nothing but
 #' throw an error if the corresponding \code{is_*} function returns 
 #' \code{FALSE}.

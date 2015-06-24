@@ -65,7 +65,7 @@ is_bsd <- function()
 {
   if(!grepl("BSD", Sys.info()[["sysname"]]))
   {
-    return(false("The operating system is not BSD-based."))
+    return(not_this_os("BSD-based"))
   }
   TRUE
 }
@@ -75,6 +75,34 @@ is_bsd <- function()
 is_comma_for_decimal_point <- function(type = c("numbers", "money"))
 {
   is_xxx_for_decimal_point(",", type)
+}
+
+#' Is this version of R up to date?
+#' 
+#' Check if this version of R is as new as the current release version of R.
+#' @param cran A string giving the URL of the CRAN repository to check.
+#' @return An object of class \code{R_system_version} giving the current release
+#' version of R.
+#' @note Development versions of R can have versions higher than the current
+#' release version of R.  For convenience, these will return \code{TRUE}.
+#' @examples
+#' is_current_r()
+#' @export
+is_current_r <- function(cran = getOption("repos", c(CRAN = "http://cran.r-project.org"))["CRAN"])
+{
+  this_version <- getRversion()
+  current_version <- get_current_r(cran = cran)
+  if(this_version < current_version)
+  {
+    return(
+      false(
+        "This version of R is %s but the current version is %s.", 
+        this_version,
+        current_version
+      )
+    )
+  }
+  TRUE
 }
 
 #' @rdname is_batch_mode
@@ -94,7 +122,7 @@ is_linux <- function()
 {
   if(Sys.info()["sysname"] != "Linux")
   {
-    return(false("The operating system is not Linux."))
+    return(not_this_os("Linux"))
   }
   TRUE
 }
@@ -105,9 +133,7 @@ is_mac <- function()
 {
   if(Sys.info()["sysname"] != "Darwin")
   {
-    return(false(
-      "The operating system is not OS X."
-    ))
+    return(not_this_os("OS X"))
   }
   TRUE
 }
@@ -117,8 +143,10 @@ is_mac <- function()
 #' Is the specified path on the operating system search path?
 #' 
 #' @param x An path to check.
-#' @note The OS search path is determined with \code{Sys.getenv("path")}.
-#' @return \code{TRUE} if the sepcified paths are on the OS search path.
+#' @note The OS search path is determined with \code{Sys.getenv("path")}.  For
+#' files, the path of the containing folder is checked rather than the path of 
+#' the file itself.
+#' @return \code{TRUE} if the specified paths are on the OS search path.
 #' @examples
 #' is_on_os_path(
 #'   c(R.home("bin"), R.home("etc"), "a nonexistent path")
@@ -126,12 +154,17 @@ is_mac <- function()
 #' @export
 is_on_os_path <- function(x)
 {
+  sep <- if(is_windows()) ";" else ":"
+  # For files, check the containing directory
+  # is_dir treats missing directories as FALSE, which we don't want here
+  # so just as easy to use underlying file.info
+  x <- ifelse(is_false(file.info(x)$isdir), dirname(x), x)
   call_and_name(
     function(x) 
     {
       x <- normalizePath(path.expand(coerce_to(x, "character")), mustWork = FALSE)
       paths <- normalizePath(
-        strsplit(Sys.getenv("path"), ";")[[1]], 
+        strsplit(Sys.getenv("PATH"), sep)[[1]], 
         mustWork = FALSE
       )
       ok <- x %in% paths
@@ -202,7 +235,7 @@ is_r_alpha <- function()
 {
   if(version$status != "alpha")
   {
-    return(false("You are not running an alpha build of R."))
+    return(not_this_build("alpha"))
   }
   TRUE
 }
@@ -213,7 +246,7 @@ is_r_beta <- function()
 {
   if(version$status != "beta")
   {
-    return(false("You are not running a beta build of R."))
+    return(not_this_build("beta"))
   }
   TRUE
 }
@@ -224,7 +257,7 @@ is_r_devel <- function()
 {
   if(version$status != "Under development (unstable)")
   {
-    return(false("You are not running a development build of R."))
+    return(not_this_build("development"))
   }
   TRUE
 }
@@ -235,7 +268,7 @@ is_r_patched <- function()
 {
   if(version$status != "Patched")
   {
-    return(false("You are not running a patched build of R."))
+    return(not_this_build("patched"))
   }
   TRUE
 }
@@ -246,7 +279,7 @@ is_r_release_candidate <- function()
 {
   if(version$status != "RC")
   {
-    return(false("You are not running a release candidate build of R."))
+    return(not_this_build("release candidate"))
   }
   TRUE
 }
@@ -257,7 +290,7 @@ is_r_stable <- function()
 {
   if(nzchar(version$status))
   {
-    return(false("You are not running a stable build of R."))
+    return(not_this_build("stable"))
   }
   TRUE
 }
@@ -309,9 +342,7 @@ is_solaris <- function()
 {
   if(Sys.info()["sysname"] != "SunOS")
   {
-    return(false(
-      "The operating system is not Solaris."
-    ))
+    return(not_this_os("Solaris"))
   }
   TRUE
 }
@@ -322,7 +353,7 @@ is_unix <- function()
 {
   if(.Platform$OS.type != "unix")
   {
-    return(false("The operating system is not Unix-based."))
+    return(not_this_os("Unix-based"))
   }
   TRUE
 }
@@ -366,7 +397,7 @@ is_windows <- function()
 {
   if(.Platform$OS.type != "windows")
   {
-    return(false("The operating system is not Windows."))
+    return(not_this_os("Windows"))
   }
   TRUE
 }
@@ -458,4 +489,94 @@ is_xxx_for_decimal_point <- function(dp, type = c("numbers", "money"))
     )
   }
   TRUE
+}
+
+#' Failure for bad OS
+#' 
+#' Wrapper to \code{false} for failure messages when the OS is not as 
+#' expected.
+#' @param os A string giving the name of the OS that was desired.
+#' @return A string showing the results of \code{.Platform$OS} and 
+#' \code{Sys.info()['sysname']}.
+#' @seealso \code{\link[base]{.Platform}} and \code{\link[base]{Sys.info}}
+#' @examples
+#' \donttest{
+#' assertive:::not_this_os("Windows")
+#' assertive:::not_this_os("BSD-based")
+#' }
+not_this_os <- function(os)
+{
+  false(
+    gettextf(
+      "The operating system is not %s. R reports it as: Sys.info()['sysname'] = %s, .Platform$OS = %s.", 
+      os, 
+      Sys.info()["sysname"],
+      .Platform$OS
+    )
+  )
+}
+
+#' Failure for bad build
+#' 
+#' Wrapper to \code{false} for failure messages when the OS is not as 
+#' expected.
+#' @param status A string giving the name of the build status that was desired.
+#' @return A string showing the actual build status.
+#' @seealso \code{\link[base]{.Platform}} and \code{\link[base]{Sys.info}}
+#' @examples
+#' \donttest{
+#' assertive:::not_this_build("stable")
+#' assertive:::not_this_build("development")
+#' }
+not_this_build <- function(status)
+{
+  reported_status <- clean_status_string()
+  get_article <- function(x) if(x != "alpha") "a" else "an"
+  false(
+    gettextf(
+      "You are running %s %s build of R, not %s %s build.", 
+      get_article(reported_status),
+      reported_status, 
+      get_article(status),
+      status
+    )
+  ) 
+}
+
+clean_status_string <- function(status = version$status)
+{
+  switch(
+    status,
+    Patched                        = "patched",
+    "Under development (unstable)" = "development",
+    alpha                          = "alpha",
+    beta                           = "beta",
+    RC                             = "release candidate",
+    "stable"
+  )
+}
+
+# The smart implementation of this function uses rvest, but we don't want 
+# the dependency, so use readLines + regex matching instead.
+# get_current_r <- function(cran = getOption("repos", c(CRAN = "http://cran.r-project.org"))["CRAN"])
+# {
+#   doc <- rvest::html(paste(cran, "sources.html", sep = "/"))
+#   # Version should be contained in the first link on this page
+#   `%>%` <- rvest::`%>%`
+#   version_string <- doc %>% 
+#     rvest::html_node("li > a") %>%
+#     rvest::html_text()
+#   R_system_version(substring(version_string, 3, nchar(version_string) - 7))
+# }
+
+get_current_r <- function(cran = getOption("repos", c(CRAN = "http://cran.r-project.org"))["CRAN"])
+{
+  if(cran == "@CRAN@")
+  {
+    cran <- "http://cran.r-project.org"
+  }
+  lines <- readLines(paste(cran, "sources.html", sep = "/"))
+  rx <- "R-(\\d\\.\\d\\.\\d)"
+  version_string <- regmatches(lines, regexpr(rx, lines))
+  R_system_version(substring(version_string, 3))
 }
