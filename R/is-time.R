@@ -18,6 +18,10 @@ is_in_future <- function(x)
 #' Checks to see if the input is a time in the past/future.
 #'
 #' @param x Input to check.
+#' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
+#' cause an error; otherwise they do not.  Like \code{na.rm} in many
+#' stats package functions, except that the position of the failing
+#' values does not change.
 #' @return The \code{is_*} function return \code{TRUE} if the input is 
 #' a time in the future/past.  The \code{assert_*} functions return nothing but
 #' throw an error if the corresponding \code{is_*} function returns 

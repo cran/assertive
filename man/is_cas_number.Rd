@@ -6,14 +6,19 @@
 \alias{is_cas_number}
 \title{Does the character vector contain CAS registry numbers?}
 \usage{
-assert_all_are_cas_numbers(x)
+assert_all_are_cas_numbers(x, na_ignore = FALSE)
 
-assert_any_are_cas_numbers(x)
+assert_any_are_cas_numbers(x, na_ignore = FALSE)
 
 is_cas_number(x, .xname = get_name_in_parent(x))
 }
 \arguments{
 \item{x}{Input to check.}
+
+\item{na_ignore}{A logical value.  If \code{FALSE}, \code{NA} values
+cause an error; otherwise they do not.  Like \code{na.rm} in many
+stats package functions, except that the position of the failing
+values does not change.}
 
 \item{.xname}{Not intended to be called directly.}
 }

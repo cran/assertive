@@ -12,21 +12,19 @@
 \alias{is_odd}
 \title{Is the input divisible by a number?}
 \usage{
-assert_all_are_divisible_by(x, n, tol = 100 * .Machine$double.eps)
+assert_all_are_divisible_by(x, n, tol = 100 * .Machine$double.eps,
+  na_ignore = FALSE)
 
-assert_any_are_divisible_by(x, n, tol = 100 * .Machine$double.eps)
+assert_any_are_divisible_by(x, n, tol = 100 * .Machine$double.eps,
+  na_ignore = FALSE)
 
-assert_all_are_even(x, tol = 100 * .Machine$double.eps)
+assert_all_are_even(x, tol = 100 * .Machine$double.eps, na_ignore = FALSE)
 
-assert_any_are_even(x, tol = 100 * .Machine$double.eps)
+assert_any_are_even(x, tol = 100 * .Machine$double.eps, na_ignore = FALSE)
 
-assert_all_are_odd(x, n, tol = 100 * .Machine$double.eps)
+assert_all_are_odd(x, tol = 100 * .Machine$double.eps, na_ignore = FALSE)
 
-assert_any_are_odd(x, n, tol = 100 * .Machine$double.eps)
-
-assert_all_are_odd(x, n, tol = 100 * .Machine$double.eps)
-
-assert_any_are_odd(x, n, tol = 100 * .Machine$double.eps)
+assert_any_are_odd(x, tol = 100 * .Machine$double.eps, na_ignore = FALSE)
 
 is_divisible_by(x, n, tol = 100 * .Machine$double.eps)
 
@@ -40,6 +38,11 @@ is_odd(x, tol = 100 * .Machine$double.eps)
 \item{n}{A numeric vector to divide by.}
 
 \item{tol}{Differences from zero smaller than \code{tol} are not considered.}
+
+\item{na_ignore}{A logical value.  If \code{FALSE}, \code{NA} values
+cause an error; otherwise they do not.  Like \code{na.rm} in many
+stats package functions, except that the position of the failing
+values does not change.}
 }
 \value{
 \code{TRUE} if the input \code{x} is divisible by \code{n}, within

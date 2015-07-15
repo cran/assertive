@@ -6,14 +6,19 @@
 \alias{is_us_telephone_number}
 \title{Is the string a valid US telephone number?}
 \usage{
-assert_all_are_us_telephone_numbers(x)
+assert_all_are_us_telephone_numbers(x, na_ignore = FALSE)
 
-assert_any_are_us_telephone_numbers(x)
+assert_any_are_us_telephone_numbers(x, na_ignore = FALSE)
 
 is_us_telephone_number(x)
 }
 \arguments{
 \item{x}{Input to check.}
+
+\item{na_ignore}{A logical value.  If \code{FALSE}, \code{NA} values
+cause an error; otherwise they do not.  Like \code{na.rm} in many
+stats package functions, except that the position of the failing
+values does not change.}
 }
 \value{
 \code{is_us_telephone_number} returns \code{TRUE} if the input string

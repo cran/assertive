@@ -3,6 +3,10 @@
 #' Checks that the input contains UK car licence plate numbers.
 #'
 #' @param x Input to check.
+#' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
+#' cause an error; otherwise they do not.  Like \code{na.rm} in many
+#' stats package functions, except that the position of the failing
+#' values does not change.
 #' @note A single space, in the appropriate place, is allowed but not 
 #' compulsory.
 #' @return \code{is_uk_national_insurance_number} returns \code{TRUE} if the 
@@ -72,6 +76,10 @@ is_uk_car_license <- is_uk_car_licence
 #' Checks that the input contains UK national insurance numbers.
 #'
 #' @param x Input to check.
+#' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
+#' cause an error; otherwise they do not.  Like \code{na.rm} in many
+#' stats package functions, except that the position of the failing
+#' values does not change.
 #' @note A single space is allowed at the appropriate points (after the first 
 #' two letters and after each pair of numbers) but not compulsory.
 #' @return \code{is_uk_national_insurance_number} returns \code{TRUE} if the 
@@ -120,6 +128,10 @@ is_uk_national_insurance_number <- function(x)
 #' Checks that the input contains UK postcodes.
 #' 
 #' @param x Input to check.
+#' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
+#' cause an error; otherwise they do not.  Like \code{na.rm} in many
+#' stats package functions, except that the position of the failing
+#' values does not change.
 #' @return \code{is_uk_postcode} returns \code{TRUE} if the input string 
 #' contains a valid UK postcode. The {assert_*} function returns nothing but 
 #' throws an error when the \code{is_*} function returns \code{FALSE}.
@@ -163,6 +175,10 @@ is_uk_postcode <- function(x)
 #' @return \code{is_uk_telephone_number} returns \code{TRUE} if the input string 
 #' contains a valid UK telephone number. The {assert_*} function returns nothing 
 #' but throws an error when the \code{is_*} function returns \code{FALSE}.
+#' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
+#' cause an error; otherwise they do not.  Like \code{na.rm} in many
+#' stats package functions, except that the position of the failing
+#' values does not change.
 #' @note The function doesn't guarantee that the phone number is in use, but 
 #' checks that the format is correct, and that the area code exists.
 #' Spaces, hyphens and round brackets are allowed to appear in arbitrary places.  

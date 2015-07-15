@@ -38,6 +38,7 @@ has_any_attributes <- function(x, .xname = get_name_in_parent(x))
 #' f <- function(...) has_arg(z)   
 #' f(z = 123)
 #' f(123)
+#' @importFrom methods formalArgs
 #' @export
 has_arg <- function(x, fn = sys.function(sys.parent()))
 {

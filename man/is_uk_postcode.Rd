@@ -6,14 +6,19 @@
 \alias{is_uk_postcode}
 \title{Is the string a valid UK postcode?}
 \usage{
-assert_all_are_uk_postcodes(x)
+assert_all_are_uk_postcodes(x, na_ignore = FALSE)
 
-assert_any_are_uk_postcodes(x)
+assert_any_are_uk_postcodes(x, na_ignore = FALSE)
 
 is_uk_postcode(x)
 }
 \arguments{
 \item{x}{Input to check.}
+
+\item{na_ignore}{A logical value.  If \code{FALSE}, \code{NA} values
+cause an error; otherwise they do not.  Like \code{na.rm} in many
+stats package functions, except that the position of the failing
+values does not change.}
 }
 \value{
 \code{is_uk_postcode} returns \code{TRUE} if the input string

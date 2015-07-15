@@ -24,6 +24,11 @@ library(devtools)
 install_bitbucket("richierocks/assertive")
 ```
 
+### The core
+
+Package developers may prefer to use only the lightweight core, provided in
+*[assertive.base](https://bitbucket.org/richierocks/assertive.base)*.
+
 
 ### How to use the package
 
@@ -41,7 +46,7 @@ f <- function(x)
 f(1)
 ## [1] 2
 f(NULL)
-## Error: x is NULL.
+## Error in f(NULL) : x is NULL.
 ```
 
 (You can think of the *assert* functions as more specific versions of 
@@ -58,8 +63,7 @@ is_not_null(1)
 
 is_not_null(NULL)
 ## [1] FALSE
-## attr(,"cause")
-## [1] NULL is NULL.
+## Cause of failure:  NULL is NULL.
 ```
 
 Many of the *is* functions are wrappers to base functions.  They all return 
@@ -69,19 +73,31 @@ causes of failure, and they have consistent naming, beginning `is_` or `has_`
 
 ### Vectorised *is* functions
 
-Some *is* functions return a logical vector rather than a single value.  For 
-example,
+Some *is* functions return a logical vector rather than a single value.  In 
+this case the input values are returned in the names to make it easier to see 
+which values succeeded/failed, and the cause attribute is also vectorised.
+
+For example,
 
 ```{r}
 is_positive(c(1, 0, -1, NA))
+## There were 3 failures:
+##   Position Value   Cause
+## 1        2     0 too low
+## 2        3    -1 too low
+## 3        4  <NA> missing
+```
+
+Using `unclass`, you can see that this is just a logical vector, with a `cause`
+attribute.
+
+```{r}
+unclass(is_positive(c(1, 0, -1, NA)))
 ##     1     0    -1  <NA> 
 ##  TRUE FALSE FALSE    NA 
 ## attr(,"cause")
 ## [1]         too low too low missing
 ```
-
-In this case the input values are returned in the names to make it easier to see 
-which values succeeded/failed, and the cause attribute is also vectorised.
 
 There are two corresponding *assert* functions for these vectorised *is* 
 functions.
@@ -221,7 +237,7 @@ You can test the operating system with `is_windows`, `is_linux`, `is_mac`,
 You can test R's capabilities using `r_has_png_capability`, 
 `r_has_tcltk_capability`, etc.
 
-You can test the currentlocale's preference for decimal points using 
+You can test the current locale's preference for decimal points using 
 `is_comma_for_decimal_point` or `is_period_for_decimal_point`.
 
 `is_slave_r`, `is_interactive`, `is_batch_mode`, `is_32_bit` and `is_64_bit` 

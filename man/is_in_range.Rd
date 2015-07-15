@@ -36,55 +36,63 @@
 \alias{is_proportion}
 \title{Is the input in range?}
 \usage{
-assert_all_are_in_closed_range(x, lower = -Inf, upper = Inf)
+assert_all_are_in_closed_range(x, lower = -Inf, upper = Inf,
+  na_ignore = FALSE)
 
-assert_any_are_in_closed_range(x, lower = -Inf, upper = Inf)
+assert_any_are_in_closed_range(x, lower = -Inf, upper = Inf,
+  na_ignore = FALSE)
 
-assert_all_are_in_left_open_range(x, lower = -Inf, upper = Inf)
+assert_all_are_in_left_open_range(x, lower = -Inf, upper = Inf,
+  na_ignore = FALSE)
 
-assert_any_are_in_left_open_range(x, lower = -Inf, upper = Inf)
+assert_any_are_in_left_open_range(x, lower = -Inf, upper = Inf,
+  na_ignore = FALSE)
 
-assert_all_are_in_open_range(x, lower = -Inf, upper = Inf)
+assert_all_are_in_open_range(x, lower = -Inf, upper = Inf,
+  na_ignore = FALSE)
 
-assert_any_are_in_open_range(x, lower = -Inf, upper = Inf)
+assert_any_are_in_open_range(x, lower = -Inf, upper = Inf,
+  na_ignore = FALSE)
 
 assert_all_are_in_range(x, lower = -Inf, upper = Inf,
-  lower_is_strict = FALSE, upper_is_strict = FALSE)
+  lower_is_strict = FALSE, upper_is_strict = FALSE, na_ignore = FALSE)
 
 assert_any_are_in_range(x, lower = -Inf, upper = Inf,
-  lower_is_strict = FALSE, upper_is_strict = FALSE)
+  lower_is_strict = FALSE, upper_is_strict = FALSE, na_ignore = FALSE)
 
-assert_all_are_in_right_open_range(x, lower = -Inf, upper = Inf)
+assert_all_are_in_right_open_range(x, lower = -Inf, upper = Inf,
+  na_ignore = FALSE)
 
-assert_any_are_in_right_open_range(x, lower = -Inf, upper = Inf)
+assert_any_are_in_right_open_range(x, lower = -Inf, upper = Inf,
+  na_ignore = FALSE)
 
-assert_all_are_negative(x)
+assert_all_are_negative(x, na_ignore = FALSE)
 
-assert_any_are_negative(x)
+assert_any_are_negative(x, na_ignore = FALSE)
 
-assert_all_are_non_negative(x)
+assert_all_are_non_negative(x, na_ignore = FALSE)
 
-assert_any_are_non_negative(x)
+assert_any_are_non_negative(x, na_ignore = FALSE)
 
-assert_all_are_non_positive(x)
+assert_all_are_non_positive(x, na_ignore = FALSE)
 
-assert_any_are_non_positive(x)
+assert_any_are_non_positive(x, na_ignore = FALSE)
 
 assert_all_are_percentages(x, lower_is_strict = FALSE,
-  upper_is_strict = FALSE)
+  upper_is_strict = FALSE, na_ignore = FALSE)
 
 assert_any_are_percentages(x, lower_is_strict = FALSE,
-  upper_is_strict = FALSE)
+  upper_is_strict = FALSE, na_ignore = FALSE)
 
-assert_all_are_positive(x)
+assert_all_are_positive(x, na_ignore = FALSE)
 
-assert_any_are_positive(x)
+assert_any_are_positive(x, na_ignore = FALSE)
 
 assert_all_are_proportions(x, lower_is_strict = FALSE,
-  upper_is_strict = FALSE)
+  upper_is_strict = FALSE, na_ignore = FALSE)
 
 assert_any_are_proportions(x, lower_is_strict = FALSE,
-  upper_is_strict = FALSE)
+  upper_is_strict = FALSE, na_ignore = FALSE)
 
 is_in_closed_range(x, lower = -Inf, upper = Inf)
 
@@ -116,6 +124,11 @@ is_proportion(x, lower_is_strict = FALSE, upper_is_strict = FALSE)
 
 \item{upper}{Upper bound for the interval.}
 
+\item{na_ignore}{A logical value.  If \code{FALSE}, \code{NA} values
+cause an error; otherwise they do not.  Like \code{na.rm} in many
+stats package functions, except that the position of the failing
+values does not change.}
+
 \item{lower_is_strict}{If \code{TRUE}, the lower bound is open (strict)
 otherwise it is closed.}
 
@@ -136,6 +149,9 @@ Checks to see if the input is within an numeric interval.
 if values are within a numeric interval.  The other functions restrict
 the input arguments for convience in common cases.  For example,
 \code{is_percentage} forces the interval to be from 0 to 100.
+The function is not vectorized by the \code{lower_is_strict} and
+\code{upper_is_strict} for speed (these are assumed to be scalar logical
+values).
 }
 \examples{
 assert_all_are_positive(1:10)

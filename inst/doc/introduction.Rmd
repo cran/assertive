@@ -55,6 +55,16 @@ Here you see that the error message contains a human readable sentence, followed
 by information on the values that caused problems, along with their positions
 and reasons for failure.
 
+You can also use pipes, but this means that the variable name is changed to `.`.
+
+```{r, CountsWithPipes, error = TRUE, purl = FALSE}
+library(magrittr)
+counts %>% 
+  assert_is_numeric %>% 
+  assert_all_are_non_negative %>% 
+  assert_all_are_whole_numbers
+```
+
 ### *is* and *has* functions
 
 Each of the *assert* functions has an underlying *is* or *has* function.  For
@@ -80,8 +90,13 @@ Some *is* and *has* functions, such as `is_non_negative`, return a logical
 vector.
 
 ```{r, IsNonNegative}
-is_non_negative(rnorm(6))
+is_nn <- is_non_negative(rnorm(6))
+unclass(is_nn)
 ```
+
+For convenience, this has a pretty print method that shows you where the 
+problems are (in the same way as the `assert_` function).  The actual value 
+works in exactly the same way as a regular logical vector.
 
 `is_non_negative` returned a logical vector which was `TRUE` where the check
 passed, and `FALSE` where the check failed.  This time the `cause` attribute

@@ -3,8 +3,8 @@
 assert_are_set_equal <- function(x, y)
 {
   assert_engine(
-    x, 
     is_set_equal, 
+    x, 
     y = y, 
     .xname = get_name_in_parent(x), 
     .yname = get_name_in_parent(y)
@@ -24,8 +24,8 @@ assert_is_set_equal <- function(x, y)
 assert_is_subset <- function(x, y)
 {
   assert_engine(
-    x, 
     is_subset, 
+    x, 
     y = y, 
     .xname = get_name_in_parent(x), 
     .yname = get_name_in_parent(y)
@@ -37,8 +37,8 @@ assert_is_subset <- function(x, y)
 assert_is_superset <- function(x, y)
 {
   assert_engine(
-    x, 
     is_superset, 
+    x, 
     y = y, 
     .xname = get_name_in_parent(x), 
     .yname = get_name_in_parent(y)

@@ -43,7 +43,7 @@ is_binding_locked(x)
 }
 \seealso{
 \code{\link[base]{bindingIsLocked}}, which this wraps,
-\code{\link[utils]{find}} for how the environment is guessed.  If the returns
+\code{\link[utils]{find}} for how the environment is guessed.  If this returns
 a single environment, that is used.  Otherwise the parent environment is
 used (as determined with \code{\link[base]{parent.frame}}).
 }

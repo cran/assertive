@@ -6,9 +6,9 @@
 \alias{is_date_string}
 \title{Does the character vector contain dates?}
 \usage{
-assert_all_are_date_strings(x, format = "\%F \%T")
+assert_all_are_date_strings(x, format = "\%F \%T", na_ignore = FALSE)
 
-assert_any_are_date_strings(x, format = "\%F \%T")
+assert_any_are_date_strings(x, format = "\%F \%T", na_ignore = FALSE)
 
 is_date_string(x, format = "\%F \%T", .xname = get_name_in_parent(x))
 }
@@ -17,6 +17,11 @@ is_date_string(x, format = "\%F \%T", .xname = get_name_in_parent(x))
 
 \item{format}{Expected format of the dates.  See
 \code{\link[base]{strptime}}.}
+
+\item{na_ignore}{A logical value.  If \code{FALSE}, \code{NA} values
+cause an error; otherwise they do not.  Like \code{na.rm} in many
+stats package functions, except that the position of the failing
+values does not change.}
 
 \item{.xname}{Not intended to be called directly.}
 }

@@ -13,7 +13,7 @@
 #' @note The environment is guessed as follows: The name of \code{x} is 
 #' determined via \code{get_name_in_parent}.  Then find is called, 
 #' @seealso \code{\link[base]{bindingIsLocked}}, which this wraps, 
-#' \code{\link[utils]{find}} for how the environment is guessed.  If the returns
+#' \code{\link[utils]{find}} for how the environment is guessed.  If this returns
 #' a single environment, that is used.  Otherwise the parent environment is 
 #' used (as determined with \code{\link[base]{parent.frame}}).
 #' @examples
@@ -24,6 +24,7 @@
 #' is_binding_locked(x)
 #' unlockBinding("x", parent.frame())
 #' is_binding_locked(x)
+#' @importFrom utils find
 #' @export
 is_binding_locked <- function(x, env = if(is_scalar(e <- find(.xname))) as.environment(e) else parent.frame(), .xname = get_name_in_parent(x))
 {

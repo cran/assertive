@@ -153,7 +153,8 @@ test_that("test.is_isbn13_code.a_character_vector_type_13.returns_true_when_stri
     )
   })
 
-test_that("test.is_missing_or_empty_character.a_character_vector.returns_true_when_string_is_missing_or_empty", 
+test_that(
+  "test.is_missing_or_empty_character.a_character_vector.returns_true_when_string_is_missing_or_empty", 
   {
     x <- c(missing = NA_character_, empty = "", non_empty = "a", space = " ", 
       not_missing1 = "NA", not_missing2 = "<NA>")
@@ -176,7 +177,8 @@ test_that("test.is_missing_or_empty_character.a_character_vector.returns_true_wh
       cause(actual),
       noquote(rep.int(c("missing", "empty", ""), c(1, 1, 4)))
     )
-  })
+  }
+)
 
 test_that("test.is_numeric_string.a_character_vector.returns_true_when_string_contains_a_number", 
 {

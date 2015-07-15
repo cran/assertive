@@ -7,10 +7,10 @@
 \title{Is the string a valid variable name?}
 \usage{
 assert_all_are_valid_variable_names(x, allow_reserved = TRUE,
-  allow_duplicates)
+  allow_duplicates, na_ignore = FALSE)
 
 assert_any_are_valid_variable_names(x, allow_reserved = TRUE,
-  allow_duplicates)
+  allow_duplicates, na_ignore = FALSE)
 
 is_valid_variable_name(x, allow_reserved = TRUE, allow_duplicates)
 }
@@ -23,6 +23,11 @@ are considered valid.}
 \item{allow_duplicates}{Deprecated and ignored.
 The \code{assert_*} functions return nothing but throw an error if the
 corresponding \code{is_*} function returns \code{FALSE}.}
+
+\item{na_ignore}{A logical value.  If \code{FALSE}, \code{NA} values
+cause an error; otherwise they do not.  Like \code{na.rm} in many
+stats package functions, except that the position of the failing
+values does not change.}
 }
 \description{
 Checks strings to see if they are valid variable names.

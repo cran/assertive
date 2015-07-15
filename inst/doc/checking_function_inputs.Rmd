@@ -144,7 +144,7 @@ lower-level functions, you can often afford to be stricter.
 ### Summary
 
 1. Check function inputs at the start of the function to "fail early".
-2. Don't be afriad of having lots of assertions to "fail often".
+2. Don't be afraid of having lots of assertions to "fail often".
 3. Use `assert_` functions to throw errors for inputs that you can't salvage.
 4. Use `is_` functions in an `if` condition to provide custom behaviour.
 5. Fix inputs with `use_first` and `coerce_to` where possible.

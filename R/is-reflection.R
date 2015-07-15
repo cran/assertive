@@ -86,7 +86,11 @@ is_comma_for_decimal_point <- function(type = c("numbers", "money"))
 #' @note Development versions of R can have versions higher than the current
 #' release version of R.  For convenience, these will return \code{TRUE}.
 #' @examples
+#' \donttest{
+#' # This example is marked "don't test" since it requires an 
+#' # internet connection and is potentially long running
 #' is_current_r()
+#' }
 #' @export
 is_current_r <- function(cran = getOption("repos", c(CRAN = "http://cran.r-project.org"))["CRAN"])
 {
@@ -172,6 +176,49 @@ is_on_os_path <- function(x)
     }, 
     x
   )  
+}
+#' Is the installed version of a package current?
+#' 
+#' Checks to see if the installed version of a package is current.
+#' @param x A string giving a package name.
+#' @param lib.loc A character vector of paths to local package libraries.
+#' @param repos A character vector of URLs to repositories to check for new
+#' package versions.
+#' @param type Check the repository for source or binary packages?
+#' @return The \code{is_*} functions return \code{TRUE} or \code{FALSE}.
+#' The \code{assert_*} functions throw an error in the event of failure.
+#' @seealso \code{\link[utils]{old.packages}}, on which this is based, which
+#' has advanced usage features.
+#' @examples 
+#' \donttest{
+#' # This test is marked "dont-test" since it involves a connection to 
+#' # repositories which is potentially long running.
+#' is_package_current("assertive")
+#' }
+#' @importFrom utils installed.packages
+#' @importFrom utils old.packages
+#' @export
+is_package_current <- function(x, lib.loc = .libPaths(), 
+                               repos = getOption("repos"), type = getOption("pkgType"))
+{
+  # TODO: what is the behaviour when the package is installed with 
+  # different versions in multiple local libraries?
+  x <- coerce_to(use_first(x), "character")
+  ip <- installed.packages()[x, , drop = FALSE]
+  op <- old.packages(instPkgs = ip)
+  if(!is.null(op))
+  {
+    return(
+      false(
+        "%s is out of date; the installed version is %s but the latest %s version is %s.",
+        x,
+        as.character(op[, "Installed"]),
+        type,
+        as.character(op[, "ReposVer"])
+      )
+    )
+  }
+  TRUE
 }
 
 #' @rdname is_xxx_for_decimal_point
@@ -322,6 +369,108 @@ is_rstudio <- function()
     return(false("You are not running RStudio."))
   }
   TRUE
+}
+
+#' Is RStudio the current version?
+#' 
+#' Checks to see if the running version of RStudio is the current version.
+#' @return \code{is_rstudio_current} returns \code{TRUE} or \code{FALSE}, and
+#' \code{assert_is_rstudio_current} throws an error in the event of an out of
+#' date RStudio.  Non-RStudio IDEs throw an error.
+#' @references This function is engineered from the \code{downloadUpdateInfo} 
+#' function from 
+#' \url{https://github.com/rstudio/rstudio/blob/master/src/cpp/session/modules/SessionUpdates.R}
+#' where the string for the OS is described in \code{beginUpdateCheck} from
+#' \url{https://github.com/rstudio/rstudio/blob/master/src/cpp/session/modules/SessionUpdates.cpp}
+#' @seealso \code{\link{is_rstudio}}, \code{\link{is_rstudio_desktop}}
+#' @export
+is_rstudio_current <- function()
+{
+  assert_is_rstudio()
+  os <- if(is_windows()) "windows" else if(is_mac()) "mac" else "linux"
+  current_version <- rstudio_version_info()$version
+  if(is.na(current_version))
+  {
+    return(
+      false(
+        "RStudio is out of date; it is old enough that the version check API has changed."
+      )
+    ) 
+  }
+  update_url <- sprintf(
+    "http://www.rstudio.org/links/check_for_update?version=%s&os=%s&format=kvp",
+    current_version,
+    os
+  )
+  lines <- readLines(update_url, warn = FALSE)
+  update_version <- substring(
+    grep("update-version=([0-9.]*)", strsplit(lines, "&")[[1]], value = TRUE),
+    16
+  )
+  if(nzchar(update_version))
+  {
+    return(
+      false(
+        "RStudio is out of date; you are running %s but version %s is available.",
+        current_version,
+        update_version
+      )
+    )
+  }
+  TRUE
+}
+
+#' Is RStudio running in desktop or server mode?
+#' 
+#' Checks for RStudio desktop or server version.
+#' @references The values that RStudio uses for its mode are defined in
+#' \url{https://github.com/rstudio/rstudio/blob/master/src/cpp/session/include/session/SessionConstants.hpp}
+#' via the constants \code{kSessionProgramModeDesktop} and 
+#' \code{kSessionProgramModeServer}.
+#' @seealso \code{\link{is_rstudio}}, \code{\link{is_rstudio_current}}
+#' @examples 
+#' is_rstudio_desktop()
+#' is_rstudio_server()
+#' @export
+is_rstudio_desktop <- function()
+{
+  if(!(ok <- is_rstudio()))
+  {
+    return(false(cause(ok)))
+  }
+  if(rstudio_version_info()$mode != "desktop")
+  {
+    return(false("You are running the server version of RStudio."))
+  }
+}
+
+#' @rdname is_rstudio_desktop
+#' @export
+is_rstudio_server <- function()
+{
+  if(!(ok <- is_rstudio()))
+  {
+    return(false(cause(ok)))
+  }
+  if(rstudio_version_info()$mode != "server")
+  {
+    return(false("You are running the desktop version of RStudio."))
+  }
+}
+
+#' Get RStudio's version information
+#' 
+#' Wrapper to .rs.api.versionInfo.
+rstudio_version_info <- function()
+{
+  assert_is_rstudio()
+  e <- as.environment("tools:rstudio")
+  if(!".rs.api.versionInfo" %in% ls(e, all.names = TRUE))
+  {
+    warning("You are using an old version of RStudio, which does not tell you version information.")
+    return(NA_character_)
+  }
+  e$.rs.api.versionInfo()
 }
 
 #' @rdname is_r

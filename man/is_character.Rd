@@ -29,21 +29,21 @@ assert_is_a_string(x)
 
 assert_is_an_empty_string(x)
 
-assert_all_are_numeric_strings(x)
+assert_all_are_numeric_strings(x, na_ignore = FALSE)
 
-assert_any_are_numeric_strings(x)
+assert_any_are_numeric_strings(x, na_ignore = FALSE)
 
-assert_all_strings_are_missing_or_empty(x)
+assert_all_strings_are_missing_or_empty(x, na_ignore = FALSE)
 
-assert_any_strings_are_missing_or_empty(x)
+assert_any_strings_are_missing_or_empty(x, na_ignore = FALSE)
 
 assert_all_strings_are_not_missing_nor_empty(x)
 
 assert_any_strings_are_not_missing_nor_empty(x)
 
-assert_all_are_not_missing_nor_empty_characters(x)
+assert_all_are_not_missing_nor_empty_characters(x, na_ignore = FALSE)
 
-assert_any_are_not_missing_nor_empty_characters(x)
+assert_any_are_not_missing_nor_empty_characters(x, na_ignore = FALSE)
 
 assert_is_character(x)
 
@@ -65,6 +65,11 @@ is_character(x, .xname = get_name_in_parent(x))
 }
 \arguments{
 \item{x}{Input to check.}
+
+\item{na_ignore}{A logical value.  If \code{FALSE}, \code{NA} values
+cause an error; otherwise they do not.  Like \code{na.rm} in many
+stats package functions, except that the position of the failing
+values does not change.}
 
 \item{.xname}{Not intended to be used directly.}
 }

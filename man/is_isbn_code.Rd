@@ -8,9 +8,9 @@
 \alias{is_isbn_code}
 \title{Does the character vector contain ISBN book codes?}
 \usage{
-assert_all_are_isbn_codes(x, type = c("10", "13"))
+assert_all_are_isbn_codes(x, type = c("10", "13"), na_ignore = FALSE)
 
-assert_any_are_isbn_codes(x, type = c("10", "13"))
+assert_any_are_isbn_codes(x, type = c("10", "13"), na_ignore = FALSE)
 
 is_isbn10_code(x, .xname = get_name_in_parent(x))
 
@@ -22,6 +22,11 @@ is_isbn_code(x, type = c("10", "13"), .xname = get_name_in_parent(x))
 \item{x}{Input to check.}
 
 \item{type}{Either "isbn10", "isbn13" or both (for matching either type).}
+
+\item{na_ignore}{A logical value.  If \code{FALSE}, \code{NA} values
+cause an error; otherwise they do not.  Like \code{na.rm} in many
+stats package functions, except that the position of the failing
+values does not change.}
 
 \item{.xname}{Not intended to be called directly.}
 }

@@ -3,6 +3,10 @@
 #' Checks that the input contains Chemical Abstract Service registry numbers.
 #' 
 #' @param x Input to check.
+#' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
+#' cause an error; otherwise they do not.  Like \code{na.rm} in many
+#' stats package functions, except that the position of the failing
+#' values does not change.
 #' @param .xname Not intended to be called directly.
 #' @note CAS numbers take the form of 1 to 7 digits followed by a hyphen,  
 #' followed by 2 digits, another hyphen and a final check digit.
@@ -58,6 +62,10 @@ is_cas_number <- function(x, .xname = get_name_in_parent(x))
 #' @param x Input to check.
 #' @param type Type of credit card.  Multiple types can be selected.
 #' @param .xname Not intended to be called directly.
+#' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
+#' cause an error; otherwise they do not.  Like \code{na.rm} in many
+#' stats package functions, except that the position of the failing
+#' values does not change.
 #' @note Legacy card numbers, for example 13 digit Visa numbers and 15 digits 
 #' JCB numbers are not supported.
 #' @return A logical vector that is \code{TRUE} when the input contains valid 
@@ -146,6 +154,10 @@ is_credit_card_number <- function(x,
 #' @param x Input to check.
 #' @param format Expected format of the dates.  See 
 #' \code{\link[base]{strptime}}.
+#' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
+#' cause an error; otherwise they do not.  Like \code{na.rm} in many
+#' stats package functions, except that the position of the failing
+#' values does not change.
 #' @param .xname Not intended to be called directly.
 #' @return A logical vector that is \code{TRUE} when the input contains valid 
 #' dates or times.
@@ -165,7 +177,7 @@ is_date_string <- function(x, format = "%F %T", .xname = get_name_in_parent(x))
     function(x) 
     {
       ok <- !is.na(strptime(x, format))
-      set_cause(ok, ifelse(is.na(x), "missing", "bad format"))
+      set_cause(ok, "bad format")
     }, 
     x
   )  
@@ -179,6 +191,10 @@ is_date_string <- function(x, format = "%F %T", .xname = get_name_in_parent(x))
 #' @param x Input to check.
 #' @param method Name of method to check for validity.  See notes below.
 #' @param .xname Not intended to be called directly.
+#' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
+#' cause an error; otherwise they do not.  Like \code{na.rm} in many
+#' stats package functions, except that the position of the failing
+#' values does not change.
 #' @note Each method specifies a regular expression (see 
 #' \code{\link[base]{regex}}) to match against. The \code{simple} method matches 
 #' most email addresses in use, and is quite good at filtering out typos and 
@@ -238,6 +254,10 @@ is_empty_character <- function(x)
 #' Checks that the input contains hexadecimal colors.
 #' 
 #' @param x Input to check.
+#' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
+#' cause an error; otherwise they do not.  Like \code{na.rm} in many
+#' stats package functions, except that the position of the failing
+#' values does not change.
 #' @note A string is considered to represent a hexadecimal colour when contains 
 #' a hash followed by six hex values.  That is, digits or the letters from a to 
 #' f (case insensitive).
@@ -272,6 +292,10 @@ is_hex_colour <- is_hex_color
 #' Checks that the input contains honorifics (a.k.a. titles 
 #' or salutations).
 #' @param x Input to check.
+#' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
+#' cause an error; otherwise they do not.  Like \code{na.rm} in many
+#' stats package functions, except that the position of the failing
+#' values does not change.
 #' @return \code{is_honorific} returns \code{TRUE} if the input string contains
 #' a valid UK postcode. The {assert_*} function returns nothing but throws an 
 #' error when the \code{is_*} function returns \code{FALSE}. 
@@ -327,6 +351,10 @@ is_honorific <- function(x)
 #' address exists, merely that the string is in a suitable format.)
 #' 
 #' @param x Input to check.
+#' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
+#' cause an error; otherwise they do not.  Like \code{na.rm} in many
+#' stats package functions, except that the position of the failing
+#' values does not change.
 #' @note Valid IP addresses are considered to be four integers in the range 0 to 
 #' 255, separated by dots, or the string "localhost".
 #' @return A logical vector that is \code{TRUE} when the input contains valid IP 
@@ -446,6 +474,10 @@ is_isbn13_code <- function(x, .xname = get_name_in_parent(x))
 #' Checks that the input contains ISBN-10 or ISBN-13 book codes.
 #' 
 #' @param x Input to check.
+#' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
+#' cause an error; otherwise they do not.  Like \code{na.rm} in many
+#' stats package functions, except that the position of the failing
+#' values does not change.
 #' @param type Either "isbn10", "isbn13" or both (for matching either type).
 #' @param .xname Not intended to be called directly.
 #' @return  A logical vector that is \code{TRUE} when the input contains valid 
@@ -536,10 +568,16 @@ is_numeric_string <- function(x)
 #' 
 #' Checks to see if he unput is a single character.
 #' @param x A character vector.
+#' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
+#' cause an error; otherwise they do not.  Like \code{na.rm} in many
+#' stats package functions, except that the position of the failing
+#' values does not change.
 #' @return \code{is_single_character} returns \code{TRUE} when the input is a 
 #' single character (as determined by \code{nchar}; this excludes \code{NA}).
 #' The \code{assert_*} functions return nothing but throw an error if the 
 #' corresponding \code{is_*} function returns \code{FALSE}.
+#' @note The behaviour of this function has changed so that \code{NA} inputs 
+#' now return \code{NA} rather than \code{FALSE}.
 #' @seealso \code{\link[base]{nchar}}
 #' @examples
 #' x <- c("", "a", "aa", NA)
@@ -551,7 +589,14 @@ is_single_character <- function(x)
   ok <- call_and_name(
     function(x)
     {
-      nchar(x) == 1
+      nch_is_1 <- nchar(x) == 1
+      is_na_x <- is.na(x)
+      if(any(is_na_x))
+      {
+        message("New behaviour: NA inputs now return NA.")
+        nch_is_1[is_na_x] <- NA
+      }
+      nch_is_1
     },
     x
   )
@@ -597,6 +642,10 @@ is_valid_r_code <- function(x, .xname = get_name_in_parent(x))
 #' @param allow_duplicates Deprecated and ignored.
 #' The \code{assert_*} functions return nothing but throw an error if the 
 #' corresponding \code{is_*} function returns \code{FALSE}.
+#' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
+#' cause an error; otherwise they do not.  Like \code{na.rm} in many
+#' stats package functions, except that the position of the failing
+#' values does not change.
 #' @seealso \code{\link{make.names}}.
 #' @examples
 #' make_random_string <- function(n)

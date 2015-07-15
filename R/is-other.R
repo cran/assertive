@@ -11,7 +11,11 @@
 #' @export
 is_debugged <- function(x, .xname = get_name_in_parent(x))
 {
-  assert_is_any_of(x, c("function", "character"), .xname)
+  # isdebugged accepts x as either a function or a string
+  if(!is.function(x))
+  {
+    x <- coerce_to(use_first(x), "character")
+  }
   if(!isdebugged(x))
   {
     return(false("%s is not being debugged.", .xname))
@@ -25,6 +29,10 @@ is_debugged <- function(x, .xname = get_name_in_parent(x))
 #' @param x A numeric vector to divide.
 #' @param n A numeric vector to divide by.
 #' @param tol Differences from zero smaller than \code{tol} are not considered.
+#' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
+#' cause an error; otherwise they do not.  Like \code{na.rm} in many
+#' stats package functions, except that the position of the failing
+#' values does not change.
 #' @return \code{TRUE} if the input \code{x} is divisible by \code{n}, within 
 #' the specified tolerance.
 #' @note \code{is_even} and \code{is_odd} are shortcuts for divisibility by two.
@@ -81,16 +89,13 @@ is_even <- function(x, tol = 100 * .Machine$double.eps)
 #' Checks to see if the input variables exist.
 #'
 #' @param x Input to check.
-#' @param where Passed to \code{exists}.
 #' @param envir Passed to \code{exists}.
-#' @param frame Passed to \code{exists}.
-#' @param mode Passed to \code{exists}.
 #' @param inherits Passed to \code{exists}.
 #' @param .xname Not intended to be used directly.
 #' @return \code{is_existing} is a vectorized wrapper to \code{exists}, 
-#' providing more information on failure.  The \code{assert_*} functions
-#' return nothing but throw an error if \code{is_existing} returns 
-#' \code{FALSE}.
+#' providing more information on failure (and with a simplified interface).  
+#' The \code{assert_*} functions return nothing but throw an error if 
+#' \code{is_existing} returns \code{FALSE}.
 #' @seealso \code{\link[base]{exists}}.
 #' @examples
 #' e <- new.env()
@@ -102,10 +107,7 @@ is_even <- function(x, tol = 100 * .Machine$double.eps)
 #' @export
 is_existing <- function(
   x, 
-  where = -1, 
-  envir = if (missing(frame)) as.environment(where) else sys.frame(frame), 
-  frame, 
-  mode = "any", 
+  envir = parent.frame(), 
   inherits = TRUE, 
   .xname = get_name_in_parent(x)
 )
@@ -117,23 +119,54 @@ is_existing <- function(
     return(bapply(
       x, 
       is_existing,
-      where    = where,
       envir    = envir,
-      frame    = frame,
-      mode     = mode,
       inherits = inherits
     ))
   }
   if(!exists(
     x, 
-    where    = where,
     envir    = envir,
-    frame    = frame,
-    mode     = mode,
     inherits = inherits
   ))
   {
     return(false("%s does not exist.", .xname))
+  }
+  TRUE
+}
+
+#' Is suitable to be used as an if condition
+#' 
+#' @param x Input to check.
+#' @param .xname Not intended to be used directly.
+#' @return \code{is_if_condition} returns \code{TRUE} if the input is 
+#' scalar \code{TRUE} or \code{FALSE}.
+#' @note \code{if} will try to do the right thing if you pass it a number
+#' or a string, but this function assumes you want to do the right thing
+#' and pass either \code{TRUE} or \code{FALSE}, maybe with some attributes.
+#' @examples
+#' is_if_condition(TRUE)
+#' is_if_condition(FALSE)
+#' is_if_condition(NA)
+#' is_if_condition(c(TRUE, FALSE))
+#' is_if_condition("the truth")
+#' # You can pass a number as a logical condition, but you shouldn't,
+#' # so the next line returns FALSE.
+#' is_if_condition(1)
+#' dont_stop(assert_is_if_condition(raw(1)))
+#' @export
+is_if_condition <- function(x, .xname = get_name_in_parent(x))
+{
+  if(!(ok <- is_logical(x, .xname)))
+  {
+    return(ok)
+  }
+  if(!(ok <- is_scalar(x, "length", .xname)))
+  {
+    return(ok)
+  }
+  if(!is_not_na(x))
+  {
+    return(false("%s is NA.", .xname))
   }
   TRUE
 }
@@ -160,10 +193,11 @@ is_loaded <- function(x, PACKAGE = "", type = "",
 }
 
 #' @rdname is_divisible_by
+#' @importFrom stats setNames
 #' @export
 is_odd <- function(x, tol = 100 * .Machine$double.eps)
 {
-  is_divisible_by(x - 1, 2L, tol = tol)  
+  setNames(is_divisible_by(x - 1, 2L, tol = tol), x)
 }
 
 #' Is the input a symmetric matrix?
@@ -263,6 +297,10 @@ is_unsorted <- function(x, na.rm = FALSE, strictly = FALSE,
 #' 
 #' @param x Input to check.
 #' @param tol Differences smaller than \code{tol} are not considered.
+#' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
+#' cause an error; otherwise they do not.  Like \code{na.rm} in many
+#' stats package functions, except that the position of the failing
+#' values does not change.
 #' @note The term whole number is used to distinguish from integer in
 #' that the input \code{x} need not have type \code{integer}.  In fact
 #' it is expected that \code{x} will be \code{numeric}.

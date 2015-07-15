@@ -9,13 +9,13 @@
 \alias{is_in_past}
 \title{Is the input in the past/future?}
 \usage{
-assert_all_are_in_future(x)
+assert_all_are_in_future(x, na_ignore = FALSE)
 
-assert_any_are_in_future(x)
+assert_any_are_in_future(x, na_ignore = FALSE)
 
-assert_all_are_in_past(x)
+assert_all_are_in_past(x, na_ignore = FALSE)
 
-assert_any_are_in_past(x)
+assert_any_are_in_past(x, na_ignore = FALSE)
 
 is_in_future(x)
 
@@ -23,6 +23,11 @@ is_in_past(x)
 }
 \arguments{
 \item{x}{Input to check.}
+
+\item{na_ignore}{A logical value.  If \code{FALSE}, \code{NA} values
+cause an error; otherwise they do not.  Like \code{na.rm} in many
+stats package functions, except that the position of the failing
+values does not change.}
 }
 \value{
 The \code{is_*} function return \code{TRUE} if the input is

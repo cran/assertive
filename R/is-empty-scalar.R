@@ -111,6 +111,7 @@ is_empty <- function(x, metric = c("length", "elements"), .xname = get_name_in_p
 #' assert_is_empty_model(lm(uptake ~ 0, CO2))
 #' assert_is_non_empty_model(lm(uptake ~ conc, CO2))
 #' assert_is_non_empty_model(lm(uptake ~ 1, CO2))
+#' @importFrom stats terms
 #' @export
 is_empty_model <- function(x, .xname = get_name_in_parent(x))
 {
@@ -143,6 +144,7 @@ is_non_empty <- function(x, metric = c("length", "elements"), .xname = get_name_
 }
 
 #' @rdname is_empty_model
+#' @importFrom stats terms
 #' @export
 is_non_empty_model <- function(x, .xname = get_name_in_parent(x))
 {
@@ -234,3 +236,12 @@ is_scalar <- function(x, metric = c("length", "elements"),
   metric <- get_metric(metric)
   metric(x, 1L, .xname)
 }     
+
+get_metric <- function(metric = c("length", "elements"))
+{
+  switch(
+    match.arg(force(metric)[1], eval(formals(sys.function())$metric)),
+    length   = is_of_length,
+    elements = has_elements
+  )
+}

@@ -25,6 +25,10 @@ Development versions of R can have versions higher than the current
 release version of R.  For convenience, these will return \code{TRUE}.
 }
 \examples{
+\donttest{
+# This example is marked "don't test" since it requires an
+# internet connection and is potentially long running
 is_current_r()
+}
 }
 

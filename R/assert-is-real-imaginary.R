@@ -1,31 +1,73 @@
 #' @rdname is_real
 #' @export
-assert_all_are_imaginary <- function(x, tol = 100 * .Machine$double.eps)
+assert_all_are_imaginary <- function(x, tol = 100 * .Machine$double.eps, 
+  na_ignore = FALSE)
 {                                                     
-  msg <- gettextf("%s are not all imaginary.", get_name_in_parent(x))
-  assert_engine(x, is_imaginary, msg, tol = tol)        
+  msg <- gettextf(
+    "%s are not all imaginary (tol = %g).", 
+    get_name_in_parent(x), 
+    tol
+  )
+  assert_engine(
+    is_imaginary, 
+    x, 
+    tol = tol, 
+    msg = msg, 
+    na_ignore = na_ignore
+  )        
 }
 
 #' @rdname is_real
 #' @export
-assert_any_are_imaginary <- function(x, tol = 100 * .Machine$double.eps)
+assert_any_are_imaginary <- function(x, tol = 100 * .Machine$double.eps, 
+  na_ignore = FALSE)
 {                                                     
-  msg <- gettextf("%s are all not imaginary.", get_name_in_parent(x))
-  assert_engine(x, is_imaginary, msg, what = "any", tol = tol)        
+  msg <- gettextf(
+    "%s are all not imaginary (tol = %g).", 
+    get_name_in_parent(x), 
+    tol
+  )
+  assert_engine(
+    is_imaginary, 
+    x, 
+    tol = tol, 
+    msg = msg, 
+    what = "any", 
+    na_ignore = na_ignore
+  )        
 }
 
 #' @rdname is_real
 #' @export
-assert_all_are_real <- function(x, tol = 100 * .Machine$double.eps)
+assert_all_are_real <- function(x, tol = 100 * .Machine$double.eps, 
+  na_ignore = FALSE)
 {                                                     
-  msg <- gettextf("%s are not all real.", get_name_in_parent(x))
-  assert_engine(x, is_real, msg, tol = tol)        
+  msg <- gettextf(
+    "%s are not all real (tol = %g).", 
+    get_name_in_parent(x), 
+    tol
+  )
+  assert_engine(
+    is_real, 
+    x, 
+    tol = tol, 
+    msg = msg, 
+    na_ignore = na_ignore
+  )
 }
 
 #' @rdname is_real
 #' @export
-assert_any_are_real <- function(x, tol = 100 * .Machine$double.eps)
+assert_any_are_real <- function(x, tol = 100 * .Machine$double.eps, 
+  na_ignore = FALSE)
 {                                                     
-  msg <- gettextf("%s are all not real.", get_name_in_parent(x))
-  assert_engine(x, is_real, msg, what = "any", tol = tol)        
+  msg <- gettextf("%s are all not real (tol = %g).", get_name_in_parent(x), tol)
+  assert_engine(
+    is_real, 
+    x, 
+    tol = tol, 
+    msg = msg, 
+    what = "any", 
+    na_ignore = na_ignore
+  )
 }

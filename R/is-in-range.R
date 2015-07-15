@@ -30,10 +30,17 @@ is_in_open_range <- function(x, lower = -Inf, upper = Inf)
 #' otherwise it is closed.
 #' @param upper_is_strict If \code{TRUE}, the upper bound is open (strict)
 #' otherwise it is closed.
+#' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
+#' cause an error; otherwise they do not.  Like \code{na.rm} in many
+#' stats package functions, except that the position of the failing
+#' values does not change.
 #' @note \code{is_in_range} provides the most flexibility in determining
 #' if values are within a numeric interval.  The other functions restrict
 #' the input arguments for convience in common cases.  For example,
 #' \code{is_percentage} forces the interval to be from 0 to 100.
+#' The function is not vectorized by the \code{lower_is_strict} and
+#' \code{upper_is_strict} for speed (these are assumed to be scalar logical
+#' values).
 #' @return The \code{is_*} functions return \code{TRUE} if the input is 
 #' within an interval.  The \code{assert_*} functions return nothing but
 #' throw an error if the corresponding \code{is_*} function returns 
@@ -50,6 +57,10 @@ is_in_range <- function(x, lower = -Inf, upper = Inf, lower_is_strict = FALSE,
   upper_is_strict = FALSE)
 {
   x <- coerce_to(x, "numeric")
+  lower <- coerce_to(lower, "numeric")
+  upper <- coerce_to(upper, "numeric")
+  lower_is_strict <- coerce_to(use_first(lower_is_strict), "logical")
+  upper_is_strict <- coerce_to(use_first(upper_is_strict), "logical")
   ok <- rep.int(TRUE, length(x))
   ok[is.na(x)] <- NA
   too_low <- (if(lower_is_strict) `<=` else `<`)(x, lower)

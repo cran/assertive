@@ -1,3 +1,12 @@
+0.3-0 Core functionality outsourced to assertive.base.
+0.2-7 License changed to GPL3.
+      Support for pipes.
+      Added fns for testing RStudio desktop/server, current ver.
+      Updated internal API for assert_engine.
+      Better error msgs for is_in_range.
+      Better NA handling via na_ignore arg.
+      Pretty printing of predicates.
+      Completed set of is-true/false/na fns.
 0.2-6 Tests moved to new location; bug fixes.
 0.2-5 More informative error messages.
 0.2-4 Support for alpha/beta versions of R.

@@ -8,13 +8,17 @@
 \alias{is_whole_number}
 \title{Is the input a whole number?}
 \usage{
-assert_all_numbers_are_whole_numbers(x, tol = 100 * .Machine$double.eps)
+assert_all_numbers_are_whole_numbers(x, tol = 100 * .Machine$double.eps,
+  na_ignore = FALSE)
 
-assert_any_numbers_are_whole_numbers(x, tol = 100 * .Machine$double.eps)
+assert_any_numbers_are_whole_numbers(x, tol = 100 * .Machine$double.eps,
+  na_ignore = FALSE)
 
-assert_all_are_whole_numbers(x, tol = 100 * .Machine$double.eps)
+assert_all_are_whole_numbers(x, tol = 100 * .Machine$double.eps,
+  na_ignore = FALSE)
 
-assert_any_are_whole_numbers(x, tol = 100 * .Machine$double.eps)
+assert_any_are_whole_numbers(x, tol = 100 * .Machine$double.eps,
+  na_ignore = FALSE)
 
 is_whole_number(x, tol = 100 * .Machine$double.eps)
 }
@@ -22,6 +26,11 @@ is_whole_number(x, tol = 100 * .Machine$double.eps)
 \item{x}{Input to check.}
 
 \item{tol}{Differences smaller than \code{tol} are not considered.}
+
+\item{na_ignore}{A logical value.  If \code{FALSE}, \code{NA} values
+cause an error; otherwise they do not.  Like \code{na.rm} in many
+stats package functions, except that the position of the failing
+values does not change.}
 }
 \value{
 \code{TRUE} if the input is a whole number.

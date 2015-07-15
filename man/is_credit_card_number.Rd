@@ -6,15 +6,20 @@
 \alias{is_credit_card_number}
 \title{Does the character vector contain credit card numbers?}
 \usage{
-assert_all_are_credit_card_numbers(x)
+assert_all_are_credit_card_numbers(x, na_ignore = FALSE)
 
-assert_any_are_credit_card_numbers(x)
+assert_any_are_credit_card_numbers(x, na_ignore = FALSE)
 
 is_credit_card_number(x, type = c("visa", "mastercard", "amex", "diners",
   "discover", "jcb"), .xname = get_name_in_parent(x))
 }
 \arguments{
 \item{x}{Input to check.}
+
+\item{na_ignore}{A logical value.  If \code{FALSE}, \code{NA} values
+cause an error; otherwise they do not.  Like \code{na.rm} in many
+stats package functions, except that the position of the failing
+values does not change.}
 
 \item{type}{Type of credit card.  Multiple types can be selected.}
 

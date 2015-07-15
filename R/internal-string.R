@@ -1,51 +1,3 @@
-#' Wrapper to vapply that returns booleans.
-#' 
-#' Wrapper to \code{\link{vapply}} for functions that return a boolean (logical 
-#' scalar) value.
-#' 
-#' @param x A vector (atomic or list).
-#' @param predicate A predicate (function that returns a bool) to apply.
-#' elementwise to \code{x}.
-#' @param ... Passed to \code{vapply}.
-#' @return A logical vector.
-#' @note \code{USE.NAMES} is set to \code{TRUE}
-#' @seealso \code{\link{vapply}}.
-bapply <- function(x, predicate, ...)
-{
-  vapply(x, predicate, logical(1L), ..., USE.NAMES = TRUE)
-}
-
-#' Call a function, and give the result names.
-#'
-#' Calls a function, and names the result with the first argument.
-#'
-#' @param fn A function to call.  See note below.
-#' @param x The first input to \code{fn}.
-#' @param ... Optional additional inputs to \code{fn}.
-#' @return The result of \code{fn(x, ...)}, with names given by the
-#' argument \code{x}.
-#' @note The function, \code{fn}, should return an object with the 
-#' same length as the input \code{x}.
-#' @examples
-#' \dontrun{
-#' call_and_name(is.finite, c(1, Inf, NA))
-#' }
-#' @seealso \code{\link{cause}} and \code{\link{na}}.
-call_and_name <- function(fn, x, ...)
-{
-  y <- fn(x, ...)
-  if(!is_identical_to_true(length(y) == length(x)))
-  {
-    warning(
-      "Vector of names is different length to results.  Trying to resize."
-    )
-    length(x) <- length(y)
-  }
-  dim(y) <- dim(x)
-  names(y) <- x
-  y
-}
-
 #' Convert a character vector to a list of integer vectors.
 #'
 #' Split strings by character, then convert to numbers
@@ -116,7 +68,10 @@ create_regex <- function (..., l = list(), sep = "[- ]?")
 d <- function(lo, hi = NA_integer_, optional = FALSE)
 {
   lo <- as.integer(lo)
-  assert_all_are_non_negative(lo)
+  if(any(lo < 0))
+  {
+    stop("lo contains negative values.")
+  }
   l <- recycle(lo = lo, hi = hi)
   lo <- l$lo
   hi <- l$hi
@@ -127,7 +82,7 @@ d <- function(lo, hi = NA_integer_, optional = FALSE)
     },
     {
       ifelse(
-        is_positive_infinity(hi),
+        is.infinite(hi) & hi > 0,
         {
           ifelse(
             lo == 0,
@@ -147,7 +102,10 @@ d <- function(lo, hi = NA_integer_, optional = FALSE)
         },
         {
           hi <- as.integer(hi)
-          assert_all_are_true(hi > lo)
+          if(any(hi <= lo))
+          {
+            stop("hi must be strictly greater than lo.")
+          }
           rx <- paste0("[[:digit:]]{", lo, ",", hi, "}")
         }
       )
@@ -158,33 +116,6 @@ d <- function(lo, hi = NA_integer_, optional = FALSE)
     rx <- paste0("(", rx, ")?")
   }
   rx
-}
-
-get_metric <- function(metric = c("length", "elements"))
-{
-  switch(
-    match.arg(force(metric)[1], eval(formals(sys.function())$metric)),
-    length   = is_of_length,
-    elements = has_elements
-  )
-}
-
-#' Allowed locale categories.
-#'
-#' The categories of locale that can be gotten/set.
-#'
-#' @param include_all If \code{TRUE}, the value \code{LC_ALL} is included.
-#' @param include_unix If \code{TRUE}, the extra unix-only values are included.
-#' @return A character vector of locale categories.
-#' @seealso \code{\link{sys_get_locale}}.
-locale_categories <- function(include_all = TRUE, include_unix = is_unix())
-{
-  allowed_categories <- c(
-    if(include_all) "ALL",
-    "COLLATE", "CTYPE", "MONETARY", "NUMERIC", "TIME",
-    if(include_unix) c("MESSAGES", "PAPER", "MEASUREMENT")
-  )
-  paste0("LC_", allowed_categories)
 }
 
 #' Does the input match the regular expression?
@@ -224,34 +155,6 @@ matches_regex <- function(x, rx, ignore.case = TRUE, ...)
     }, 
     x
   )
-}
-
-#' The most common value in a vector.
-#'
-#' The modal value of a vector.
-#' @param x vector to find the modal value of.
-#' @note Probably very inefficient; not suitable for general use.
-#' @return The modal value of \code{x}.
-modal_value <- function(x)
-{
-  names(sort(table(x), descending = TRUE))[1]
-}
-
-#' Print a variable and capture the output
-#' 
-#' Prints a variable and captures the output, collapsing the value to a single 
-#' string.
-#' @param x A variable.
-#' @return A string.
-#' @seealso \code{\link[base]{print}}, \code{\link[utils]{capture.output}}
-#' @examples
-#' \dontrun{
-#' # This is useful for including data frames in warnings or errors
-#' message("This is the CO2 dataset:\n", print_and_capture(CO2))
-#' }
-print_and_capture <- function(x)
-{
-  paste(capture.output(print(x)), collapse = "\n")
 }
 
 #' Recycle arguments
@@ -324,26 +227,3 @@ strip_non_numeric <- function(x, allow_x = FALSE, allow_plus = FALSE)
   )
   strip_invalid_chars(x, invalid_chars, "non-numeric")
 }
-
-#' Truncate a string
-#' 
-#' Truncates a character vector to have a maximum length.
-#' @param x A character vector, or something coercible to one.
-#' @param width A positive integer.
-#' @return A character vector
-#' @examples
-#' \dontrun{
-#' truncate(c("abcd", "efghi", "jklmno", "pqrstuv"), 5)
-#' }
-truncate <- function(x, width = getOption("width"))
-{
-  x <- as.character(x)
-  ifelse(
-    nchar(x) > width,
-    # paste0(substring(x, 1, width - 1), "\u2026") would be better, but some
-    # setups don't display unicode properly.
-    paste0(substring(x, 1, width - 3), "..."),
-    x
-  )
-} 
-

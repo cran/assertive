@@ -9,13 +9,13 @@
 \alias{is_uk_car_license}
 \title{Is the string a valid UK car licence plate number?}
 \usage{
-assert_all_are_uk_car_licences(x)
+assert_all_are_uk_car_licences(x, na_ignore = FALSE)
 
-assert_any_are_uk_car_licences(x)
+assert_any_are_uk_car_licences(x, na_ignore = FALSE)
 
-assert_all_are_uk_car_licenses(x)
+assert_all_are_uk_car_licenses(x, na_ignore = FALSE)
 
-assert_any_are_uk_car_licenses(x)
+assert_any_are_uk_car_licenses(x, na_ignore = FALSE)
 
 is_uk_car_licence(x)
 
@@ -23,6 +23,11 @@ is_uk_car_license(x)
 }
 \arguments{
 \item{x}{Input to check.}
+
+\item{na_ignore}{A logical value.  If \code{FALSE}, \code{NA} values
+cause an error; otherwise they do not.  Like \code{na.rm} in many
+stats package functions, except that the position of the failing
+values does not change.}
 }
 \value{
 \code{is_uk_national_insurance_number} returns \code{TRUE} if the

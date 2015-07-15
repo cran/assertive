@@ -9,13 +9,13 @@
 \alias{is_hex_colour}
 \title{Does the character vector contain hex colors?}
 \usage{
-assert_all_are_hex_colors(x)
+assert_all_are_hex_colors(x, na_ignore = FALSE)
 
-assert_any_are_hex_colors(x)
+assert_any_are_hex_colors(x, na_ignore = FALSE)
 
-assert_all_are_hex_colours(x)
+assert_all_are_hex_colours(x, na_ignore = FALSE)
 
-assert_any_are_hex_colours(x)
+assert_any_are_hex_colours(x, na_ignore = FALSE)
 
 is_hex_color(x)
 
@@ -23,6 +23,11 @@ is_hex_colour(x)
 }
 \arguments{
 \item{x}{Input to check.}
+
+\item{na_ignore}{A logical value.  If \code{FALSE}, \code{NA} values
+cause an error; otherwise they do not.  Like \code{na.rm} in many
+stats package functions, except that the position of the failing
+values does not change.}
 }
 \value{
 A logical vector that is \code{TRUE} when the input contains hex

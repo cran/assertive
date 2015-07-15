@@ -3,75 +3,75 @@
 assert_is_64_bit_os <- function()
 {
   .Deprecated("assert_is_64_bit")
-  assert_engine(predicate = is_64_bit)
+  assert_engine(is_64_bit)
 }
 
 #' @rdname is_windows
 #' @export
 assert_is_32_bit <- function()
 {
-  assert_engine(predicate = is_32_bit)
+  assert_engine(is_32_bit)
 }
 #' @rdname is_windows
 #' @export
 assert_is_64_bit <- function()
 {
-  assert_engine(predicate = is_64_bit)
+  assert_engine(is_64_bit)
 }
 #' @rdname is_r
 #' @export
 assert_is_architect <- function()
 {                                                         
-  assert_engine(predicate = is_architect)        
+  assert_engine(is_architect)        
 }
 
 #' @rdname is_batch_mode
 #' @export
 assert_is_batch_mode <- function()
 {
-  assert_engine(predicate = is_batch_mode)
+  assert_engine(is_batch_mode)
 }
 
 #' @rdname is_windows
 #' @export
 assert_is_bsd <- function()
 {
-  assert_engine(predicate = is_bsd)
+  assert_engine(is_bsd)
 }
 
 #' @rdname is_xxx_for_decimal_point
 #' @export
 assert_is_comma_for_decimal_point <- function()
 {
-  assert_engine(predicate = is_comma_for_decimal_point)
+  assert_engine(is_comma_for_decimal_point)
 }
 
 #' @rdname is_current_r
 #' @export
 assert_is_current_r <- function()
 {
-  assert_engine(predicate = is_current_r)
+  assert_engine(is_current_r)
 }
 
 #' @rdname is_batch_mode
 #' @export
 assert_is_interactive <- function()
 {
-  assert_engine(predicate = is_interactive)
+  assert_engine(is_interactive)
 }
 
 #' @rdname is_windows
 #' @export
 assert_is_linux <- function()
 {
-  assert_engine(predicate = is_linux)
+  assert_engine(is_linux)
 }
 
 #' @rdname is_windows
 #' @export
 assert_is_mac <- function()
 {
-  assert_engine(predicate = is_mac)
+  assert_engine(is_mac)
 }
 
 #' @rdname is_on_os_path
@@ -79,7 +79,7 @@ assert_is_mac <- function()
 assert_all_are_on_os_path <- function(x)
 {                                                     
   msg <- gettextf("%s are not all on the operating system path.", get_name_in_parent(x))
-  assert_engine(x, is_on_os_path, msg)        
+  assert_engine(is_on_os_path, x, msg = msg)        
 }
 
 #' @rdname is_on_os_path
@@ -87,103 +87,124 @@ assert_all_are_on_os_path <- function(x)
 assert_any_are_on_os_path <- function(x)
 {                                                     
   msg <- gettextf("%s are all not on the operating system path.", get_name_in_parent(x))
-  assert_engine(x, is_on_os_path, msg, what = "any")        
+  assert_engine(is_on_os_path, x, msg = msg, what = "any")        
 }
 
 #' @rdname is_xxx_for_decimal_point
 #' @export
 assert_is_period_for_decimal_point <- function()
 {
-  assert_engine(predicate = is_period_for_decimal_point)
+  assert_engine(is_period_for_decimal_point)
 }
 
 #' @rdname is_r
 #' @export
 assert_is_r <- function()
 {                                                         
-  assert_engine(predicate = is_r)        
+  assert_engine(is_r)        
 }
 
 #' @rdname is_r
 #' @export
 assert_is_r_alpha <- function()
 {                                                         
-  assert_engine(predicate = is_r_alpha)        
+  assert_engine(is_r_alpha)        
 }
 
 #' @rdname is_r
 #' @export
 assert_is_r_beta <- function()
 {                                                         
-  assert_engine(predicate = is_r_beta)        
+  assert_engine(is_r_beta)        
 }
 
 #' @rdname is_r
 #' @export
 assert_is_r_devel <- function()
 {                                                         
-  assert_engine(predicate = is_r_devel)        
+  assert_engine(is_r_devel)        
 }
 
 #' @rdname is_r
 #' @export
 assert_is_r_patched <- function()
 {                                                         
-  assert_engine(predicate = is_r_patched)        
+  assert_engine(is_r_patched)        
 }
 
 #' @rdname is_r
 #' @export
 assert_is_r_release_candidate <- function()
 {                                                         
-  assert_engine(predicate = is_r_release_candidate)        
+  assert_engine(is_r_release_candidate)        
 }
 
 #' @rdname is_r
 #' @export
 assert_is_r_stable <- function()
 {                                                         
-  assert_engine(predicate = is_r_stable)        
+  assert_engine(is_r_stable)        
 }
 
 #' @rdname is_r
 #' @export
 assert_is_revo_r <- function()
 {                                                         
-  assert_engine(predicate = is_revo_r)        
+  assert_engine(is_revo_r)        
 }
 
 #' @rdname is_r
 #' @export
 assert_is_rstudio <- function()
 {                                                         
-  assert_engine(predicate = is_rstudio)        
+  assert_engine(is_rstudio)        
+}
+
+#' @rdname is_r
+#' @export
+assert_is_rstudio_current <- function()
+{                                                         
+  assert_engine(is_rstudio_current)        
+}
+
+#' @rdname is_r
+#' @export
+assert_is_rstudio_desktop <- function()
+{                                                         
+  assert_engine(is_rstudio_desktop)        
+}
+
+#' @rdname is_r
+#' @export
+assert_is_rstudio_server <- function()
+{                                                         
+  assert_engine(is_rstudio_server)        
 }
 
 #' @rdname is_r
 #' @export
 assert_is_slave_r <- function()
 {                                                         
-  assert_engine(predicate = is_slave_r)        
+  assert_engine(is_slave_r)        
 }
 
 #' @rdname is_windows
 #' @export
 assert_is_solaris <- function()
 {
-  assert_engine(predicate = is_solaris)
+  assert_engine(is_solaris)
 }
 
 #' @rdname is_windows
 #' @export
 assert_is_unix <- function()
 {
-  assert_engine(predicate = is_unix)
+  assert_engine(is_unix)
 }
 
 #' @rdname is_windows
 #' @export
 assert_is_windows <- function()
 {
-  assert_engine(predicate = is_windows)
+  assert_engine(is_windows)
 }

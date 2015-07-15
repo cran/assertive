@@ -1,68 +1,3 @@
-#' Alternative version of is.
-#' 
-#' If a function named \code{is.class} exists, call \code{is.class(x)}.
-#' If not, call \code{is(x, class)}.
-#' @param x Input to check.
-#' @param class Target class that \code{x} maybe belong to.
-#' @param classes As for \code{class}.
-#' @param .xname Not intended to be used directly.
-#' @return \code{TRUE} if x belongs to the class and \code{FALSE} 
-#' otherwise.  \code{assert_is} returns nothing but throws an error if
-#' \code{x} does not have class \code{class}.
-#' @seealso \code{\link[methods]{is}}.
-#' @examples
-#' is2(1:5, "character")
-#' is2(matrix(1:5), "character")
-#' is2(1:5, c("character", "list", "numeric"))
-#' assert_is_all_of(1:10, c("integer", "numeric"))
-#' #These examples should fail.
-#' dont_stop(assert_is_any_of(1:10, c("list", "data.frame")))
-#' @export
-is2 <- function(x, class, .xname = get_name_in_parent(x))
-{    
-  # Can't use is_empty in next line because that function calls this one.
-  if(length(class) == 0L) stop("You must provide a class.")
-  if(length(class) > 1L) 
-  {
-    return(
-      set_cause(
-        bapply(class, function(cl) is2(x, cl, "")),
-        rep.int(type_description(x), length(x))
-      )
-    )
-  }
-  ok <- is_error_free(match.fun(paste0("is.", class)))
-  condn <- if(ok) attr(ok, "result")(x) else is(x, class)
-  if(!condn)
-  {
-    return(
-      false(
-        "%s is not of type '%s'; it has %s.", 
-        .xname, 
-        class, 
-        type_description(x)
-      )
-    )
-  }
-  TRUE
-}
-
-#' Describe the type of object
-#' 
-#' Get the class or mode (for arrays).
-#' @param x A variable.
-#' @return A string.
-type_description <- function(x)
-{
-  if(is.array(x))
-  {
-    sprintf("mode '%s'", mode(x))
-  } else
-  {
-    sprintf("class '%s'", toString(class(x)))
-  }
-}
-
 #' Is the input an array or matrix?
 #'
 #' Checks to see if the input is an array or matrix.
@@ -99,6 +34,10 @@ is_call <- function(x, .xname = get_name_in_parent(x))
 #'
 #' @param x Input to check.
 #' @param .xname Not intended to be used directly.
+#' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
+#' cause an error; otherwise they do not.  Like \code{na.rm} in many
+#' stats package functions, except that the position of the failing
+#' values does not change.
 #' @return \code{is_character} wraps \code{is.character}, providing more 
 #' information on failure. \code{is_a_string} returns \code{TRUE} if the 
 #' input is character and scalar. \code{is_an_empty_string} returns \code{TRUE}
@@ -141,6 +80,7 @@ is_character <- function(x, .xname = get_name_in_parent(x))
 #' @seealso \code{\link[methods]{isClass}}.
 #' @examples
 #' assert_all_are_classes(c("lm", "numeric"))
+#' @importFrom methods isClass
 #' @export
 is_class <- function(x, .xname = get_name_in_parent(x))
 {
@@ -595,6 +535,7 @@ is_S4 <- function(x, .xname = get_name_in_parent(x))
 }
 
 #' @rdname is_function
+#' @importFrom stats is.stepfun
 #' @export
 is_stepfun <- function(x, .xname = get_name_in_parent(x))
 {

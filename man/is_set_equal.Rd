@@ -61,6 +61,9 @@ is_subset(1:5, 1:4)
 is_superset(1:5, 1:4)
 is_superset(1:4, 1:5)
 
+# Types are coerced to be the same, as per base::setdiff
+is_set_equal(1:4, c("4", "3", "2", "1"))
+
 # Errors are thrown in the event of failure
 assert_are_set_equal(1:5, 5:1)
 dont_stop(assert_are_set_equal(1:5, 1:6))
@@ -70,6 +73,10 @@ dont_stop(assert_is_subset(1:5, 1:4))
 
 assert_is_superset(1:5, 1:4)
 dont_stop(assert_is_superset(1:4, 1:5))
+
+# A common use case: checking that data contains required columns
+required_cols <- c("Time", "weight", "Diet")
+assert_is_superset(colnames(ChickWeight), required_cols)
 }
 \seealso{
 \code{\link{is_subset}}, \code{\link[base]{sets}},

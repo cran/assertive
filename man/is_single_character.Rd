@@ -6,14 +6,19 @@
 \alias{is_single_character}
 \title{Is the input a single character?}
 \usage{
-assert_all_are_single_characters(x)
+assert_all_are_single_characters(x, na_ignore = FALSE)
 
-assert_any_are_single_characters(x)
+assert_any_are_single_characters(x, na_ignore = FALSE)
 
 is_single_character(x)
 }
 \arguments{
 \item{x}{A character vector.}
+
+\item{na_ignore}{A logical value.  If \code{FALSE}, \code{NA} values
+cause an error; otherwise they do not.  Like \code{na.rm} in many
+stats package functions, except that the position of the failing
+values does not change.}
 }
 \value{
 \code{is_single_character} returns \code{TRUE} when the input is a
@@ -23,6 +28,10 @@ corresponding \code{is_*} function returns \code{FALSE}.
 }
 \description{
 Checks to see if he unput is a single character.
+}
+\note{
+The behaviour of this function has changed so that \code{NA} inputs
+now return \code{NA} rather than \code{FALSE}.
 }
 \examples{
 x <- c("", "a", "aa", NA)

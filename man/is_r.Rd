@@ -11,6 +11,9 @@
 \alias{assert_is_r_stable}
 \alias{assert_is_revo_r}
 \alias{assert_is_rstudio}
+\alias{assert_is_rstudio_current}
+\alias{assert_is_rstudio_desktop}
+\alias{assert_is_rstudio_server}
 \alias{assert_is_slave_r}
 \alias{is_architect}
 \alias{is_r}
@@ -44,6 +47,12 @@ assert_is_r_stable()
 assert_is_revo_r()
 
 assert_is_rstudio()
+
+assert_is_rstudio_current()
+
+assert_is_rstudio_desktop()
+
+assert_is_rstudio_server()
 
 assert_is_slave_r()
 

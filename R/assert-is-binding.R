@@ -2,5 +2,5 @@
 #' @export
 assert_is_binding_locked <- function(x)
 {      
-  assert_engine(x, is_binding_locked, .xname = get_name_in_parent(x))    
+  assert_engine(is_binding_locked, x, .xname = get_name_in_parent(x))    
 }
