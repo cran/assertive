@@ -1,6 +1,18 @@
+[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/0.1.0/active.svg)](http://www.repostatus.org/#active)
+[![Is the package on CRAN?](http://www.r-pkg.org/badges/version/assertive)](http://www.r-pkg.org/pkg/assertive)
+
 # assertive
 
-Readable check functions to ensure code integrity.
+*An R package that provides readable check functions to ensure code integrity.*
+
+There are times when it is a good idea to check the state of your variables, to
+ensure that they have the properties that you think they have. For example,
+if you have a count variable, you might want to check that it is numeric, that
+all the values are non-negative, and that all the values are whole numbers.
+
+*assertive* provides lots of functions ("predicates" and "assertions") to provide 
+such checks.  It is designed to make your code very easy to read, and to provide 
+highly informative error messages.
 
 
 ### Installation
@@ -24,16 +36,11 @@ library(devtools)
 install_bitbucket("richierocks/assertive")
 ```
 
-### The core
-
-Package developers may prefer to use only the lightweight core, provided in
-*[assertive.base](https://bitbucket.org/richierocks/assertive.base)*.
-
-
 ### How to use the package
 
-*assertive* contains lots of *assert* functions that throw errors if conditions 
-aren't met.  They are very useful for checking user input to your functions.
+*assertive* contains lots of *assert* functions ("assertions") that throw errors 
+if conditions aren't met.  They are very useful for checking user input to your 
+functions.
 
 For example,
 
@@ -53,9 +60,9 @@ f(NULL)
 `base::stopifnot` that make your code easier to read and give more informative 
 error messages.)
 
-Each *assert* function has a corresponding *is* function.  In this case, 
-`is_not_null` is a wrapper to base-R's `!is.null`, that gives a more informative 
-error message on failure (in an attribute named `cause`).
+Each *assert* function has a corresponding *is* function (a "predicate").  In 
+this case,  `is_not_null` is a wrapper to base-R's `!is.null`, that gives a more 
+informative error message on failure (in an attribute named `cause`).
 
 ```{r}
 is_not_null(1)
@@ -113,173 +120,119 @@ assert_all_are_positive(c(1, 0, -1, NA))
 ## 3        4  <NA> missing
 ```
 
-### Testing types
 
-You can test for a particular type of object using `is_numeric`, `is_character`, 
-`is_matrix`, `is_data.frame`, through to more obscure types like `is_qr`, 
-`is_name`, and `is_relistable`.
+### Can't I just use *testthat*?
 
-`is_s4`, `is_atomic` and `is_recursive` test properties of variables.
+[*testthat*](https://github.com/hadley/testthat) is an excellent package for 
+writing unit tests, and I recommend that you use it.  Unit tests are a form of
+development-time testing.  That is, you write the tests while you develop your
+code in order to check that you haven't made any mistakes.
 
-`is_a_number`, `is_a_string`, `is_a_bool`, etc. combine tests for types with 
-`is_scalar` (see below) to check for a single numeric/character/logical value 
-respectively.
+*assertive*, and assertions in general, are for run-time testing.  That is,
+you include them in your code to check that the user hasn't made a mistake
+while running your code.
 
 
-### Testing sizes
+### The virtual package system
 
-`is_scalar` tests for objects of length one, or with one element (this can be 
-different for lists; you choose the metric).
+*assertive* is a virtual package; it does not contain any functions, but merely 
+reexports them from lower-level packages.  For a complete reference, see the 
+individual package pages.
 
-Similarly `is_empty` and `is_non_empty` test for objects of zero 
-length/containing zero elements.
+*[assertive.base](https://bitbucket.org/richierocks/assertive.base)* contains 
+the core functionality.  For example, `is_true` checks when inputs return 
+`TRUE`.  It also contains some utility functions, such as `use_first`, which 
+returns the first value of a vector, warning you if it was longer than length 
+one.
 
-More generally `is_of_length` and `has_elements` test for a particular length/
-number of elements.
+*[assertive.properties](https://bitbucket.org/richierocks/assertive.properties)* 
+contains checks on properties of variables.  For example, `is_scalar` checks
+for values that have length one, and `has_duplicates` checks for the presence of 
+duplicate values.
 
+*[assertive.types](https://bitbucket.org/richierocks/assertive.types)* contains 
+checks for types of variables. For example, `is_character` wraps the base 
+`is.character`, while `is_a_string` combines that check with `is_scalar` to 
+check for single strings.
 
-### Testing missing values
+*[assertive.numbers](https://bitbucket.org/richierocks/assertive.numbers)* 
+contains checks for numbers.  For example, `is_in_range` checks if a number is 
+in a numeric range.
 
-You can test for NAs, NaNs, and NULLs using `is_na`, `is_nan` and `is_null`, or 
-their opposites `is_not_na`, `is_not_nan` and `is_not_null`.
+*[assertive.strings](https://bitbucket.org/richierocks/assertive.strings)* 
+contains checks for strings.  For example, `is_an_empty_string` checks if
+a character vector contains a single empty string.
 
+*[assertive.datetimes](https://bitbucket.org/richierocks/assertive.datetimes)* 
+contains checks for dates and times.  For example, `is_in_past` checks if a
+`Date` or `POSIXt` obejct is in the past.
 
-### Testing numbers
+*[assertive.files](https://bitbucket.org/richierocks/assertive.files)* contains 
+checks for files and connections.  For example, `is_readable_file` checks if
+a path points to a file that R has permission to read, and `is_file_connection`
+check if an object is a file connection.
 
-`is_in_range` tests if a number is in a numeric range, along with the more 
-specialised wrappers: `is_in_open_range`, `is_in_closed_range`, 
-`is_in_left_open_range`, `is_in_right_open_range`, `is_positive`, `is_negative`, 
-`is_non_positive`, `is_non_negative`, `is_proportion` and `is_percentage`.
+*[assertive.sets](https://bitbucket.org/richierocks/assertive.sets)* contains 
+checks for sets.  For example, `is_subset` checks if a vector is a subset of 
+another vector.
 
-Finiteness can be tested with `is_finite`, `is_infinite`, `is_positive_infinity` 
-and `is_negative_infinity`.
+*[assertive.matrices](https://bitbucket.org/richierocks/assertive.matrices)* 
+contains checks for matrices.  For example, `is_symmetric_matrix` checks if
+a matrix is symmetric.
 
-`is_odd` and `is_even` test for those qualities, and are generalized by 
-`is_divisible_by`.
+*[assertive.models](https://bitbucket.org/richierocks/assertive.models)* 
+contains checks for models.  For example, `is_empty_model` checks if a model
+is the empty model (no factors).
 
-`is_whole_number` tests whether a number is an integer, give or take some 
-tolerance.
+*[assertive.data](https://bitbucket.org/richierocks/assertive.data)* contains 
+checks for complex data types.  For example, `is_credit_card_number` checks a
+character vector for valid credit card numbers.
 
-`is_real` and `is_imaginary` test for real/imaginary numbers.
+*[assertive.data.uk](https://bitbucket.org/richierocks/assertive.data.uk)* 
+contains checks for UK-specific complex data types.  For example, 
+`is_uk_postcode` checks a character vector for valid UK postcodes.
 
+*[assertive.data.us](https://bitbucket.org/richierocks/assertive.data.us)* 
+contains checks for US-specific complex data types.   For example, 
+`is_us_telephone_number` checks a character vector for valid US telephone 
+numbers.
 
-### Testing attributes
+*[assertive.reflection](https://bitbucket.org/richierocks/assertive.reflection)* 
+contains checks on the state of R.  For example, `is_solaris` tests for that
+operating system, and `is_rstudio` tests for that IDE.
 
-Rows, columns and dimensions can be tested for using, `has_rows`, `has_cols` and 
-`has_dims`.
+*[assertive.code](https://bitbucket.org/richierocks/assertive.code)* contains 
+checks for code.  For example, `is_valid_variable_name` checks whether a 
+character vector contains valid variable names.
 
-Similarly their names can be tested for using `has_rownames`, `has_colnames`, 
-`has_dimnames` and `has_names`.
 
-Duplicates can be tested for using `has_duplicates` or its opposite `has_no_duplicates`.
+### I hate this; what's the alternative?
 
-Attributes can be tested for using `has_attributes` and `has_any_attributes`.
+There are at least five other R packages for doing assertions.  In alphabetical 
+order of package:
 
-Functions arguments can be tested using `has_arg`.
+- Tony Fishettti's [assertr](https://github.com/tonyfischetti/assertr)
+- Hadley Wickham's [assertthat](https://github.com/hadley/assertthat)
+- Michel Lang's [checkmate](https://github.com/mllg/checkmate)
+- Stefan Bache's [ensurer](https://github.com/smbache/ensurer)
+- Gaston Sanchez's [tester](https://github.com/gastonstat/tester)
 
-Model terms can be tested using `has_terms`.
+### I want to know more
 
+There are several vignettes with more details on how to use the package, 
+including case studies and exercises.  Find them using
 
-### Testing files and connections
+```{r}
+browseVignettes()
+```
 
-`is_dir` tests if a path refers to an existing directory.
+### I want to help
 
-`is_existing_file` tests whether a file exists.
+The *assertive* packages are in the process of being translated into many languages.
+If you speak a language other than English, and have an hour or two spare, your
+translation skills would be appreciated.
 
-`is_executable_file`, `is_readable_file`, and `is_writable_file` test your 
-permissions to access a file (though they are based on `file.access`, which is 
-slightly unreliable on Windows).
-
-`is_connection` tests whether an object is a connection, and there are many 
-specialized types including `is_file_connection`, `is_fifo_connection`, 
-`is_pipe_connection`, `is_readable_connection`, `is_open_connection`, 
-`is_writable_connection`, `is_stdin`, `is_stdout` and `is_stderr`.
-
-### Testing time
-
-`is_in_future` and `is_in_past` test when a date-time object is.
-
-### Testing sets
-
-`is_set_equal` tests if two vectors contain the same elements, regardless of 
-order.
-
-`is_subset` and `is_superset` test if one vector contains another.
-
-### Testing complex data types
-
-`is_email_address`, `is_credit_card_number`, `is_date_string`, `is_honorific`, 
-`is_ip_address`, `is_hex_color`, `is_cas_number` and `is_isbn_code` check for 
-these more complex data types. 
-
-`is_uk_car_licence`, `is_uk_national_insurance_number`, `is_uk_postcode` and 
-`is_uk_telephone_number` test the United Kingdom-specific data types.
-
-`is_us_telephone_number`, `is_us_zip_code` test the United States-specific data 
-types.
-
-Adding to this section is a priority for *assertive* development.  Request 
-additional data types on the 
-[issues](https://bitbucket.org/richierocks/assertive/issues?status=new&status=open) 
-page.
-
-
-### Reflection
-
-You can test the operating system with `is_windows`, `is_linux`, `is_mac`, 
-`is_solaris` and the more general `is_unix`.
-
-`is_r`, `is_r_devel`, `is_r_alpha`, `is_r_beta`, `is_r_release_candidate`,
-`is_r_stable` and `is_r_patched` test if you are running R, and if so what type.
-
-`is_rstudio`, `is_architect` and `is_revo_r` test for specific IDEs.
-
-You can test R's capabilities using `r_has_png_capability`, 
-`r_has_tcltk_capability`, etc.
-
-You can test the current locale's preference for decimal points using 
-`is_comma_for_decimal_point` or `is_period_for_decimal_point`.
-
-`is_slave_r`, `is_interactive`, `is_batch_mode`, `is_32_bit` and `is_64_bit` 
-test how R is being run.
-
-`r_can_compile_code` tests whether the OS has the necessary tools for compiling
-code, and that R can see them.  Useful for working with `Rcpp`.
-
-
-### Testing code
-
-`is_debugged` tests whether a function is being debugged (by `debug` or 
-`debugonce`).
-
-`is_valid_variable_name` tests whether a string is a valid variable name.
-
-`is_error_free` runs code and returns an indicator of whether or not an error 
-was thrown.
-
-`is_valid_r_code` parses code and returns an indicator of whether or not an 
-error was thrown.
-
-
-### Utilities
-
-`use_first` takes the first value of a vector, warning you if it one longer than 
-length one.
-
-`coerce_to` is a wrapper to `as`, changing an object's type with a warning.
-
-`get_name_in_parent` gets the name of a variable in the parent environment 
-(stopping you have to remember `deparse(substitute())` arcana).
-
-`strip_attributes` strips the attributes from an object.
-
-`merge_dots_with_list` merges the contents of `...` with a list argument, to 
-allow users to pass arguments to your function in either form.
-
-`dont_stop` runs code without stopping at errors, which is useful for 
-demonstrating errors in examples.
-
-`parenthesise` wraps a string in parentheses.
-
-`sys_get_locale` and `sys_set_locale` are convenience wrappers for getting and 
-setting locale components.
+*assertive* is also currently lacking assertions for time series, spatial data,
+personal data for countries other than the UK and US, and industry-sector-specific
+data.  If you want to contribute a package for these data types, let me know and 
+I can talk you through how to do it.

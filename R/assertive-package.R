@@ -22,69 +22,33 @@ NULL
 
 #' Important changes to assertive
 #' 
-#' The assertive package has a few changes since v0.2-6 that you should be 
-#' aware of.
+#' Changes since 0.3-0:
 #' 
-#' @section License change:
-#' The package has moved from 'Unlimited' licensing to GNU GPL 3.  There are 
-#' a couple of reasons for the change.  Originally assertive was a hobby 
-#' project, and the licence was designed so that I didn't have to worry about
-#' it.  Now that assertive has users other than myself, a proper license was
-#' needed.
+#' @section Virtuality:
+#' The assertive package is now a virtual package: that is, it no longer 
+#' contains its own functions, but instead rexports them from lower-level 
+#' packages.
 #' 
-#' Secondly, a recent feature request was for a function to check whether RStudio
-#' was up to date.  Rather than reverse engineering this feature, I adapted some 
-#' code from the RStudio source (AGPL code), which meant that assertive now needed 
-#' to be AGPL compatible.
+#' For interactive use, you can carry on using assertive as before.
 #' 
-#' @section Pretty printing:
-#' The most obvious thing is that the return values from \code{is_} functions
-#' now have a pretty printing method so that they now look similar to the error
-#' message in the corresponding \code{assert_} function.  Compare, for example
-#' \code{is_na(1:12)} and \code{assert_is_na(1:12)}.  This object is still the 
-#' same as in previous versions, except that it has a class of 
-#' \code{scalar_with_cause} or \code{vector_with_cause}.  
-#' Try \code{unclass(is_na(1:12))} to see this.
+#' For programmatic use, you can have more fine-grained control over what gets 
+#' loaded by using the lower-level packages.
 #' 
-#' You now get to see the first 10 failures (up from 6) by default, and you can
-#' force all failures to be shown using, for example, 
-#' \code{print(is_nan(1:12), n_to_show = Inf)}.
-#' 
-#' @section Multiple packages:
-#' Some users had noted that assertive was getting quite big, and package 
-#' developers didn't want to have such a large dependency.  Consequently 
-#' I'm in the process of breaking assertive into smaller chunks.  Currently the
-#' base functionality is available in a new \code{assertive.base} package.
-#' Eventually, the rest of assertive will be broken down into other chunks;
-#' with functionality for handling dates and time, personal data, etc., 
-#' outsourced to their own packages.
-#' 
-#' @section Support for pipes:
-#' \code{assert_} functions now invisibly return their first input argument
-#' (if there is one, and if no error is thrown, of course).  This means that 
-#' fans of magrittr or pipeR pipes can now chain together multiple assertions.
-#' 
-#' @section Better NA handling:
-#' Where an \code{is_} function could return \code{NA}, the corresponding
-#' \code{assert_} function gains an \code{na_ignore} argument.  This works like
-#' the \code{na.rm} argument in many stats package functions, except it doesn't
-#' affect the position of the reported failure.
-#' 
-#' @section Turning off assertions:
-#' Usually, the time for R to run an assertion is negligible compared to the
-#' rest of your code.  For some situations like simulations, where you call a
-#' function millions of times, the assertion time can add up to something 
-#' undesirable.  You can now include assertions in these functions for
-#' debugging purposes, then set \code{options(assertive.severity = "none")} to
-#' turn off the checks, when you need your code to run fast.
-#' 
-#' Similarly, \code{options(assertive.severity = "warning")} and 
-#' \code{options(assertive.severity = "message")} allow you to include
-#' assertions with a lower consequence for failures.
-#' 
-#' @section Clearer error messages:
-#' Some error messages have been rewritten to make them clearer, in preparation 
-#' for...
+#' \code{assertive.base} contains the core functionality.
+#' \code{assertive.properties} contains checks on properties of variables.
+#' \code{assertive.types} contains checks on types of variables.
+#' \code{assertive.numbers} contains checks for numbers.
+#' \code{assertive.strings} contains checks for strings. 
+#' \code{assertive.datetimes} contains checks for dates and times.
+#' \code{assertive.files} contains checks for files and connections.
+#' \code{assertive.sets} contains checks for sets.
+#' \code{assertive.matrices} contains checks for matrices.
+#' \code{assertive.models} contains checks for models.
+#' \code{assertive.data} contains checks for complex data types.
+#' \code{assertive.data.uk} contains checks for UK-specific complex data types.
+#' \code{assertive.data.us} contains checks for US-specific complex data types. 
+#' \code{assertive.reflection} contains checks on the state of R. 
+#' \code{assertive.code} contains checks for code.
 #' 
 #' @section Translations:
 #' The infrastructure for errors and warnings in multiple langauges is in place,

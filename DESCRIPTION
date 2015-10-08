@@ -1,8 +1,8 @@
 Package: assertive
 Type: Package
 Title: Readable Check Functions to Ensure Code Integrity
-Version: 0.3-0
-Date: 2015-07-14
+Version: 0.3-1
+Date: 2015-10-06
 Author: Richard Cotton [aut, cre]
 Maintainer: Richard Cotton <richierocks@gmail.com>
 Authors@R: person("Richard", "Cotton", role = c("aut", "cre"), email =
@@ -10,7 +10,12 @@ Authors@R: person("Richard", "Cotton", role = c("aut", "cre"), email =
 Description: Lots of is_* functions to check the state of your variables,
     and assert_* functions to throw errors if they aren't in the right form.
 Depends: R (>= 3.0.0)
-Imports: assertive.base, knitr, methods, stats, utils
+Imports: assertive.base (>= 0.0-2), assertive.properties,
+        assertive.types, assertive.numbers, assertive.strings,
+        assertive.datetimes, assertive.files, assertive.sets,
+        assertive.matrices, assertive.models, assertive.data,
+        assertive.data.uk, assertive.data.us, assertive.reflection,
+        assertive.code, knitr
 Suggests: testthat, devtools
 License: GPL (>= 3)
 LazyLoad: yes
@@ -21,25 +26,7 @@ Acknowledgments: Development of this package was partially funded by
         <http://qatar-weill.cornell.edu>.  The Core is supported by
         'Biomedical Research Program' funds, a program funded by Qatar
         Foundation.
-Collate: 'are-same.R' 'assert-are-same.R' 'assert-has.R'
-        'assert-is-a-type.R' 'assert-is-atomic-recursive-vector.R'
-        'assert-is-binding.R' 'assert-is-connection.R'
-        'assert-is-empty-scalar.R' 'assert-is-file.R'
-        'assert-is-in-range.R' 'assert-is-infinity-nan.R'
-        'assert-is-null.R' 'assert-is-other.R'
-        'assert-is-real-imaginary.R' 'assert-is-reflection.R'
-        'assert-is-set.R' 'assert-is-string-uk.R'
-        'assert-is-string-us.R' 'assert-is-string.R' 'assert-is-time.R'
-        'assert-is-type.R' 'assert-r-has-capability.R'
-        'assertive-package.R' 'has.R' 'imports.R'
-        'internal-connection.R' 'internal-string.R' 'is-a-type.R'
-        'is-atomic-recursive-vector.R' 'is-binding.R' 'is-connection.R'
-        'is-empty-scalar.R' 'is-file.R' 'is-in-range.R'
-        'is-infinity-nan.R' 'is-null.R' 'is-other.R'
-        'is-real-imaginary.R' 'is-reflection.R' 'is-set.R'
-        'is-string-uk.R' 'is-string-us.R' 'is-string.R' 'is-time.R'
-        'is-type.R' 'locale.R' 'r-has-capability.R' 'zzz.R'
 NeedsCompilation: no
-Packaged: 2015-07-15 06:00:11 UTC; rjc2003
+Packaged: 2015-10-06 13:54:34 UTC; rjc2003
 Repository: CRAN
-Date/Publication: 2015-07-15 13:23:34
+Date/Publication: 2015-10-08 13:55:26
