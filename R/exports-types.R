@@ -145,11 +145,15 @@ NULL
 #' 
 #' See \code{\link[assertive.types]{is_numeric}}.
 #' @name is_numeric
-#' @aliases is_a_number assert_is_numeric assert_is_a_number
+#' @aliases is_double is_a_number is_a_double assert_is_numeric assert_is_double assert_is_a_number assert_is_a_double
 #' @export is_numeric
+#' @export is_double
 #' @export is_a_number
+#' @export is_a_double
 #' @export assert_is_numeric
+#' @export assert_is_double
 #' @export assert_is_a_number
+#' @export assert_is_a_double
 NULL
 
 #' Is the input a QR decomposition of a matrix?
@@ -230,6 +234,21 @@ NULL
 #' @export assert_is_date
 #' @export assert_is_posixct
 #' @export assert_is_posixlt
+NULL
+
+# From assertive.types is-formula.R, assert-is-formula.R
+
+#' Is the input a formula?
+#' 
+#' See \code{\link[assertive.types]{is_formula}}.
+#' @name is_formula
+#' @aliases is_one_sided_formula is_two_sided_formula assert_is_formula assert_is_one_sided_formula assert_is_two_sided_formula
+#' @export is_formula
+#' @export is_one_sided_formula
+#' @export is_two_sided_formula
+#' @export assert_is_formula
+#' @export assert_is_one_sided_formula
+#' @export assert_is_two_sided_formula
 NULL
 
 # From assertive.types is-type-data.table.R, assert-is-type-data.table.R

@@ -4,13 +4,15 @@
 #' 
 #' See \code{\link[assertive.properties]{are_same_length}}.
 #' @name are_same_length
-#' @aliases have_same_dims are_same_length_legacy assert_are_same_length assert_have_same_dims assert_all_are_same_length_legacy assert_any_are_same_length_legacy
+#' @aliases have_same_dims are_same_length_legacy assert_are_same_length assert_have_same_dims assert_all_are_same_length_legacy assert_any_are_same_length_legacy assert_all_are_same_length assert_any_are_same_length
 #' @export are_same_length
 #' @export are_same_length_legacy
 #' @export have_same_dims
 #' @export assert_are_same_length
 #' @export assert_all_are_same_length_legacy
 #' @export assert_any_are_same_length_legacy
+#' @export assert_all_are_same_length
+#' @export assert_any_are_same_length
 #' @export assert_have_same_dims
 NULL 
 
@@ -87,19 +89,34 @@ NULL
 #' @export assert_has_dimnames
 NULL
 
+# From assertive.properties has-slot.R, assert-has-slot.R
+
+#' Does the S4 input have a slot?
+#' 
+#' See \code{\link[assertive.properties]{has_slot}}.
+#' @name has_slot
+#' @aliases assert_has_slot
+#' @export has_slot
+#' @export assert_has_slot
+NULL
+
 # From assertive.properties is-atomic-recursive-vector.R, assert-is-atomic-recursive-vector.R
 
 #' Is the input atomic/recursive/vector?
 #' 
 #' See \code{\link[assertive.properties]{is_atomic}}.
 #' @name is_atomic
-#' @aliases is_recursive is_vector assert_is_atomic assert_is_recursive assert_is_vector
+#' @aliases is_recursive is_vector is_nested is_non_nested assert_is_atomic assert_is_recursive assert_is_vector assert_is_nested assert_is_non_nested
 #' @export is_atomic
 #' @export is_recursive
 #' @export is_vector
+#' @export is_nested
+#' @export is_non_nested
 #' @export assert_is_atomic
 #' @export assert_is_recursive
 #' @export assert_is_vector
+#' @export assert_is_nested
+#' @export assert_is_non_nested
 NULL
 
 # From assertive.properties is-empty-scalar.R, assert-is-empty-scalar.R

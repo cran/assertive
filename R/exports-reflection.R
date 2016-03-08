@@ -187,13 +187,15 @@ NULL
 #' 
 #' See \code{\link[assertive.reflection]{r_can_find_tools}}.
 #' @name r_can_find_tools 
-#' @aliases  r_can_compile_code r_can_build_translations assert_r_can_find_tools assert_r_can_compile_code assert_r_can_build_translations
+#' @aliases  r_can_compile_code r_can_build_translations r_can_find_java assert_r_can_find_tools assert_r_can_compile_code assert_r_can_build_translations assert_r_can_find_java
 #' @export r_can_find_tools
 #' @export r_can_compile_code
 #' @export r_can_build_translations
+#' @export r_can_find_java
 #' @export assert_r_can_find_tools
 #' @export assert_r_can_compile_code
 #' @export assert_r_can_build_translations
+#' @export assert_r_can_find_java
 NULL
 
 #' Does R have a capability?

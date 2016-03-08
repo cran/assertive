@@ -37,7 +37,7 @@ stopifnot(
 This is OK, but not that easy to read.  Worse, the error messages that it 
 produces in the event of failure aren't very user-friendly.
 
-`assertive` provides lots of *assert* functions that provide checks
+**assertive** provides lots of *assert* functions that provide checks
 for specific conditions.  (An *assertion* is software development jargon for a 
 check.)  They are designed to make your code easier to read, and to return 
 helpful error messages to users in the event of a check failing.
@@ -108,18 +108,35 @@ functions, prefixed `assert_all_are_`, and `assert_any_are_`.  For example,
 `is_non_negative` is paired with `assert_all_are_non_negative` and 
 `assert_any_are_non_negative`.
 
+### Interactive vs. Programmatic Use
+
+As well as **assertive** itself, there are lots of packages named **assertive.\***.
+For example, **assertive.numbers**, **assertive.data**, and **assertive.types**.  
+**assertive** doesn't actually contain any functions of its own.  All it does is 
+re-export all functions from these **assertive.\*** packages.  Why is this a good 
+thing you may ask?
+
+For *interactive* use, typing less is a blessing.  So when you use R interactively,
+so can just type `library(assertive)`, and have access to all the functionality 
+without having to remember which package it comes from.
+
+For *programmatic* use, particularly for developing other packages that depend upon 
+*assertive*, you can use only the **assertive.\*** packages that you require, giving 
+your code a smaller footprint.
+
 ### Summary
 
-1. *assertive* contains `is*` functions that return logical values or vectors,
+1. **assertive** contains `is*` functions that return logical values or vectors,
 with a `cause` attribute the describes what went wrong when the return value
-is not \code{TRUE}.
-2. *assertive* also contains `assert*` functions that throw an error if a 
+is not `TRUE`.
+2. **assertive** also contains `assert*` functions that throw an error if a 
 conditon is not met (and do nothing if the condition is met).
 3. If a function `is_something` returns a single value, then the corresponding 
 `assert*` function is named `assert_is_something`.
 4. If a function `is_something` returns a vector, then the corresponding 
 `assert*` functions are named `assert_all_are_something` and 
 `assert_any_are_something`.
+5. Use **assertive** interactively and **assertive.\*** programmatically.
 
 ### Exercises.
 

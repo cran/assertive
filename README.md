@@ -1,5 +1,9 @@
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/0.1.0/active.svg)](http://www.repostatus.org/#active)
 [![Is the package on CRAN?](http://www.r-pkg.org/badges/version/assertive)](http://www.r-pkg.org/pkg/assertive)
+[![SemaphoreCI Build Status](https://semaphoreci.com/api/v1/projects/a9fbd8d5-fa9c-4b63-9457-23321ece7c8b/635061/badge.svg)](https://semaphoreci.com/richierocks/assertive)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/a7lqf6vwr3mbemi5?svg=true)](https://ci.appveyor.com/project/richierocks/assertive)
+
+![assertive logo](http://s25.postimg.org/uk9jho2db/assertive_logo.png)
 
 # assertive
 

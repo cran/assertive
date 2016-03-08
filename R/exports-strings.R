@@ -6,7 +6,7 @@
 #' 
 #' See \code{\link[assertive.strings]{is_empty_character}}.
 #' @name is_empty_character
-#' @aliases is_non_empty_character is_missing_or_empty_character is_non_missing_nor_empty_character is_not_missing_nor_empty_character is_an_empty_string is_a_non_empty_string is_a_missing_or_empty_string is_a_non_missing_nor_empty_string assert_all_are_empty_character assert_any_are_empty_character assert_all_are_non_empty_character assert_any_are_non_empty_character assert_all_are_missing_or_empty_character assert_any_are_non_empty_character assert_all_are_missing_or_empty_character assert_any_are_missing_or_empty_character assert_all_are_non_missing_nor_empty_character assert_any_are_non_missing_nor_empty_character assert_is_an_empty_string assert_is_a_non_empty_string assert_is_a_missing_or_empty_string assert_is_a_non_missing_nor_empty_string
+#' @aliases is_non_empty_character is_missing_or_empty_character is_non_missing_nor_empty_character is_not_missing_nor_empty_character is_an_empty_string is_a_non_empty_string is_a_missing_or_empty_string is_a_non_missing_nor_empty_string assert_all_are_empty_character assert_any_are_empty_character assert_all_are_non_empty_character assert_any_are_non_empty_character assert_all_are_missing_or_empty_character assert_any_are_non_empty_character assert_all_are_missing_or_empty_character assert_any_are_missing_or_empty_character assert_all_are_non_missing_nor_empty_character assert_any_are_non_missing_nor_empty_character assert_is_an_empty_string assert_is_a_non_empty_string assert_is_a_missing_or_empty_string assert_is_a_non_missing_nor_empty_string assert_all_strings_are_not_missing_nor_empty assert_any_strings_are_not_missing_nor_empty
 #' @export is_empty_character
 #' @export is_non_empty_character 
 #' @export is_missing_or_empty_character
@@ -28,6 +28,8 @@
 #' @export assert_is_a_non_empty_string
 #' @export assert_is_a_missing_or_empty_string
 #' @export assert_is_a_non_missing_nor_empty_string
+#' @export assert_all_strings_are_not_missing_nor_empty
+#' @export assert_any_strings_are_not_missing_nor_empty
 NULL
 
 # From assertive.strings is-special-string.R, assert-is-special-string.R
@@ -36,10 +38,13 @@ NULL
 #'  
 #' See \code{\link[assertive.strings]{is_numeric_string}}.
 #' @name is_numeric_string
-#' @aliases assert_all_are_numeric_strings assert_any_are_numeric_strings
+#' @aliases is_logical_string assert_all_are_numeric_strings assert_any_are_numeric_strings assert_all_are_logical_strings assert_any_are_logical_strings
 #' @export is_numeric_string
+#' @export is_logical_string
 #' @export assert_all_are_numeric_strings
 #' @export assert_any_are_numeric_strings
+#' @export assert_all_are_logical_strings
+#' @export assert_any_are_logical_strings
 NULL
 
 #' Is the input a single character?
