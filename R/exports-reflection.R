@@ -109,7 +109,7 @@ NULL
 #' 
 #' See \code{\link[assertive.reflection]{is_r}}.
 #' @name is_r
-#' @aliases is_architect is_revo_r is_rstudio is_r_alpha is_r_beta is_r_devel is_r_patched is_r_release_candidate is_r_release is_r_stable assert_is_r assert_is_architect assert_is_revo_r assert_is_rstudio assert_is_r_alpha assert_is_r_beta assert_is_r_devel assert_is_r_patched assert_is_r_release_candidate  assert_is_r_release assert_is_r_stable
+#' @aliases is_architect is_revo_r is_rstudio is_r_alpha is_r_beta is_r_devel is_r_patched is_r_release_candidate is_r_release is_r_revised is_r_stable assert_is_r assert_is_architect assert_is_revo_r assert_is_rstudio assert_is_r_alpha assert_is_r_beta assert_is_r_devel assert_is_r_patched assert_is_r_release_candidate assert_is_r_release assert_is_r_revised assert_is_r_stable
 #' @export is_r
 #' @export is_architect
 #' @export is_revo_r
@@ -120,6 +120,7 @@ NULL
 #' @export is_r_patched
 #' @export is_r_release_candidate
 #' @export is_r_release
+#' @export is_r_revised
 #' @export is_r_stable
 #' @export assert_is_r
 #' @export assert_is_architect
@@ -131,6 +132,7 @@ NULL
 #' @export assert_is_r_patched
 #' @export assert_is_r_release_candidate
 #' @export assert_is_r_release
+#' @export assert_is_r_revised
 #' @export assert_is_r_stable
 NULL
 

@@ -9,6 +9,7 @@
 \alias{assert_is_r_patched}
 \alias{assert_is_r_release}
 \alias{assert_is_r_release_candidate}
+\alias{assert_is_r_revised}
 \alias{assert_is_r_stable}
 \alias{assert_is_revo_r}
 \alias{assert_is_rstudio}
@@ -20,6 +21,7 @@
 \alias{is_r_patched}
 \alias{is_r_release}
 \alias{is_r_release_candidate}
+\alias{is_r_revised}
 \alias{is_r_stable}
 \alias{is_revo_r}
 \alias{is_rstudio}

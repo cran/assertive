@@ -1,6 +1,6 @@
-25531714d709e63e297da41ed6ef4f62 *DESCRIPTION
-49965446e4fa606c9db47f4b14199b34 *NAMESPACE
-7f211f1b4a476c1cd8a17365b6df2810 *NEWS
+d3e0978b961f8ca1a1d11f4031614505 *DESCRIPTION
+c844c0d4e3add818b40fde1d8329e0d5 *NAMESPACE
+4e36d5176dce110deb2a7edb65784dcc *NEWS
 9d66b42d9f86c60356b19ef2f61f3296 *R/assertive-package.R
 61c2cb9b98a8d8914bcb8bd1e16f8ea7 *R/exports-base.R
 c89c91654cbbf49a4337e67c2c34828a *R/exports-code.R
@@ -13,7 +13,7 @@ f1c78c908620cbbeb5eabe1f7a84b7f8 *R/exports-files.R
 ff58371f99a432850e594cf7e47f5ffb *R/exports-models.R
 a18064ade1c1dab23d7a20e4dd0a8d94 *R/exports-numbers.R
 82c322f6a243cada6c055118279f9cb6 *R/exports-properties.R
-b998b59b1d0bd72610d74efd28cf49b0 *R/exports-reflection.R
+3ff9cd7ac9d31159c5452c51a18a080e *R/exports-reflection.R
 18b43f4f9558a67d20e39c6147a407d0 *R/exports-sets.R
 0925cdac3971adab68df014abf324c2a *R/exports-strings.R
 b4d9251b31176c8b525009c413cd7dc9 *R/exports-types.R
@@ -116,7 +116,7 @@ c67002e019664de4085f9e852edc2d79 *man/is_null.Rd
 cebb35dbb341811d78e14967ead1372b *man/is_on_os_path.Rd
 4d49d1128f012156d297031d68755f7e *man/is_package_current.Rd
 e5832c308dcf85d16397bafb6dc7e07d *man/is_qr.Rd
-f0982bf1d5e6c63a4a0109ef4c448a5b *man/is_r.Rd
+f4732084413802d1cfc7eca901590e83 *man/is_r.Rd
 d4b2e9704fa034b3c793919b9ab21ffa *man/is_r_current.Rd
 98de273e48cd9a05cfd89a2b723dba5f *man/is_raster.Rd
 b7f12ba09eff9fa0ac42dc7f3b423791 *man/is_raw.Rd

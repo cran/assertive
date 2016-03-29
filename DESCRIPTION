@@ -1,8 +1,8 @@
 Package: assertive
 Type: Package
 Title: Readable Check Functions to Ensure Code Integrity
-Version: 0.3-2
-Date: 2016-03-06
+Version: 0.3-3
+Date: 2016-03-29
 Author: Richard Cotton [aut, cre]
 Maintainer: Richard Cotton <richierocks@gmail.com>
 Authors@R: person("Richard", "Cotton", role = c("aut", "cre"), email =
@@ -10,6 +10,8 @@ Authors@R: person("Richard", "Cotton", role = c("aut", "cre"), email =
 Description: Lots of predicates (is_* functions) to check the state of your
     variables, and assertions (assert_* functions) to throw errors if they
     aren't in the right form.
+URL: https://bitbucket.org/richierocks/assertive
+BugReports: https://bitbucket.org/richierocks/assertive/issues
 Depends: R (>= 3.0.0)
 Imports: assertive.base (>= 0.0-4), assertive.properties (>= 0.0-2),
         assertive.types (>= 0.0-2), assertive.numbers,
@@ -30,6 +32,6 @@ Acknowledgments: Development of this package was partially funded by
         Foundation.
 RoxygenNote: 5.0.1
 NeedsCompilation: no
-Packaged: 2016-03-07 11:19:25 UTC; rjc2003
+Packaged: 2016-03-29 12:02:10 UTC; rjc2003
 Repository: CRAN
-Date/Publication: 2016-03-08 09:52:04
+Date/Publication: 2016-03-29 14:24:31
