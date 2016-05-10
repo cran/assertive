@@ -16,6 +16,19 @@
 #' @export assert_have_same_dims
 NULL 
 
+# From assertive.properties is-monotonic.R, assert-is-monotonic.R
+
+#' Is the vector monotonically increasing or decreasing?
+#' 
+#' See \code{\link[assertive.properties]{is_monotonic_increasing}}.
+#' @name is_monotonic_increasing
+#' @aliases is_monotonic is_monotonic_decreasing assert_is_monotonic_increasing assert_is_monotonic_decreasing
+#' @export is_monotonic_increasing
+#' @export is_monotonic_decreasing
+#' @export assert_is_monotonic_increasing
+#' @export assert_is_monotonic_decreasing
+NULL
+
 # From assertive.properties has-attributes.R, assert-has-attributes.R
 
 #' Does the input have any attributes?

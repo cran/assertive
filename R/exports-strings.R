@@ -32,6 +32,27 @@
 #' @export assert_any_strings_are_not_missing_nor_empty
 NULL
 
+# From assertive.strings is-matching-fixed.R, assert-is-matching-fixed.R
+
+#' Does the string match a pattern?
+#'  
+#' See \code{\link[assertive.strings]{is_matching_fixed}}.
+#' @name is_matching_fixed
+#' @aliases is_not_matching_fixed is_matching_regex is_not_matching_regex assert_all_are_matching_fixed assert_any_are_matching_fixed assert_all_are_not_matching_fixed assert_any_are_not_matching_fixed assert_all_are_matching_regex assert_any_are_matching_regex assert_all_are_not_matching_regex assert_any_are_not_matching_regex
+#' @export is_matching_fixed
+#' @export is_not_matching_fixed
+#' @export is_matching_regex
+#' @export is_not_matching_regex
+#' @export assert_all_are_matching_fixed
+#' @export assert_any_are_matching_fixed
+#' @export assert_all_are_not_matching_fixed
+#' @export assert_any_are_not_matching_fixed
+#' @export assert_all_are_matching_regex
+#' @export assert_any_are_matching_regex
+#' @export assert_all_are_not_matching_regex
+#' @export assert_any_are_not_matching_regex
+NULL
+
 # From assertive.strings is-special-string.R, assert-is-special-string.R
 
 #' Does the string contain a number?

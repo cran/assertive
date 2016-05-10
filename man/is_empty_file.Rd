@@ -3,12 +3,14 @@
 \name{is_empty_file}
 \alias{assert_all_are_empty_files}
 \alias{assert_all_are_non_empty_files}
+\alias{assert_all_file_sizes_are_in_range}
 \alias{assert_any_are_empty_files}
 \alias{assert_any_are_non_empty_files}
+\alias{assert_any_file_sizes_are_in_range}
 \alias{is_empty_file}
 \alias{is_file_size_in_range}
 \alias{is_non_empty_file}
-\title{Is a file empty?}
+\title{Is a file too big or small?}
 \description{
 See \code{\link[assertive.files]{is_empty_file}}.
 }

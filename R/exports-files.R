@@ -57,20 +57,6 @@ NULL
 #' @export assert_any_are_dirs
 NULL
 
-#' Is a file empty?
-#' 
-#' See \code{\link[assertive.files]{is_empty_file}}.
-#' @name is_empty_file
-#' @aliases is_non_empty_file is_file_size_in_range assert_all_are_empty_files assert_any_are_empty_files assert_all_are_non_empty_files assert_any_are_non_empty_files
-#' @export is_empty_file
-#' @export is_non_empty_file
-#' @export is_file_size_in_range
-#' @export assert_all_are_empty_files
-#' @export assert_any_are_empty_files
-#' @export assert_all_are_non_empty_files
-#' @export assert_any_are_non_empty_files
-NULL
-
 #' Does the file exist?
 #' 
 #' See \code{\link[assertive.files]{is_existing_file}}.
@@ -106,4 +92,22 @@ NULL
 #' @export is_library
 #' @export assert_all_are_libraries
 #' @export assert_any_are_libraries
+NULL
+
+# From assertive.files is-file-empty.R, assert-is-file-empty.R
+
+#' Is a file too big or small?
+#' 
+#' See \code{\link[assertive.files]{is_empty_file}}.
+#' @name is_empty_file
+#' @aliases is_non_empty_file is_file_size_in_range assert_all_are_empty_files assert_any_are_empty_files assert_all_are_non_empty_files assert_any_are_non_empty_files assert_all_file_sizes_are_in_range assert_any_file_sizes_are_in_range
+#' @export is_empty_file
+#' @export is_non_empty_file
+#' @export is_file_size_in_range
+#' @export assert_all_are_empty_files
+#' @export assert_any_are_empty_files
+#' @export assert_all_are_non_empty_files
+#' @export assert_any_are_non_empty_files
+#' @export assert_all_file_sizes_are_in_range
+#' @export assert_any_file_sizes_are_in_range
 NULL
