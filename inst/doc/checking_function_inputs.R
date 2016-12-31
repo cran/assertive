@@ -1,4 +1,4 @@
-## ----, Setup, echo = FALSE, results = "hide"-----------------------------
+## ---- Setup, echo = FALSE, results = "hide"------------------------------
 set.seed(19790801)
 library(assertive)
 knitr::opts_chunk$set(error = FALSE)
@@ -9,14 +9,14 @@ geomean <- function(x, na.rm = FALSE)
   exp(mean(log(x), na.rm = na.rm))
 }
 
-## ----, Geomean2----------------------------------------------------------
+## ---- Geomean2-----------------------------------------------------------
 geomean2 <- function(x, na.rm = FALSE)
 {
   assert_is_numeric(x)
   exp(mean(log(x), na.rm = na.rm))
 }
 
-## ----, Geomean3----------------------------------------------------------
+## ---- Geomean3-----------------------------------------------------------
 geomean3 <- function(x, na.rm = FALSE)
 {
   assert_is_numeric(x)

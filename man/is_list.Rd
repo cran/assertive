@@ -2,7 +2,9 @@
 % Please edit documentation in R/exports-types.R
 \name{is_list}
 \alias{assert_is_list}
+\alias{assert_is_pairlist}
 \alias{is_list}
+\alias{is_pairlist}
 \title{Is the input a list?}
 \description{
 See \code{\link[assertive.types]{is_list}}.

@@ -58,8 +58,8 @@ add some assertions to your code.
 4. Which operating system am I using? (`is_windows`, `is_linux`, `is_mac`, 
 `is_solaris`, `is_unix`)
 5. Does the current working dir have an effect? (`standardize_path` in 
-[`pathological`](https://github.com/richierocks/pathological), `in_dir` in 
-[`devtools`](https://github.com/hadley/devtools))
+[`pathological`](http://github.com/richierocks/pathological), `in_dir` in 
+[`devtools`](https://github.com/hadley/devtools/))
 7. Does the operating system `PATH` environment variable have an effect? (`is_on_os_path`)
 6. Can R create that plot file type? (`r_has_png_capability`, 
 `r_has_jpeg_capability`, `r_has_tiff_capability`)

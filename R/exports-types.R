@@ -60,6 +60,15 @@ NULL
 #' @export assert_is_environment
 NULL
 
+#' Is the input an external pointer?
+#' 
+#' See \code{\link[assertive.types]{is_externalptr}}.
+#' @name is_externalptr
+#' @aliases assert_is_externalptr
+#' @export is_externalptr
+#' @export assert_is_externalptr
+NULL
+
 #' Is the input a factor?
 #' 
 #' See \code{\link[assertive.types]{is_factor}}.
@@ -125,9 +134,11 @@ NULL
 #' 
 #' See \code{\link[assertive.types]{is_list}}.
 #' @name is_list
-#' @aliases assert_is_list
+#' @aliases is_pairlist assert_is_list assert_is_pairlist
 #' @export is_list
+#' @export is_pairlist
 #' @export assert_is_list
+#' @export assert_is_pairlist
 NULL
 
 #' Is the input logical?
@@ -180,11 +191,15 @@ NULL
 #' 
 #' See \code{\link[assertive.types]{is_s4}}.
 #' @name is_s4
-#' @aliases is_s4 is_S4 assert_is_s4 assert_is_S4
+#' @aliases is_s4 is_S4 is_ref_class_generator is_ref_class_object assert_is_s4 assert_is_S4 assert_is_ref_class_generator assert_is_ref_class_object
 #' @export is_s4
 #' @export is_S4
+#' @export is_ref_class_generator
+#' @export is_ref_class_object
 #' @export assert_is_s4
 #' @export assert_is_S4
+#' @export assert_is_ref_class_generator
+#' @export assert_is_ref_class_object
 NULL
 
 #' Is the input a table?
@@ -249,6 +264,49 @@ NULL
 #' @export assert_is_formula
 #' @export assert_is_one_sided_formula
 #' @export assert_is_two_sided_formula
+NULL
+
+# From assertive.types is-function.R, assert-is-function.R
+
+#' Is the input a closure, builtin or special function?
+#' 
+#' See \code{\link[assertive.types]{is_closure_function}}.
+#' @name is_closure_function
+#' @aliases is_builtin_function is_special_function assert_is_closure_function assert_is_builtin_function assert_is_special_function
+#' @export is_closure_function
+#' @export is_builtin_function
+#' @export is_special_function
+#' @export assert_is_closure_function
+#' @export assert_is_builtin_function
+#' @export assert_is_special_function
+NULL
+
+#' Is the input an internal function?
+#' 
+#' See \code{\link[assertive.types]{is_closure_function}}.
+#' @name is_internal_function
+#' @aliases assert_is_internal_function
+#' @export is_internal_function
+#' @export assert_is_internal_function
+NULL
+
+#' Is the input an S3 generic or method?
+#' 
+#' See \code{\link[assertive.types]{is_s3_generic}}.
+#' @name is_s3_generic
+#' @aliases is_s3_method is_s3_primitive_generic is_s3_group_generic is_s3_internal_generic is_s4_group_generic assert_is_s3_generic assert_is_s3_method assert_is_s3_primitive_generic assert_is_s3_group_generic assert_is_s3_internal_generic assert_is_s4_group_generic
+#' @export is_s3_generic
+#' @export is_s3_method
+#' @export is_s3_primitive_generic
+#' @export is_s3_group_generic
+#' @export is_s3_internal_generic
+#' @export is_s4_group_generic
+#' @export assert_is_s3_generic
+#' @export assert_is_s3_method
+#' @export assert_is_s3_primitive_generic
+#' @export assert_is_s3_group_generic
+#' @export assert_is_s3_internal_generic
+#' @export assert_is_s4_group_generic
 NULL
 
 # From assertive.types is-type-data.table.R, assert-is-type-data.table.R

@@ -160,13 +160,6 @@ NULL
 #' @export
 NULL
 
-#' Get the number of elements
-#' 
-#' See \code{\link[assertive.properties]{n_elements}}.
-#' @name n_elements
-#' @export
-NULL
-
 #' Wrap a string in brackets
 #' 
 #' See \code{\link[assertive.base]{parenthesize}}.
@@ -174,6 +167,20 @@ NULL
 #' @aliases parenthesise
 #' @export parenthesize
 #' @export parenthesise
+NULL
+
+#' Print a variable and capture the output
+#' 
+#' See \code{\link[assertive.base]{print_and_capture}}.
+#' @name print_and_capture
+#' @export
+NULL
+
+#' Safe version of deparse
+#' 
+#' See \code{\link[assertive.base]{safe_deparse}}.
+#' @name safe_deparse
+#' @export
 NULL
 
 #' Strip all attributes from a variable

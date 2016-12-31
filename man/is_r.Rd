@@ -2,6 +2,7 @@
 % Please edit documentation in R/exports-reflection.R
 \name{is_r}
 \alias{assert_is_architect}
+\alias{assert_is_emacs}
 \alias{assert_is_r}
 \alias{assert_is_r_alpha}
 \alias{assert_is_r_beta}
@@ -13,7 +14,9 @@
 \alias{assert_is_r_stable}
 \alias{assert_is_revo_r}
 \alias{assert_is_rstudio}
+\alias{assert_is_visual_studio}
 \alias{is_architect}
+\alias{is_emacs}
 \alias{is_r}
 \alias{is_r_alpha}
 \alias{is_r_beta}
@@ -25,6 +28,7 @@
 \alias{is_r_stable}
 \alias{is_revo_r}
 \alias{is_rstudio}
+\alias{is_visual_studio}
 \title{Are you running R?}
 \description{
 See \code{\link[assertive.reflection]{is_r}}.

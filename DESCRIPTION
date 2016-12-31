@@ -1,8 +1,8 @@
 Package: assertive
 Type: Package
 Title: Readable Check Functions to Ensure Code Integrity
-Version: 0.3-4
-Date: 2016-05-08
+Version: 0.3-5
+Date: 2016-12-30
 Author: Richard Cotton [aut, cre]
 Maintainer: Richard Cotton <richierocks@gmail.com>
 Authors@R: person("Richard", "Cotton", role = c("aut", "cre"), email =
@@ -32,6 +32,6 @@ Acknowledgments: Development of this package was partially funded by
         Foundation.
 RoxygenNote: 5.0.1
 NeedsCompilation: no
-Packaged: 2016-05-10 09:56:03 UTC; rjc2003
+Packaged: 2016-12-30 19:12:43 UTC; richierocks
 Repository: CRAN
-Date/Publication: 2016-05-10 13:25:15
+Date/Publication: 2016-12-31 01:43:23

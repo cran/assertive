@@ -8,6 +8,7 @@
 \alias{assert_is_bsd}
 \alias{assert_is_linux}
 \alias{assert_is_mac}
+\alias{assert_is_macos_sierra}
 \alias{assert_is_osx}
 \alias{assert_is_osx_cheetah}
 \alias{assert_is_osx_el_capitan}
@@ -40,6 +41,7 @@
 \alias{is_bsd}
 \alias{is_linux}
 \alias{is_mac}
+\alias{is_macos_sierra}
 \alias{is_osx}
 \alias{is_osx_cheetah}
 \alias{is_osx_el_capitan}

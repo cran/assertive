@@ -4,7 +4,7 @@
 #' 
 #' See \code{\link[assertive.reflection]{is_windows}}.
 #' @name is_windows
-#' @aliases is_bsd is_linux is_mac is_osx is_osx_cheetah is_osx_puma is_osx_jaguar is_osx_panther is_osx_tiger is_osx_leopard is_osx_snow_leopard is_osx_lion is_osx_mountain_lion is_osx_mavericks is_osx_yosemite is_osx_el_capitan is_solaris is_unix is_windows_vista is_windows_7 is_windows_8 is_windows_8.1 is_windows_10 is_windows_server_2008 is_windows_server_2008_r2 is_windows_server_2012 is_windows_server_2012_r2 is_32_bit is_64_bit is_32_bit_os is_64_bit_os assert_is_windows assert_is_bsd assert_is_linux assert_is_mac assert_is_osx assert_is_osx_cheetah assert_is_osx_puma assert_is_osx_jaguar assert_is_osx_panther assert_is_osx_tiger assert_is_osx_leopard assert_is_osx_snow_leopard assert_is_osx_lion assert_is_osx_mountain_lion assert_is_osx_mavericks assert_is_osx_yosemite assert_is_osx_el_capitan assert_is_solaris assert_is_unix assert_is_windows_vista assert_is_windows_7 assert_is_windows_8 assert_is_windows_8.1 assert_is_windows_10 assert_is_windows_server_2008 assert_is_windows_server_2008_r2 assert_is_windows_server_2012 assert_is_windows_server_2012_r2 assert_is_32_bit assert_is_64_bit assert_is_32_bit_os assert_is_64_bit_os
+#' @aliases is_bsd is_linux is_mac is_macos_sierra is_osx is_osx_cheetah is_osx_puma is_osx_jaguar is_osx_panther is_osx_tiger is_osx_leopard is_osx_snow_leopard is_osx_lion is_osx_mountain_lion is_osx_mavericks is_osx_yosemite is_osx_el_capitan is_solaris is_unix is_windows_vista is_windows_7 is_windows_8 is_windows_8.1 is_windows_10 is_windows_server_2008 is_windows_server_2008_r2 is_windows_server_2012 is_windows_server_2012_r2 is_32_bit is_64_bit is_32_bit_os is_64_bit_os assert_is_windows assert_is_bsd assert_is_linux assert_is_mac assert_is_osx assert_is_osx_cheetah assert_is_osx_puma assert_is_osx_jaguar assert_is_osx_panther assert_is_osx_tiger assert_is_osx_leopard assert_is_osx_snow_leopard assert_is_osx_lion assert_is_osx_mountain_lion assert_is_osx_mavericks assert_is_osx_yosemite assert_is_osx_el_capitan assert_is_solaris assert_is_unix assert_is_windows_vista assert_is_windows_7 assert_is_windows_8 assert_is_windows_8.1 assert_is_windows_10 assert_is_windows_server_2008 assert_is_windows_server_2008_r2 assert_is_windows_server_2012 assert_is_windows_server_2012_r2 assert_is_32_bit assert_is_64_bit assert_is_32_bit_os assert_is_64_bit_os assert_is_macos_sierra
 #' @export is_windows
 #' @export is_windows_vista
 #' @export is_windows_7
@@ -18,6 +18,7 @@
 #' @export is_bsd
 #' @export is_linux
 #' @export is_mac
+#' @export is_macos_sierra
 #' @export is_osx
 #' @export is_osx_cheetah
 #' @export is_osx_puma
@@ -67,6 +68,7 @@
 #' @export assert_is_32_bit
 #' @export assert_is_64_bit
 #' @export assert_is_64_bit_os
+#' @export assert_is_macos_sierra
 NULL
 
 # From assertive.reflection is-current.R, assert-is-current.R
@@ -85,8 +87,10 @@ NULL
 #' 
 #' See \code{\link[assertive.reflection]{is_package_current}}.
 #' @name is_package_current
-#' @aliases assert_is_package_current
+#' @aliases assert_all_are_current_packages assert_any_are_current_packages assert_is_package_current
 #' @export is_package_current
+#' @export assert_all_are_current_packages
+#' @export assert_any_are_current_packages
 #' @export assert_is_package_current
 NULL
 
@@ -109,9 +113,10 @@ NULL
 #' 
 #' See \code{\link[assertive.reflection]{is_r}}.
 #' @name is_r
-#' @aliases is_architect is_revo_r is_rstudio is_r_alpha is_r_beta is_r_devel is_r_patched is_r_release_candidate is_r_release is_r_revised is_r_stable assert_is_r assert_is_architect assert_is_revo_r assert_is_rstudio assert_is_r_alpha assert_is_r_beta assert_is_r_devel assert_is_r_patched assert_is_r_release_candidate assert_is_r_release assert_is_r_revised assert_is_r_stable
+#' @aliases is_architect is_emacs is_revo_r is_rstudio is_r_alpha is_r_beta is_r_devel is_r_patched is_r_release_candidate is_r_release is_r_revised is_r_stable is_visual_studio assert_is_r assert_is_architect assert_is_emacs assert_is_revo_r assert_is_rstudio assert_is_r_alpha assert_is_r_beta assert_is_r_devel assert_is_r_patched assert_is_r_release_candidate assert_is_r_release assert_is_r_revised assert_is_r_stable assert_is_visual_studio
 #' @export is_r
 #' @export is_architect
+#' @export is_emacs
 #' @export is_revo_r
 #' @export is_rstudio
 #' @export is_r_alpha
@@ -122,8 +127,10 @@ NULL
 #' @export is_r_release
 #' @export is_r_revised
 #' @export is_r_stable
+#' @export is_visual_studio
 #' @export assert_is_r
 #' @export assert_is_architect
+#' @export assert_is_emacs
 #' @export assert_is_revo_r
 #' @export assert_is_rstudio
 #' @export assert_is_r_alpha
@@ -134,6 +141,7 @@ NULL
 #' @export assert_is_r_release
 #' @export assert_is_r_revised
 #' @export assert_is_r_stable
+#' @export assert_is_visual_studio
 NULL
 
 #' How is R running?

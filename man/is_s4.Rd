@@ -2,8 +2,12 @@
 % Please edit documentation in R/exports-types.R
 \name{is_s4}
 \alias{assert_is_S4}
+\alias{assert_is_ref_class_generator}
+\alias{assert_is_ref_class_object}
 \alias{assert_is_s4}
 \alias{is_S4}
+\alias{is_ref_class_generator}
+\alias{is_ref_class_object}
 \alias{is_s4}
 \title{Is the input an S4 object?}
 \description{
