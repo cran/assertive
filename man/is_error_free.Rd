@@ -10,4 +10,3 @@ Does the code run without throwing an error?
  
 See \code{\link[assertive.code]{is_error_free}}.
 }
-

@@ -1,10 +1,10 @@
 Package: assertive
 Type: Package
 Title: Readable Check Functions to Ensure Code Integrity
-Version: 0.3-5.1
-Date: 2016-12-30
+Version: 0.3-6
+Date: 2020-07-30
 Author: Richard Cotton [aut, cre]
-Maintainer: ORPHANED
+Maintainer: Richard Cotton <richierocks@gmail.com>
 Authors@R: person("Richard", "Cotton", role = c("aut", "cre"), email =
     "richierocks@gmail.com")
 Description: Lots of predicates (is_* functions) to check the state of your
@@ -20,7 +20,7 @@ Imports: assertive.base (>= 0.0-4), assertive.properties (>= 0.0-2),
         assertive.models, assertive.data, assertive.data.uk,
         assertive.data.us, assertive.reflection (>= 0.0-2),
         assertive.code, knitr
-Suggests: testthat
+Suggests: testthat, markdown
 License: GPL (>= 3)
 LazyLoad: yes
 LazyData: yes
@@ -30,8 +30,8 @@ Acknowledgments: Development of this package was partially funded by
         <http://qatar-weill.cornell.edu>.  The Core is supported by
         'Biomedical Research Program' funds, a program funded by Qatar
         Foundation.
-RoxygenNote: 5.0.1
+RoxygenNote: 7.1.1
 NeedsCompilation: no
-Packaged: 2020-07-17 05:55:25 UTC; ripley
+Packaged: 2020-07-31 18:29:39 UTC; richierocks
 Repository: CRAN
-Date/Publication: 2020-07-17 06:06:50 UTC
+Date/Publication: 2020-08-01 01:00:02 UTC

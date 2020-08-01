@@ -2,16 +2,15 @@
 % Please edit documentation in R/exports-properties.R
 \name{are_same_length}
 \alias{are_same_length}
+\alias{have_same_dims}
 \alias{are_same_length_legacy}
-\alias{assert_all_are_same_length}
-\alias{assert_all_are_same_length_legacy}
-\alias{assert_any_are_same_length}
-\alias{assert_any_are_same_length_legacy}
 \alias{assert_are_same_length}
 \alias{assert_have_same_dims}
-\alias{have_same_dims}
+\alias{assert_all_are_same_length_legacy}
+\alias{assert_any_are_same_length_legacy}
+\alias{assert_all_are_same_length}
+\alias{assert_any_are_same_length}
 \title{Are the inputs the same length/dimension?}
 \description{
 See \code{\link[assertive.properties]{are_same_length}}.
 }
-

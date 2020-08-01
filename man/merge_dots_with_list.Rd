@@ -6,4 +6,3 @@
 \description{
 See \code{\link[assertive.base]{merge_dots_with_list}}.
 }
-

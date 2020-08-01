@@ -6,4 +6,3 @@
 \description{
 See \code{\link[assertive.base]{use_first}}.
 }
-

@@ -8,4 +8,3 @@ See \code{\link[assertive.properties]{DIM}}.
 
 See \code{\link[assertive.properties]{DIM}}.
 }
-

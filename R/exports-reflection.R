@@ -4,7 +4,7 @@
 #' 
 #' See \code{\link[assertive.reflection]{is_windows}}.
 #' @name is_windows
-#' @aliases is_bsd is_linux is_mac is_macos_sierra is_osx is_osx_cheetah is_osx_puma is_osx_jaguar is_osx_panther is_osx_tiger is_osx_leopard is_osx_snow_leopard is_osx_lion is_osx_mountain_lion is_osx_mavericks is_osx_yosemite is_osx_el_capitan is_solaris is_unix is_windows_vista is_windows_7 is_windows_8 is_windows_8.1 is_windows_10 is_windows_server_2008 is_windows_server_2008_r2 is_windows_server_2012 is_windows_server_2012_r2 is_32_bit is_64_bit is_32_bit_os is_64_bit_os assert_is_windows assert_is_bsd assert_is_linux assert_is_mac assert_is_osx assert_is_osx_cheetah assert_is_osx_puma assert_is_osx_jaguar assert_is_osx_panther assert_is_osx_tiger assert_is_osx_leopard assert_is_osx_snow_leopard assert_is_osx_lion assert_is_osx_mountain_lion assert_is_osx_mavericks assert_is_osx_yosemite assert_is_osx_el_capitan assert_is_solaris assert_is_unix assert_is_windows_vista assert_is_windows_7 assert_is_windows_8 assert_is_windows_8.1 assert_is_windows_10 assert_is_windows_server_2008 assert_is_windows_server_2008_r2 assert_is_windows_server_2012 assert_is_windows_server_2012_r2 assert_is_32_bit assert_is_64_bit assert_is_32_bit_os assert_is_64_bit_os assert_is_macos_sierra
+#' @aliases is_bsd is_linux is_mac is_macos_sierra is_macos_high_sierra is_macos_mojave is_macos_catalina is_macos_big_sur is_osx is_osx_cheetah is_osx_puma is_osx_jaguar is_osx_panther is_osx_tiger is_osx_leopard is_osx_snow_leopard is_osx_lion is_osx_mountain_lion is_osx_mavericks is_osx_yosemite is_osx_el_capitan is_solaris is_unix is_windows_vista is_windows_7 is_windows_8 is_windows_8.1 is_windows_10 is_windows_server_2008 is_windows_server_2008_r2 is_windows_server_2012 is_windows_server_2012_r2 is_windows_server_2016 is_windows_server_2019 is_32_bit is_64_bit is_32_bit_os is_64_bit_os assert_is_windows assert_is_bsd assert_is_linux assert_is_mac assert_is_osx assert_is_osx_cheetah assert_is_osx_puma assert_is_osx_jaguar assert_is_osx_panther assert_is_osx_tiger assert_is_osx_leopard assert_is_osx_snow_leopard assert_is_osx_lion assert_is_osx_mountain_lion assert_is_osx_mavericks assert_is_osx_yosemite assert_is_osx_el_capitan assert_is_solaris assert_is_unix assert_is_windows_vista assert_is_windows_7 assert_is_windows_8 assert_is_windows_8.1 assert_is_windows_10 assert_is_windows_server_2008 assert_is_windows_server_2008_r2 assert_is_windows_server_2012 assert_is_windows_server_2012_r2 assert_is_windows_server_2016 assert_is_windows_server_2019 assert_is_32_bit assert_is_64_bit assert_is_32_bit_os assert_is_64_bit_os assert_is_macos_sierra assert_is_macos_high_sierra assert_is_macos_mojave assert_is_macos_catalina assert_is_macos_big_sur
 #' @export is_windows
 #' @export is_windows_vista
 #' @export is_windows_7
@@ -15,10 +15,16 @@
 #' @export is_windows_server_2008_r2
 #' @export is_windows_server_2012
 #' @export is_windows_server_2012_r2
+#' @export is_windows_server_2016
+#' @export is_windows_server_2019
 #' @export is_bsd
 #' @export is_linux
 #' @export is_mac
 #' @export is_macos_sierra
+#' @export is_macos_high_sierra
+#' @export is_macos_mojave
+#' @export is_macos_catalina
+#' @export is_macos_big_sur
 #' @export is_osx
 #' @export is_osx_cheetah
 #' @export is_osx_puma
@@ -69,6 +75,10 @@
 #' @export assert_is_64_bit
 #' @export assert_is_64_bit_os
 #' @export assert_is_macos_sierra
+#' @export assert_is_macos_high_sierra
+#' @export assert_is_macos_mojave
+#' @export assert_is_macos_catalina
+#' @export assert_is_macos_big_sur
 NULL
 
 # From assertive.reflection is-current.R, assert-is-current.R
@@ -212,7 +222,7 @@ NULL
 #' 
 #' See \code{\link[assertive.reflection]{r_has_jpeg_capability}}.
 #' @name r_has_jpeg_capability
-#' @aliases r_has_png_capability r_has_tiff_capability r_has_tcltk_capability r_has_x11_capability r_has_aqua_capability r_has_http_ftp_capability r_has_sockets_capability r_has_libxml_capability r_has_fifo_capability r_has_cledit_capability r_has_iconv_capability r_has_nls_capability r_has_profmem_capability r_has_cairo_capability r_has_icu_capability r_has_long_double_capability r_has_libcurl_capability assert_r_has_jpeg_capability assert_r_has_png_capability assert_r_has_tiff_capability assert_r_has_tcltk_capability assert_r_has_x11_capability assert_r_has_aqua_capability assert_r_has_http_ftp_capability assert_r_has_sockets_capability assert_r_has_libxml_capability assert_r_has_fifo_capability assert_r_has_cledit_capability assert_r_has_iconv_capability assert_r_has_nls_capability assert_r_has_profmem_capability assert_r_has_cairo_capability assert_r_has_icu_capability assert_r_has_long_double_capability assert_r_has_libcurl_capability
+#' @aliases r_has_png_capability r_has_tiff_capability r_has_tcltk_capability r_has_x11_capability r_has_aqua_capability r_has_http_ftp_capability r_has_sockets_capability r_has_libxml_capability r_has_fifo_capability r_has_cledit_capability r_has_iconv_capability r_has_nls_capability r_has_rprof_capability r_has_profmem_capability r_has_cairo_capability r_has_icu_capability r_has_long_double_capability r_has_libcurl_capability assert_r_has_jpeg_capability assert_r_has_png_capability assert_r_has_tiff_capability assert_r_has_tcltk_capability assert_r_has_x11_capability assert_r_has_aqua_capability assert_r_has_http_ftp_capability assert_r_has_sockets_capability assert_r_has_libxml_capability assert_r_has_fifo_capability assert_r_has_cledit_capability assert_r_has_iconv_capability assert_r_has_nls_capability assert_r_has_rprof_capability assert_r_has_profmem_capability assert_r_has_cairo_capability assert_r_has_icu_capability assert_r_has_long_double_capability assert_r_has_libcurl_capability
 #' @export r_has_jpeg_capability
 #' @export r_has_png_capability
 #' @export r_has_tiff_capability
@@ -226,6 +236,7 @@ NULL
 #' @export r_has_cledit_capability
 #' @export r_has_iconv_capability
 #' @export r_has_nls_capability
+#' @export r_has_rprof_capability
 #' @export r_has_profmem_capability
 #' @export r_has_cairo_capability
 #' @export r_has_icu_capability
@@ -244,6 +255,7 @@ NULL
 #' @export assert_r_has_cledit_capability
 #' @export assert_r_has_iconv_capability
 #' @export assert_r_has_nls_capability
+#' @export assert_r_has_rprof_capability
 #' @export assert_r_has_profmem_capability
 #' @export assert_r_has_cairo_capability
 #' @export assert_r_has_icu_capability

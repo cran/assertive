@@ -7,4 +7,3 @@
 \description{
 See \code{\link[assertive.types]{assert_is_all_of}}.
 }
-

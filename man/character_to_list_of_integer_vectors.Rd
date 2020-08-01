@@ -10,4 +10,3 @@ Convert a character vector to a list of integer vectors
  
 See \code{\link[assertive.strings]{character_to_list_of_integer_vectors}}.
 }
-

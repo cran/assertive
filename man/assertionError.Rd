@@ -2,10 +2,9 @@
 % Please edit documentation in R/exports-base.R
 \name{assertionError}
 \alias{assertionError}
-\alias{assertionMessage}
 \alias{assertionWarning}
+\alias{assertionMessage}
 \title{Condition classes}
 \description{
 See \code{\link[assertive.base]{assertionError}}.
 }
-

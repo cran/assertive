@@ -25,4 +25,3 @@ dont_stop(assert_is_scalar(runif(10)))
 \author{
 Richard Cotton \email{richierocks@gmail.com}
 }
-

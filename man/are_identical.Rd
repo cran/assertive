@@ -2,12 +2,11 @@
 % Please edit documentation in R/exports-base.R
 \name{are_identical}
 \alias{are_identical}
+\alias{assert_are_identical}
 \alias{are_identical_legacy}
 \alias{assert_all_are_identical_legacy}
 \alias{assert_any_are_identical_legacy}
-\alias{assert_are_identical}
 \title{Are the inputs identical?}
 \description{
 See \code{\link[assertive.base]{are_identical}}.
 }
-

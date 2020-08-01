@@ -3,7 +3,6 @@
 \docType{package}
 \name{changes}
 \alias{changes}
-\alias{changes-package}
 \title{Important changes to assertive}
 \description{
 Changes since 0.3-0:

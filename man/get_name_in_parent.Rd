@@ -6,4 +6,3 @@
 \description{
 See \code{\link[assertive.base]{get_name_in_parent}}.
 }
-

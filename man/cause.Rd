@@ -7,4 +7,3 @@
 \description{
 See \code{\link[assertive.base]{cause}}.
 }
-
